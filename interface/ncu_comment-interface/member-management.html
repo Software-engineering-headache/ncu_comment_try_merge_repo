@@ -70,6 +70,14 @@
         tr:hover {
             background-color: #f1f1f1; /* 懸停時行的背景色 */
         }
+        /* 隱藏評論區域 */
+        .comments {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +99,7 @@
             <th>會員名稱</th> <!-- 列標題：會員名稱 -->
             <th>帳號</th> <!-- 列標題：會員帳號 -->
             <th>最近一次登入時間</th> <!-- 列標題：最近一次登入時間 -->
+            <th>查看評論</th> <!-- 列標題：查看評論 -->
             <th>操作</th> <!-- 列標題：操作按鈕 -->
         </tr>
 
@@ -99,6 +108,21 @@
             <td>會員A</td> <!-- 會員名稱 -->
             <td>userA</td> <!-- 會員帳號 -->
             <td>2024-12-01 14:30:45</td> <!-- 最近一次登入時間 -->
+            <td>
+                <select onchange="showComments('commentsA')">
+                    <option value="">選擇年份</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+                <!-- 隱藏的歷年評論區域 -->
+                <div id="commentsA" class="comments">
+                    <h4>歷年評論</h4>
+                    <p>2024: 這是2024年的評論。</p>
+                    <p>2023: 這是2023年的評論。</p>
+                    <p>2022: 這是2022年的評論。</p>
+                </div>
+            </td>
             <td>
                 <!-- 操作按鈕 -->
                 <button>刪除</button> <!-- 刪除會員按鈕 -->
@@ -112,10 +136,38 @@
             <td>userB</td>
             <td>2024-11-30 10:15:22</td>
             <td>
+                <select onchange="showComments('commentsB')">
+                    <option value="">選擇年份</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+                <div id="commentsB" class="comments">
+                    <h4>歷年評論</h4>
+                    <p>2024: 這是2024年的評論。</p>
+                    <p>2023: 這是2023年的評論。</p>
+                    <p>2022: 這是2022年的評論。</p>
+                </div>
+            </td>
+            <td>
                 <button>刪除</button>
                 <button>修改權限</button>
             </td>
         </tr>
     </table>
+    <script>
+        // JavaScript函數，用於顯示評論區域
+        function showComments(commentId) {
+            var selectedYear = document.querySelector('#' + commentId).previousElementSibling.value;
+            var commentsDiv = document.getElementById(commentId);
+
+            // 根據選擇的年份顯示或隱藏評論
+            if (selectedYear) {
+                commentsDiv.style.display = 'block';
+            } else {
+                commentsDiv.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
