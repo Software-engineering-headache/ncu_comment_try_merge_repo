@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增評論 - 課程評論系統</title>
+    <link rel="stylesheet" href="stylev2.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">NCU課程評論基地</a>
+            <nav>
+                <ul>
+                    <li><a href="courses.html">搜尋課程</a></li>
+                    <li><a href="member.html">會員中心</a></li>
+                    <!--<li><a href="login.html" id="login-link">登入</a></li>
+                    <li><a href="register.html">註冊</a></li>-->
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="course-detail">
+            <h2>課程名稱</h2>
+            <h3>授課老師</h3>
+            <p>課程簡介</p>
+            <button class="btn btn-primary" id="review-button">我要評論</button>
+        </div>
+
+        <!-- 評論彈跳視窗 -->
+        <div class="modal" id="review-modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h3>發表評論</h3>
+                
+                <form id="review-form">
+                    <!-- 課程代碼 -->
+                    <label for="course-code">課程代碼</label>
+                    <input type="text" id="course-code" required><br>
+
+                    <!-- 使用者名稱 -->
+                    <label for="username">使用者名稱</label>
+                    <input type="text" id="username" required><br>
+
+                    <!-- 系所 -->
+                    <label for="department">系所</label>
+                    <!--<input type="text" id="department" required><br>-->
+                    <select id="department">
+                        <option>選擇系所</option>
+                        <option>資訊管理研究所</option>
+                        <option>資訊管理研究所</option>
+                    </select>
+                    <pre></pre>
+                    <!-- 授課老師 -->
+                    <label for="teacher">授課老師</label>
+                    <input type="text" id="teacher" required><br>
+
+                    <!-- 課程關鍵字 -->
+                    <label for="keywords">課程關鍵字</label>
+                    <input type="text" id="keywords" required><br>
+                    
+                    <!-- 年份 -->
+                    <label for="year">年份</label>
+                    <!--<input type="number" id="year" required min="2000" max="2100"><br>-->
+                    <select id="department">
+                        <option>選擇年份</option>
+                        <option>2024</option>
+                        <option>2022</option>
+                        <option>2020</option>
+                    </select>
+                    <pre></pre>
+                    <!-- 推薦指數 -->
+                    <label for="rating">推薦指數</label>
+                    <div id="rating">
+                        <span class="star" onclick="setRating(1)">★</span>
+                        <span class="star" onclick="setRating(2)">★</span>
+                        <span class="star" onclick="setRating(3)">★</span>
+                        <span class="star" onclick="setRating(4)">★</span>
+                        <span class="star" onclick="setRating(5)">★</span>
+                    </div>
+
+                    <!-- 評論內容 -->
+                    <label for="comment-text">評論內容 (字數限制：1500)</label>
+                    <textarea id="comment-text" maxlength="1500" placeholder="撰寫您的評論..." required></textarea><br>
+
+                    <!-- 提交日期 -->
+                    <label for="submit-date">提交日期</label>
+                    <input type="date" id="submit-date" required>
+
+                    <!-- 提交按鈕 -->
+                    <button type="button" class="btn btn-submit" onclick="submitReview()">送出評論</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 超過字數警告視窗 -->
+        <div class="alert-modal" id="alert-modal">
+            <div class="alert-content">
+                <p>字數不可超過 1500 字！</p>
+                <button class="btn btn-alert" onclick="closeAlert()">確定</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

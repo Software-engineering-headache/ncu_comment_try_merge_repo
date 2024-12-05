@@ -1,0 +1,244 @@
+/* 通用樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* 顏色設定 */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --light-color: #f4f4f4;
+}
+
+/* 導覽列 */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar li {
+    margin-left: 1.5rem;
+}
+
+.navbar a:hover {
+    color: #ddd;
+}
+
+/* 英雄區 */
+.hero {
+    background: linear-gradient(rgba(0, 123, 255, 0.8), rgba(0, 123, 255, 0.8)), url('hero-bg.jpg') no-repeat center center/cover;
+    color: #fff;
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+ /* 讓按鈕本身的內容置中 */
+ .btn {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 20px; /* 調整按鈕的內邊距 */
+    text-decoration: none; /* 去掉超鏈接的下劃線 */
+    /*font-size: 0.75rem;  設置字體大小為 0.75rem（較小） */
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #495057;
+}
+
+/* 表單 */
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-container label {
+    font-weight: bold;
+    margin-top: 1rem;
+    display: block;
+}
+
+.form-container input, .form-container select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.form-container input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background-color: var(--primary-color);
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+/* 課程列表 */
+.course-list {
+    width: 90%;
+    max-width: 700px;
+    margin: 2rem auto;
+}
+
+.course-list ul {
+    list-style-type: none;
+}
+
+.course-list li {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.course-list li:hover {
+    transform: scale(1.02);
+}
+
+.course-list span {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.course-list .btn {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.course-list .btn:hover {
+    background-color: #495057;
+}
+
+/* 彈跳視窗 */
+.modal, .alert-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content, .alert-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 500px;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* 評分星級樣式 */
+#rating .star {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+}
+
+#rating .star.selected {
+    color: #f5b301;
+}
+
+/* 警告按鈕 */
+.btn-alert {
+    background-color: #d9534f;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+

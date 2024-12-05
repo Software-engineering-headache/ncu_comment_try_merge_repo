@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入 - 課程評論系統</title>
+    <link rel="stylesheet" href="stylev2.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">NCU課程評論基地</a>
+            <nav>
+                <ul>
+                    <li><a href="register.html">註冊</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="form-container">
+            <h2>登入</h2>
+            <form action="/login" method="post">
+                <label for="username">帳號：</label>
+                <input type="text" id="username" placeholder="輸入portal帳號" name="username" required>
+                
+                <label for="password">密碼：</label>
+                <input type="password" id="password" placeholder="輸入portal密碼" name="password" required>
+                
+                <button type="submit" class="btn">登入</button>
+                <p>還沒有帳號？<a href="register.html">立即註冊</a></p>
+                <p>管理員身份<a href="admin.html">管理員帳號登入</a></p><!--admin interface-->
+            </form>
+        </div>
+    </main>
+</body>
+</html>

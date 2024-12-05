@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜尋課程 - 課程評論系統</title>
+    <link rel="stylesheet" href="stylev2.css">
+    <style>
+        .course-list {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">NCU課程評論基地</a>
+        </div>
+    </header>
+    <main>
+        <section class="search-container">
+            <h2>搜尋課程</h2>
+            <form id="search-form">
+                <label for="department">系所：</label>
+                <select id="department">
+                    <option>選擇系所</option>
+                    <option>資訊管理研究所</option>
+                    <option>資訊工程研究所</option>
+                </select>
+                <label for="instructor">授課老師：</label>
+                <input type="text" id="instructor" placeholder="輸入老師名稱">
+                <label for="keyword">課程關鍵字：</label>
+                <input type="text" id="keyword" placeholder="輸入課程名稱或代碼">
+                <!-- 其他表單元素 -->
+                <button type="submit" class="btn">搜尋</button>
+         </form>
+        </section>
+        <section class="course-list"></section>
+        <script>
+            document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const department = document.getElementById('department').value;
+            const instructor = document.getElementById('instructor').value;
+            const keyword = document.getElementById('keyword').value;
+            if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
+                alert('輸入資料不完整');
+                return;
+            }
+            const courseListSection = document.querySelector('.course-list');
+            courseListSection.innerHTML = `
+                <h2>搜尋結果：</h2>
+                <p>系所：${department}</p>
+                <p>授課老師：${instructor}</p>
+                <p>課程關鍵字：${keyword}</p>
+                <p>課程資訊：</p>
+                <ul>
+                    <li>
+                        <button class="btn">加入收藏</button>
+                        <a href="newCommentv2.html" class="btn btn-primary">我要評論</a>
+                    </li>
+                </ul>
+            `;
+            courseListSection.style.display = 'block';
+            });
+        </script>
+    </main>
+</body>
+</html>

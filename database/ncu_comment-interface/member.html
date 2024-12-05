@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生會員中心</title>
+    <link rel="stylesheet" href="stylev4.css">
+</head>
+<body>
+    <!-- 頁面導航 -->
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">NCU課程評論基地</a>
+            <div class="user-menu">
+                <button class="dropdown-button" onclick="toggleDropdown()">會員中心 ▼</button>
+                <div class="dropdown-content" id="dropdown-content">
+                    <a href="#" onclick="showSection('my-comments')">我的評論</a>
+                    <a href="#" onclick="showSection('favorite-courses')">收藏課程</a>
+                    <a href="#" onclick="showSection('edit-profile')">修改個人資訊</a>
+                    <a href="index.html">登出</a><!--logout-->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 我的評論區域 -->
+    <section id="my-comments" class="section hidden">
+        <h2>我的評論</h2>
+        <div class="comment-list">
+            <!-- 範例評論 -->
+            <div class="comment-item">
+                <p>課程代碼: 12345 - 這是一則評論的範例。</p>
+                <span class="delete-button" onclick="deleteComment(this)">刪除</span>
+            </div>
+            <div class="comment-item">
+                <p>課程代碼: 67890 - 這是一則評論的範例。</p>
+                <span class="delete-button" onclick="deleteComment(this)">刪除</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 收藏課程區域 -->
+    <section id="favorite-courses" class="section hidden">
+        <h2>收藏課程</h2>
+        <ul class="course-list">
+            <li>課程代碼: 12345 - 資料科學入門</li>
+            <li>課程代碼: 67890 - 機器學習基礎</li>
+            <!-- 更多收藏課程 -->
+        </ul>
+    </section>
+
+    <!-- 修改個人資訊區域 -->
+    <section id="edit-profile" class="section hidden">
+        <h2>修改個人資訊</h2>
+        <form id="profile-form">
+            <label for="username">使用者名稱</label>
+            <input type="text" id="username" placeholder="輸入新的使用者名稱">
+
+            <label for="email">電子郵件</label>
+            <input type="email" id="email" placeholder="輸入新的電子郵件">
+
+            <button type="submit" class="btn">更新資訊</button>
+        </form>
+    </section>
+
+    <script src="scriptsv2.js"></script>
+</body>
+</html>
