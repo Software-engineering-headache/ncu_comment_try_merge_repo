@@ -7,6 +7,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True) #id是主鍵，index就是代表他可以成為索引
     username = Column(String(50), unique=True) #因為名字不像id一定是獨一的，但我們希望是獨一，所以unique=True
+    admin = Column(Boolean)
 
 class College(Base):
     __tablename__ = 'colleges'
