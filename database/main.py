@@ -43,7 +43,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 @app.post("/comments/", status_code=status.HTTP_201_CREATED)
 async def create_comment(comment: CommentBase, db: db_dependency):
     # 根據請求資料創建一個新的comment
-    db_comment = models.Comment(**comment.dict()) # `comment.dict()` 會將 Pydantic 模型轉換為字典
+    db_comment = models.Comment(**comment.dict()) # comment.dict() 會將 Pydantic 模型轉換為字典
     db.add(db_comment) # 將新comment加入資料庫會話
     db.commit() # 提交更改保存到資料庫
 
