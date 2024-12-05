@@ -11,15 +11,22 @@
     <header>
         <div class="navbar">
             <a href="index.html" class="logo">NCU課程評論基地</a>
-            <div class="user-menu">
-                <button class="dropdown-button" onclick="toggleDropdown()">會員中心 ▼</button>
-                <div class="dropdown-content" id="dropdown-content">
-                    <a href="#" onclick="showSection('my-comments')">我的評論</a>
-                    <a href="#" onclick="showSection('favorite-courses')">收藏課程</a>
-                    <a href="#" onclick="showSection('edit-profile')">修改個人資訊</a>
-                    <a href="index.html">登出</a><!--logout-->
-                </div>
-            </div>
+            <nav>
+                <ul>
+                    <li><a href="courses.html">搜尋課程</a></li>
+                    <li>
+                        <div class="user-menu">
+                            <button class="dropdown-button" onclick="toggleDropdown()">會員中心 ▼</button>
+                            <div class="dropdown-content" id="dropdown-content">
+                                <a href="#" onclick="showSection('my-comments')">我的評論</a>
+                                <a href="#" onclick="showSection('favorite-courses')">收藏課程</a>
+                                <a href="#" onclick="showSection('edit-profile')">修改個人資訊</a>
+                                <a href="index.html">登出</a><!--logout-->
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </header>
 
