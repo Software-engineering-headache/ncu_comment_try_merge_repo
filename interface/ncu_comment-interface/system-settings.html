@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統設定</title>
+    <style>
+        /* 頁首樣式 */
+        /* 全局樣式設置 */
+        body {
+            font-family: Arial, sans-serif; /* 設置字體 */
+            margin: 0; /* 移除頁面邊距 */
+            padding: 0; /* 移除頁面內距 */
+            background-color: #f4f4f9; /* 背景顏色 */
+        }
+        /* 頁首樣式 */
+        header {
+            background-color: #333; /* 背景顏色：綠色 */
+            color: white; /* 文字顏色：白色 */
+            padding: 20px; /* 內距：20px */
+            display: flex; /* 使用Flexbox布局 */
+            justify-content: space-between; /* 左右元素間的間隔 */
+            align-items: center; /* 垂直居中 */
+        }
+
+        /* 標題樣式 */
+        header h1 {
+            margin: 0; /* 移除標題的外邊距 */
+        }
+
+        /* 按鈕容器 */
+        .header-buttons {
+            display: flex; /* 使用Flexbox布局 */
+            gap: 10px; /* 按鈕之間的間隔 */
+        }
+
+        /* 按鈕樣式 */
+        button {
+            background-color: #333; /* 按鈕背景色：綠色 */
+            color: white; /* 按鈕文字色：白色 */
+            border: none; /* 無邊框 */
+            padding: 8px 16px; /* 按鈕內距 */
+            border-radius: 4px; /* 圓角邊框 */
+            cursor: pointer; /* 鼠標樣式 */
+        }
+
+        button:hover {
+            background-color: #333; /* 按鈕懸停效果：深綠色 */
+        }
+
+        /* 表單樣式 */
+        form {
+            margin-top: 20px; /* 與頁首的距離 */
+        }
+
+        label {
+            font-size: 16px; /* 標籤字體大小 */
+        }
+
+        input, textarea {
+            margin-top: 5px; /* 內距 */
+            padding: 8px; /* 內距 */
+            width: 300px; /* 輸入框寬度 */
+            font-size: 16px; /* 字體大小 */
+        }
+
+        textarea {
+            width: 100%; /* 設置文本區域為 100% 宽度 */
+            resize: none; /* 禁止調整大小 */
+        }
+
+        button[type="submit"] {
+            margin-top: 20px; /* 按鈕的上邊距 */
+            width: 150px; /* 按鈕寬度 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 頁首 -->
+    <header>
+        <h1>系統設定</h1>
+
+        <!-- 頁首右側的按鈕 -->
+        <div class="header-buttons">
+            <button onclick="window.location.href='index.html';">回到首頁</button> <!-- 回到首頁按鈕 -->
+            <button onclick="window.location.href='logout.html';">登出</button> <!-- 登出按鈕 -->
+        </div>
+    </header>
+
+    <!-- 系統設定表單 -->
+    <form>
+        <label for="comment-limit">評論字數限制：</label>
+        <input id="comment-limit" type="number" value="1000" required>
+        <br>
+        <label for="system-log">系統日誌：</label>
+        <textarea id="system-log" rows="10" cols="50" readonly>日誌記錄範例...</textarea>
+        <br>
+        <button type="submit">儲存設定</button>
+    </form>
+</body>
+</html>
+
