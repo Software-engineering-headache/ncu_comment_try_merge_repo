@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCU課程評論基地</title>
     <link rel="stylesheet" href="stylev2.css">
+    <style>
+        
+        /* 新增下拉式選單樣式 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: -8px;
+            margin-left: -15px; /* 與左側按鈕的距離 */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -13,9 +59,20 @@
             <nav>
                 <ul>
                     <!--<li><a href="courses.html">搜尋課程</a></li>-->
-                    <li><a href="https://portal.ncu.edu.tw/login">登入</a></li>
+                    <li><a href="login.html">登入</a></li>
                     <li><a href="register.html">註冊</a></li>
                     <li><a href="member.html">會員中心</a></li> <!--profile -->
+                     <!-- 新增管理員功能 -->
+                     <li>
+                        <div class="dropdown">
+                            <button>管理員功能</button>
+                            <div class="dropdown-content">
+                                <a href="member-management.html">會員管理</a>
+                                <a href="admin-management.html">管理員管理</a>
+                                <a href="system-settings.html">系統設定</a>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>
