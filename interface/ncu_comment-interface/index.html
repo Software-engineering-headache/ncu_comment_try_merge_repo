@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCU課程評論基地</title>
     <link rel="stylesheet" href="stylev2.css">
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -14,6 +16,10 @@
                 <ul>
                     <!--<li><a href="courses.html">搜尋課程</a></li>-->
                     <li><a href="https://portal.ncu.edu.tw/login">登入</a></li>
+                    <li>
+                        <button id="loginButton" class="btn btn-primary">登入</button>
+                        <script src="login.js"></script>
+                    </li>
                     <li><a href="register.html">註冊</a></li>
                     <li><a href="member.html">會員中心</a></li> <!--profile -->
                 </ul>
@@ -42,21 +48,21 @@
                     <input type="text" id="keyword" placeholder="輸入課程名稱或代碼">
                     <!-- 其他表單元素 -->
                     <button type="submit" class="btn">搜尋</button>
-             </form>
+                </form>
             </section>
             <section class="course-list"></section>
             <script>
-                document.getElementById('search-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const department = document.getElementById('department').value;
-                const instructor = document.getElementById('instructor').value;
-                const keyword = document.getElementById('keyword').value;
-                if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
-                    alert('輸入資料不完整');
-                    return;
-                }
-                const courseListSection = document.querySelector('.course-list');
-                courseListSection.innerHTML = `
+                document.getElementById('search-form').addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const department = document.getElementById('department').value;
+                    const instructor = document.getElementById('instructor').value;
+                    const keyword = document.getElementById('keyword').value;
+                    if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
+                        alert('輸入資料不完整');
+                        return;
+                    }
+                    const courseListSection = document.querySelector('.course-list');
+                    courseListSection.innerHTML = `
                     <h2>搜尋結果：</h2>
                     <p>系所：${department}</p>
                     <p>授課老師：${instructor}</p>
@@ -68,7 +74,7 @@
                         </li>
                     </ul>
                 `;
-                courseListSection.style.display = 'block';
+                    courseListSection.style.display = 'block';
                 });
             </script>
         </section>
@@ -77,4 +83,5 @@
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
 </body>
+
 </html>
