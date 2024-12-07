@@ -4,7 +4,7 @@ from requests_oauthlib import OAuth2Session
 from typing import Optional
 
 import os
-
+##跑之前先輸入uvicorn login:app --reload
 app = FastAPI()
 
 # OAuth2 的配置
