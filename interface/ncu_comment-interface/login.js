@@ -2,7 +2,7 @@
 
 document.getElementById("loginButton").addEventListener("click", () => {
     // 导向到 FastAPI 的 /login 路由，开始 OAuth 认证
-    window.location.href = "http://localhost:8000/login";
+    window.location.href = "http://127.0.0.1:8000/interface/ncu_comment-interface/login";
 });
 
 // 检查 URL 是否包含回调参数（假设回调重定向到前端）
