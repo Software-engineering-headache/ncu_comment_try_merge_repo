@@ -5,9 +5,20 @@ from database.database import Base #它是 SQLAlchemy 中用於創建模型的�
 class User(Base):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True, index=True) #id是主鍵，index就是代表他可以成為索引
-    username = Column(String(50), unique=True) #因為名字不像id一定是獨一的，但我們希望是獨一，所以unique=True
-    admin = Column(Boolean)
+    # 主鍵
+    id = Column(Integer, primary_key=True, index=True)  # 主鍵且為索引
+
+    # 基本資料欄位
+    accountType = Column(String(20), nullable=True)  # 帳戶類型，例如 'STUDENT'
+    chineseName = Column(String(50), nullable=True)  # 中文姓名
+    englishName = Column(String(50), nullable=True)  # 英文姓名
+    gender = Column(String(10), nullable=True)  # 性別
+    birthday = Column(String(10), nullable=True)  # 出生日期
+    email = Column(String(100), unique=False, nullable=True)  # 電子郵件（必須唯一）
+    studentId = Column(String(20), unique=False, nullable=True)  # 學號（必須唯一）
+
+    # JSON 格式的欄位（儲存學術資料）
+    # academyRecords = Column(JSON, nullable=True)
 
 class College(Base):
     __tablename__ = 'colleges'

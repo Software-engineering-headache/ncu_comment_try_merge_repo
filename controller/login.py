@@ -1,11 +1,18 @@
-from fastapi import FastAPI, Request, Depends, APIRouter
+from fastapi import FastAPI, Request, Depends, APIRouter, HTTPException
 from fastapi.responses import RedirectResponse
 from requests_oauthlib import OAuth2Session
+from pydantic import BaseModel
 from typing import Optional
+from database.main import create_user
+import requests
+from database.database import SessionLocal
+
+# 創建數據庫會話
+db = SessionLocal()
+
 
 import os
 ##跑之前先輸入uvicorn login:app --reload
-app = FastAPI()
 router = APIRouter()
 
 # OAuth2 的配置
@@ -16,19 +23,41 @@ TOKEN_URL = "https://portal.ncu.edu.tw/oauth2/token"
 REDIRECT_URI = "http://localhost:8000/interface/ncu_comment-interface/callback"
 token_storage = {}
 
+class UserBase(BaseModel):
+    id: int
+    # identifier: str
+    accountType: str
+    chineseName: str
+    englishName: str
+    gender: str
+    birthday: str
+    # personalId: str
+    studentId: str
+    email: str
+    # academyRecords: AcademyRecords
 
 # 初始化 OAuth2Session
 def get_oauth_session(state: Optional[str] = None):
     return OAuth2Session(
         CLIENT_ID,
         redirect_uri=REDIRECT_URI,
-        scope=["identifier", "email", "chinese-name"],
+        scope = [
+            "identifier",
+            "chinese-name",
+            "english-name",
+            "gender",
+            "birthday",
+            "personal-id",
+            "student-id",
+            "academy-records",
+            "faculty-records",
+            "email",
+            "mobile-phone",
+            "alternated-id"
+        ],
+        # scope=["identifier", "email", "chinese-name"],
         state=state,
     )
-
-@app.get("/")
-async def index():
-    return {"message": "Welcome to NCU OAuth integration! Visit /login to start the authorization process."}
 
 # 路由：引導用戶授權
 @router.get("/interface/ncu_comment-interface/login")
@@ -62,7 +91,7 @@ async def callback(request: Request):
         token_storage["token"] = token["access_token"]
         # 存儲令牌或處理授權
 
-        return RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+        return RedirectResponse(url="http://localhost:8000/interface/ncu_comment-interface/profile")
         # return {"message": "Authorization successful!", "token": token}
     except Exception as e:
         return {"error": str(e)}
@@ -76,17 +105,21 @@ async def profile():
     
     response = oauth.get("https://portal.ncu.edu.tw/apis/oauth/v1/info")
     user_info = response.json()
-    return {"user_info": user_info}
+    # return user_info
+    print(user_info)
 
-# 運行 FastAPI
-if __name__ == "__main__":
-    import uvicorn
-    import webbrowser
-    url = "http://127.0.0.1:5500/interface/ncu_comment-interface/index.html"
-    print(f"後端服務運行中，請訪問 {url}")
-    
-    # 在瀏覽器中打開指定 URL
-    webbrowser.open(url)
-    
-    # 啟動 uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    user_info = UserBase(
+    id=user_info["id"],
+    accountType=user_info["accountType"],
+    chineseName=user_info["chineseName"],
+    englishName=user_info["englishName"],
+    gender=user_info["gender"],
+    birthday=user_info["birthday"],
+    studentId=user_info["studentId"],
+    email=user_info["email"],
+    )
+
+    await create_user(user_info, db)
+
+    return RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+

@@ -1,5 +1,7 @@
+import requests
 import uvicorn
 from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing_extensions import Annotated
 from database import models
@@ -7,7 +9,6 @@ from database.database import engine, SessionLocal
 from sqlalchemy.orm import Session
 
 router = APIRouter()
-app = FastAPI()
 # 創建所有與資料庫模型對應的表格
 # models.Base.metadata.create_all(bind=engine) 會檢查定義的 SQLAlchemy 模型
 # 如果表格不存在，會在資料庫中創建這些表
@@ -20,9 +21,26 @@ class PostBase(BaseModel):
     content: str
     user_id: int
 
-class UserBase(BaseModel):
-    username: str
+# class AcademyRecords(BaseModel):
+#     name: str
+#     studySystemNo: str
+#     degreeKindNo: str
+#     didGroup: str
+#     grad: str
+#     studentStatus: str
 
+class UserBase(BaseModel):
+    id: int
+    # identifier: str
+    accountType: str
+    chineseName: str
+    englishName: str
+    gender: str
+    birthday: str
+    # personalId: str
+    studentId: str
+    email: str
+    # academyRecords: AcademyRecords
 class CommentBase(BaseModel):
     score: int
     content: str
@@ -70,13 +88,25 @@ async def delet_comment(comment_id: int, db: db_dependency):
 
 
 # 定義路由：創建一個用戶
-@router.post("/users/", status_code=status.HTTP_201_CREATED)
+@router.post("/interface/ncu_comment-interface/profile", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserBase, db: db_dependency):
     # 根據請求資料創建一個新的 User 對象
-    db_user = models.User(**user.dict())  
-    db.add(db_user) # 將新用戶加入資料庫
-    db.commit() # 提交更改保存到資料庫
 
+    db_user = user.model_dump()  
+    # print(db_user)
+    # db_user.pop("emailVerified", None)  # 移除 emailVerified
+
+    # 檢查資料庫中是否已有此用戶
+    existing_user = db.query(models.User).filter(models.User.studentId == db_user["studentId"]).first()
+    if existing_user:
+        return RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+
+    # 將資料轉換為資料庫模型
+    db_user = models.User(**db_user)
+    db.add(db_user)  # 新增到資料庫
+    db.commit()  # 提交更改
+
+    return db_user
 
 # 定義路由：讀取用戶信息
 @router.get("/users/{user_id}", status_code=status.HTTP_200_OK)
