@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, APIRouter
 from fastapi.responses import RedirectResponse
 from requests_oauthlib import OAuth2Session
 from typing import Optional
@@ -6,6 +6,7 @@ from typing import Optional
 import os
 ##跑之前先輸入uvicorn login:app --reload
 app = FastAPI()
+router = APIRouter()
 
 # OAuth2 的配置
 CLIENT_ID = "202412061221336VwNe1cJtnCB"
@@ -30,7 +31,7 @@ async def index():
     return {"message": "Welcome to NCU OAuth integration! Visit /login to start the authorization process."}
 
 # 路由：引導用戶授權
-@app.get("/interface/ncu_comment-interface/login")
+@router.get("/interface/ncu_comment-interface/login")
 async def login():
     oauth = get_oauth_session()
     authorization_url, state = oauth.authorization_url(AUTHORIZATION_BASE_URL)
@@ -40,7 +41,7 @@ async def login():
     return response
 
 # 路由：處理回調
-@app.get("/interface/ncu_comment-interface/callback")
+@router.get("/interface/ncu_comment-interface/callback")
 async def callback(request: Request):
     state = request.query_params.get("state")
     code = request.query_params.get("code")
@@ -67,7 +68,7 @@ async def callback(request: Request):
         return {"error": str(e)}
 
 # 路由：使用令牌獲取用戶信息
-@app.get("/interface/ncu_comment-interface/profile")
+@router.get("/interface/ncu_comment-interface/profile")
 async def profile():
     # token = "YOUR_SAVED_ACCESS_TOKEN"  # 在實際應用中，應該從安全的存儲中獲取這個令牌
     token = token_storage.get("token")
