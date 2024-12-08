@@ -12,7 +12,7 @@ CLIENT_ID = "202412061221336VwNe1cJtnCB"
 CLIENT_SECRET = "kJVvHyM2Am3SYrdeBCBUSomnSbkBLb09jQEHr1odgBc8W8nv"
 AUTHORIZATION_BASE_URL = "https://portal.ncu.edu.tw/oauth2/authorization"
 TOKEN_URL = "https://portal.ncu.edu.tw/oauth2/token"
-REDIRECT_URI = "http://localhost:8000/interface/ncu_comment-interface/index.html"
+REDIRECT_URI = "http://localhost:8000/interface/ncu_comment-interface/callback"
 token_storage = {}
 
 
@@ -40,7 +40,7 @@ async def login():
     return response
 
 # 路由：處理回調
-@app.get("/interface/ncu_comment-interface/index.html")
+@app.get("/interface/ncu_comment-interface/callback")
 async def callback(request: Request):
     state = request.query_params.get("state")
     code = request.query_params.get("code")
@@ -60,7 +60,9 @@ async def callback(request: Request):
         )
         token_storage["token"] = token["access_token"]
         # 存儲令牌或處理授權
-        return {"message": "Authorization successful!", "token": token}
+
+        return RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+        # return {"message": "Authorization successful!", "token": token}
     except Exception as e:
         return {"error": str(e)}
 
