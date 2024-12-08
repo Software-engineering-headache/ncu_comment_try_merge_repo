@@ -106,7 +106,7 @@ async def profile():
     response = oauth.get("https://portal.ncu.edu.tw/apis/oauth/v1/info")
     user_info = response.json()
     # return user_info
-    print(user_info)
+    # print(user_info)
 
     user_info = UserBase(
     id=user_info["id"],
