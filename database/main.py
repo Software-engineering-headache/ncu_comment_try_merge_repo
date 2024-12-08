@@ -1,11 +1,12 @@
 import uvicorn
-from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
 from pydantic import BaseModel
 from typing_extensions import Annotated
-import models
-from database import engine, SessionLocal
+from database import models
+from database.database import engine, SessionLocal
 from sqlalchemy.orm import Session
 
+router = APIRouter()
 app = FastAPI()
 # 創建所有與資料庫模型對應的表格
 # models.Base.metadata.create_all(bind=engine) 會檢查定義的 SQLAlchemy 模型
@@ -40,7 +41,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 # write a comment
-@app.post("/comments/", status_code=status.HTTP_201_CREATED)
+@router.post("/comments/", status_code=status.HTTP_201_CREATED)
 async def create_comment(comment: CommentBase, db: db_dependency):
     # 根據請求資料創建一個新的comment
     db_comment = models.Comment(**comment.dict()) # `comment.dict()` 會將 Pydantic 模型轉換為字典
@@ -48,7 +49,7 @@ async def create_comment(comment: CommentBase, db: db_dependency):
     db.commit() # 提交更改保存到資料庫
 
 # read a comment
-@app.get("/comments/{comment_id}", status_code=status.HTTP_200_OK)
+@router.get("/comments/{comment_id}", status_code=status.HTTP_200_OK)
 async def read_comment(comment_id: int, db: db_dependency):
     # 從資料庫查找對應 ID 的comment
     comment = db.query(models.Comment).filter(models.Comment.id == comment_id).first()
@@ -58,7 +59,7 @@ async def read_comment(comment_id: int, db: db_dependency):
 
 
 # 定義路由：刪除一篇comment
-@app.delete("/comments/{comment_id}", status_code=status.HTTP_200_OK)
+@router.delete("/comments/{comment_id}", status_code=status.HTTP_200_OK)
 async def delet_comment(comment_id: int, db: db_dependency):
     # 查找需要刪除的comment
     db_comment = db.query(models.Comment).filter(models.Comment.id == comment_id).first()
@@ -69,7 +70,7 @@ async def delet_comment(comment_id: int, db: db_dependency):
 
 
 # 定義路由：創建一個用戶
-@app.post("/users/", status_code=status.HTTP_201_CREATED)
+@router.post("/users/", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserBase, db: db_dependency):
     # 根據請求資料創建一個新的 User 對象
     db_user = models.User(**user.dict())  
@@ -78,7 +79,7 @@ async def create_user(user: UserBase, db: db_dependency):
 
 
 # 定義路由：讀取用戶信息
-@app.get("/users/{user_id}", status_code=status.HTTP_200_OK)
+@router.get("/users/{user_id}", status_code=status.HTTP_200_OK)
 async def read_user(user_id: int, db: db_dependency): 
     # 從資料庫查找對應 ID 的用戶
     user = db.query(models.User).filter(models.User.id == user_id).first()
@@ -87,7 +88,7 @@ async def read_user(user_id: int, db: db_dependency):
     return user # 返回用戶資料
 
 # 定義路由：刪除user
-@app.delete("/users/{user_id}", status_code=status.HTTP_200_OK)
+@router.delete("/users/{user_id}", status_code=status.HTTP_200_OK)
 async def delet_user(user_id: int, db: db_dependency):
     # 查找需要刪除的文章
     db_user = db.query(models.User).filter(models.User.id == user_id).first()
@@ -95,8 +96,3 @@ async def delet_user(user_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail='post was not found')
     db.delete(db_user) # 刪除文章
     db.commit() # 提交更改保存到資料庫
-
-
-#直接run code就能執行網頁，不用在命令列run
-if __name__ == '__main__':
-    uvicorn.run(app="main:app", reload=True)

@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, CheckConstraint
 #用於定義資料庫的列型別（Column、Integer、String）和其他屬性（例如主鍵 primary_key 和索引 index）
-from database import Base #它是 SQLAlchemy 中用於創建模型的基礎類
+from database.database import Base #它是 SQLAlchemy 中用於創建模型的基礎類
 
 class User(Base):
     __tablename__ = 'users'
