@@ -46,12 +46,59 @@
             cursor: pointer;
             text-align: center;
         }
+        /* 首頁圖片跟首頁文字的樣式 */
+    .logo-container {
+    display: flex;
+    align-items: center; /* 垂直置中 */
+    gap: 10px; /* 圖片與文字之間的間距 */
+    }
+
+    .logo-container img {
+        vertical-align: middle; /* 防止圖片偏移 */
+    }
+
+    .logo-container .logo {
+        margin: 0; /* 移除多餘的外邊距 */
+    }
+
+
+        /* 中間文字樣式 */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            margin-bottom: 30px; /* 與底部留出空間 */
+        }
+
+        .hero img {
+            width: 120px;
+            height: auto;
+            margin-right: 20px; /* 與文字區域保持距離 */
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero-text h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 10px;
+        }
 
         .navbar nav button:hover,
         .navbar nav a:hover {
             background-color: #5a9bd6;
         }
-    
+        
+
         /* 表單 */
         .form-container {
             width: 100%;
@@ -138,8 +185,13 @@
 </head>
 <body>
     <header>
-        <div class="navbar">
-            <a href="index.html" class="logo">NCU課程評論基地</a>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="image/home.png" alt="首頁" width="40" height="40">
+            </a>
+            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+                NCU課程評論基地
+            </a>
         </div>
     </header>
     <main>
