@@ -90,6 +90,7 @@
         }
 
         .modal-content, .alert-content {
+            position: relative; /* 確保內部的按鈕可以相對於彈跳視窗內容定位 */
             background: #fff;
             padding: 2rem;
             border-radius: 8px;
@@ -103,6 +104,9 @@
             right: 10px;
             font-size: 1.5rem;
             cursor: pointer;
+            background: none; /* 移除背景 */
+            border: none; /* 移除邊框 */
+            color: #333; /* 叉叉的顏色 */
         }
 
         /* 評分星級樣式 */
