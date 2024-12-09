@@ -6,6 +6,75 @@
     <title>新增評論 - 課程評論系統</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* 表格樣式 */
+        .course-detail table,
+        .course-list table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-detail th,
+        .course-detail td,
+        .course-list th,
+        .course-list td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .course-detail th,
+        .course-list th {
+            background-color: #d2e8f2; /* 表格標題淺藍色 */
+            font-weight: bold;
+        }
+
+        .course-detail tr:nth-child(even),
+        .course-list tr:nth-child(even) {
+            background-color: #f9f9f9; /* 偶數列背景色 */
+        }
+
+        .course-detail button,
+        .course-list button {
+            background-color: #4682b4; /* 藍色按鈕 */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .course-detail button:hover,
+        .course-list button:hover {
+            background-color: #5a9bd6;
+        }
+
+        /* 新增：評論列表區塊樣式 */
+        .comments {
+            margin-top: 2rem;
+        }
+        /* 單條評論樣式 */
+        .comment-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-item .rating {
+            color: #f5b301; /* 星星顏色 */
+        }
+
+        .meta {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
         /* 彈跳視窗 */
         .modal, .alert-modal {
             display: none;
@@ -55,51 +124,46 @@
             border-radius: 5px;
             cursor: pointer;
         }
-         /* 新增：評論列表區塊樣式 */
-         .comments {
-            margin-top: 2rem;
-        }
-        /* 單條評論樣式 */
-        .comment-item {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .comment-item .rating {
-            color: #f5b301; /* 星星顏色 */
-        }
-
-        .meta {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
     <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="image/home.png" alt="首頁" width="40" height="40">
+            </a>
+            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+                NCU課程評論基地
+            </a>
+        </div>
         <div class="navbar">
-            <a href="index.html" class="logo">NCU課程評論基地</a>
             <nav>
                 <a href="courses.html">搜尋課程</a>
             </nav>
         </div>
     </header>
     <main>
-        <!--<div class="course-detail">
-            <h2>課程名稱</h2>
-            <h3>授課老師</h3>
-            <p>課程簡介</p>
-            <button class="btn btn-primary" id="review-button">我要評論</button>
-        </div>-->
-        <div class="course-detail">
-            <h2>軟體工程 I</h2> <!-- 修改：課程名稱改為固定值 -->
-            <h3>授課老師：許智誠</h3> <!-- 修改：授課老師改為固定值 -->
-            <p>課程代碼：43030 | 學分數：3 學分 | 開課學期：113 上</p> <!-- 新增：課程詳細資訊 -->
-            <button class="btn btn-primary" id="review-button">我要評論</button>
-        </div>
+        <section class="course-detail">
+            <table>
+                <tr>
+                    <th>課程名稱</th>
+                    <td>軟體工程 I</td>
+                </tr>
+                <tr>
+                    <th>授課老師</th>
+                    <td>許智誠</td>
+                </tr>
+                <tr>
+                    <th>課程簡介</th>
+                    <td>課程代碼：43030 | 學分數：3 學分 | 開課學期：113 上</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button class="btn btn-primary" id="review-button">我要評論</button>
+                    </td>
+                </tr>
+            </table>
+        </section>
         <!-- 新增：評論清單區塊 -->
         <div class="comments">
             <h3>評論</h3>
