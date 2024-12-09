@@ -18,7 +18,7 @@ async def get_favorites_with_details():
         # 查詢 favorites 並關聯 users 和 courses
         results = (
             db.query(Favorite, User, Course)
-            .join(User, Favorite.user_id == User.id)
+            .join(User, Favorite.user_id == User.studentId)  # 修改為 User.studentId
             .join(Course, Favorite.course_id == Course.id)
             .all()
         )
@@ -28,7 +28,7 @@ async def get_favorites_with_details():
         for favorite, user, course in results:
             favorites_details.append({
                 "favorite_id": favorite.id,
-                "user_id": user.id,
+                "user_id": user.studentId,  # 修改為 user.studentId
                 "user_name": user.chineseName,
                 "course_id": course.id,
                 "course_name": course.name,
@@ -37,6 +37,7 @@ async def get_favorites_with_details():
 
         return favorites_details
     except Exception as e:
+        print(f"Error occurred in get_favorites_with_details: {e}")
         raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
     finally:
         db.close()

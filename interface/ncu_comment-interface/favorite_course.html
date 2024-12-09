@@ -270,40 +270,13 @@
     </header>
 
     <main>
-        <!-- 收藏課程區域 -->
-        <section id="favorite-courses">
-            <h2>收藏課程</h2>
-            <table class="favorite-courses-table">
-                <thead>
-                    <tr>
-                        <th>課程代碼</th>
-                        <th>課程名稱</th>
-                        <th>評論</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>12345</td>
-                        <td>資料科學入門</td>
-                        <td><button class="btn" onclick="">查看評論</button></td>
-                    </tr>
-                    <tr>
-                        <td>67890</td>
-                        <td>機器學習基礎</td>
-                        <td><button class="btn" onclick="">查看評論</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        
-        <script src="scriptsv2.js"></script>
+        <div id="dataContainer">
+            <!-- 這裡將動態顯示從後端獲取的資料 -->
+        </div>
+        <script src="favorite_course.js"></script>
     </main>
 
-    <button id="testButton" class="btn">測試</button>
-    <div id="dataContainer">
-        <!-- 這裡將動態顯示從後端獲取的資料 -->
-    </div>
-    <script src="favorite_course.js"></script>
+
 
 
     <footer>
