@@ -55,6 +55,27 @@
             border-radius: 5px;
             cursor: pointer;
         }
+         /* 新增：評論列表區塊樣式 */
+         .comments {
+            margin-top: 2rem;
+        }
+        /* 單條評論樣式 */
+        .comment-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-item .rating {
+            color: #f5b301; /* 星星顏色 */
+        }
+
+        .meta {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -67,11 +88,32 @@
         </div>
     </header>
     <main>
-        <div class="course-detail">
+        <!--<div class="course-detail">
             <h2>課程名稱</h2>
             <h3>授課老師</h3>
             <p>課程簡介</p>
             <button class="btn btn-primary" id="review-button">我要評論</button>
+        </div>-->
+        <div class="course-detail">
+            <h2>軟體工程 I</h2> <!-- 修改：課程名稱改為固定值 -->
+            <h3>授課老師：許智誠</h3> <!-- 修改：授課老師改為固定值 -->
+            <p>課程代碼：43030 | 學分數：3 學分 | 開課學期：113 上</p> <!-- 新增：課程詳細資訊 -->
+            <button class="btn btn-primary" id="review-button">我要評論</button>
+        </div>
+        <!-- 新增：評論清單區塊 -->
+        <div class="comments">
+            <h3>評論</h3>
+            <!-- 單條評論範例 -->
+            <div class="comment-item">
+                <p><strong>資訊系網紅</strong> <span class="rating">★★★★★</span></p>
+                <p>超讚的課，老師很認真，可以扎實學習到軟體工程的流程與技巧，推推！</p>
+                <p class="meta">受評教授：許智誠 | 日期：2024-11-03 15:11</p>
+            </div>
+            <div class="comment-item">
+                <p><strong>我想畢業</strong> <span class="rating">★★★★☆</span></p>
+                <p>一學期有幾次 Case 討論作業，還有期末考，需要花時間認真學。</p>
+                <p class="meta">受評教授：許智誠 | 日期：2024-11-01 10:24</p>
+            </div>
         </div>
 
         <!-- 評論彈跳視窗 -->
