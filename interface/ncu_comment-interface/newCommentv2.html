@@ -6,6 +6,20 @@
     <title>新增評論 - 課程評論系統</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        nav a {
+            position: fixed; /* 固定定位，參考整個螢幕 */
+            right: 20px; /* 距離螢幕右側 20px */
+            top: 10px; /* 距離螢幕頂部 20px（可根據需求調整） */
+            background-color: #4682b4;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10; /* 確保按鈕不會被其他元素遮擋 */
+        }
+        
+        
         /* 表格樣式 */
         .course-detail table,
         .course-list table {
