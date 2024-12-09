@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-    fetch('http://127.0.0.1:8000/api/profile', {
+    fetch('http://localhost:8000/api/profile', {
         credentials: "include",
     })
         .then(response => response.json())

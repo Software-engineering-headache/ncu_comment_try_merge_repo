@@ -109,8 +109,8 @@ async def create_user(user: UserBase, db: db_dependency):
 #從資料庫抓資料出來
 @router.get("/api/profile")
 async def read_profile(request: Request, db: Session = Depends(get_db)):
-        student_id = await get_studentId(request)
-        user = await get_user(db, student_id)
+        student_id = get_studentId(request)
+        user = get_user(db, student_id)
         if user:
             return {
         "accountType": user.accountType,
@@ -124,7 +124,7 @@ async def read_profile(request: Request, db: Session = Depends(get_db)):
         else:
             return {"error": "User not found"}
         
-async def get_studentId(request: Request):
+def get_studentId(request: Request):
     # 嘗試從 cookies 中獲取 studentId
     print("Request Cookies:", request.cookies)
     student_id = request.cookies.get("studentId")
@@ -133,7 +133,7 @@ async def get_studentId(request: Request):
         raise HTTPException(status_code=401, detail="Student ID not found in cookies")
     return student_id
 
-async def get_user(db: Session, user_id: str ="113423075"):
+def get_user(db: Session, user_id: str ):
     return db.query(models.User).filter(models.User.studentId == user_id).first()
 
 
