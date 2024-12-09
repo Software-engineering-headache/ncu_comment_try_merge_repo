@@ -1,10 +1,9 @@
-import requests
-import uvicorn
+
 from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing_extensions import Annotated
-from database import models
+from database import models, crud
 from database.database import engine, SessionLocal
 from sqlalchemy.orm import Session
 
@@ -30,7 +29,7 @@ class PostBase(BaseModel):
 #     studentStatus: str
 
 class UserBase(BaseModel):
-    id: int
+    # id: int
     # identifier: str
     accountType: str
     chineseName: str
@@ -91,11 +90,8 @@ async def delet_comment(comment_id: int, db: db_dependency):
 @router.post("/interface/ncu_comment-interface/profile", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserBase, db: db_dependency):
     # 根據請求資料創建一個新的 User 對象
-
     db_user = user.model_dump()  
-    # print(db_user)
-    # db_user.pop("emailVerified", None)  # 移除 emailVerified
-
+    db_user.pop("id", None)
     # 檢查資料庫中是否已有此用戶
     existing_user = db.query(models.User).filter(models.User.studentId == db_user["studentId"]).first()
     if existing_user:
@@ -109,13 +105,29 @@ async def create_user(user: UserBase, db: db_dependency):
     return db_user
 
 # 定義路由：讀取用戶信息
-@router.get("/users/{user_id}", status_code=status.HTTP_200_OK)
-async def read_user(user_id: int, db: db_dependency): 
-    # 從資料庫查找對應 ID 的用戶
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if user is None:
-        raise HTTPException(status_code=404, detail='user was not found') # 如果找不到用戶，回應 404 錯誤
-    return user # 返回用戶資料
+# @router.get("/users/{user_id}", status_code=status.HTTP_200_OK)
+# async def read_user(user_id: int, db: db_dependency): 
+#     # 從資料庫查找對應 ID 的用戶
+#     user = db.query(models.User).filter(models.User.id == user_id).first()
+#     if user is None:
+#         raise HTTPException(status_code=404, detail='user was not found') # 如果找不到用戶，回應 404 錯誤
+#     return user # 返回用戶資料
+@router.get("/api/profile")
+def read_profile(db: Session = Depends(get_db)):
+    user = crud.get_user(db)
+    if user:
+        return {
+    "id": user.id,
+    "accountType": user.accountType,
+    "chineseName": user.chineseName,
+    "englishName": user.englishName,
+    "gender": user.gender,
+    "birthday": user.birthday,
+    "email": user.email,
+    "studentId": user.studentId
+    }
+    else:
+        return {"error": "User not found"}
 
 # 定義路由：刪除user
 @router.delete("/users/{user_id}", status_code=status.HTTP_200_OK)
