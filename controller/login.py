@@ -99,7 +99,6 @@ async def callback(request: Request):
 # 路由：使用令牌獲取用戶信息
 @router.get("/interface/ncu_comment-interface/profile")
 async def profile():
-    # token = "YOUR_SAVED_ACCESS_TOKEN"  # 在實際應用中，應該從安全的存儲中獲取這個令牌
     token = token_storage.get("token")
     oauth = OAuth2Session(CLIENT_ID, token={"access_token": token, "token_type": "Bearer"})
     
@@ -108,7 +107,7 @@ async def profile():
     # return user_info
     # print(user_info)
 
-    user_info = UserBase(
+    user = UserBase(
     accountType=user_info["accountType"],
     chineseName=user_info["chineseName"],
     englishName=user_info["englishName"],
@@ -118,7 +117,18 @@ async def profile():
     email=user_info["email"],
     )
 
-    await create_user(user_info, db)
+    await create_user(user, db)
+    
+    redirect_response = RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+    redirect_response.set_cookie(
+        key="studentId",
+        value=user.studentId,
+        httponly=True,      # 防止 JavaScript 訪問
+        secure=False,        # 僅通過 HTTPS 傳輸
+        max_age=3600,       # Cookie 有效期（秒）
+        path="/",           # Cookie 的作用路徑
+        samesite= None      # 防止 CSRF 攻擊
+    )
 
-    return RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+    return redirect_response
 

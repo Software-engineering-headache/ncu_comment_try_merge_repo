@@ -1,11 +1,13 @@
 
-from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
+from fastapi import FastAPI, HTTPException, Depends, status, APIRouter, Request
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing_extensions import Annotated
 from database import models, crud
 from database.database import engine, SessionLocal
 from sqlalchemy.orm import Session
+# from database.crud import get_studentId
+from fastapi.middleware.cors import CORSMiddleware
 
 router = APIRouter()
 # 創建所有與資料庫模型對應的表格
@@ -104,30 +106,36 @@ async def create_user(user: UserBase, db: db_dependency):
 
     return db_user
 
-# 定義路由：讀取用戶信息
-# @router.get("/users/{user_id}", status_code=status.HTTP_200_OK)
-# async def read_user(user_id: int, db: db_dependency): 
-#     # 從資料庫查找對應 ID 的用戶
-#     user = db.query(models.User).filter(models.User.id == user_id).first()
-#     if user is None:
-#         raise HTTPException(status_code=404, detail='user was not found') # 如果找不到用戶，回應 404 錯誤
-#     return user # 返回用戶資料
+#從資料庫抓資料出來
 @router.get("/api/profile")
-def read_profile(db: Session = Depends(get_db)):
-    user = crud.get_user(db)
-    if user:
-        return {
-    "id": user.id,
-    "accountType": user.accountType,
-    "chineseName": user.chineseName,
-    "englishName": user.englishName,
-    "gender": user.gender,
-    "birthday": user.birthday,
-    "email": user.email,
-    "studentId": user.studentId
-    }
-    else:
-        return {"error": "User not found"}
+async def read_profile(request: Request, db: Session = Depends(get_db)):
+        student_id = await get_studentId(request)
+        user = await get_user(db, student_id)
+        if user:
+            return {
+        "accountType": user.accountType,
+        "chineseName": user.chineseName,
+        "englishName": user.englishName,
+        "gender": user.gender,
+        "birthday": user.birthday,
+        "email": user.email,
+        "studentId": user.studentId
+        }
+        else:
+            return {"error": "User not found"}
+        
+async def get_studentId(request: Request):
+    # 嘗試從 cookies 中獲取 studentId
+    print("Request Cookies:", request.cookies)
+    student_id = request.cookies.get("studentId")
+    print(type(student_id))
+    if not student_id:
+        raise HTTPException(status_code=401, detail="Student ID not found in cookies")
+    return student_id
+
+async def get_user(db: Session, user_id: str ="113423075"):
+    return db.query(models.User).filter(models.User.studentId == user_id).first()
+
 
 # 定義路由：刪除user
 @router.delete("/users/{user_id}", status_code=status.HTTP_200_OK)

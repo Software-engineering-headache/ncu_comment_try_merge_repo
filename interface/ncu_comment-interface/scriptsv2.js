@@ -5,6 +5,7 @@
 // }
 
 // 顯示選擇的區域
+
 function showSection(sectionId) {
     const sections = document.querySelectorAll('main section');
     sections.forEach(section => {
@@ -16,6 +17,7 @@ function showSection(sectionId) {
         targetSection.style.display = 'block';
     }
 }
+
 
 // 刪除評論功能
 function deleteComment(element) {
