@@ -6,20 +6,6 @@
     <title>新增評論 - 課程評論系統</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        nav a {
-            position: fixed; /* 固定定位，參考整個螢幕 */
-            right: 20px; /* 距離螢幕右側 20px */
-            top: 10px; /* 距離螢幕頂部 20px（可根據需求調整） */
-            background-color: #4682b4;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 10; /* 確保按鈕不會被其他元素遮擋 */
-        }
-        
-        
         /* 表格樣式 */
         .course-detail table,
         .course-list table {
@@ -142,8 +128,15 @@
 </head>
 <body>
     <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="image/home.png" alt="首頁" width="40" height="40">
+            </a>
+            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+                NCU課程評論基地
+            </a>
+        </div>
         <div class="navbar">
-            <a href="index.html" class="logo">NCU課程評論基地</a>
             <nav>
                 <a href="courses.html">搜尋課程</a>
             </nav>
