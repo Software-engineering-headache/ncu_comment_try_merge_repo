@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCU課程評論基地</title>
+    <style>
+        /* 網站整體風格 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff; /* 淺藍色背景 */
+            color: #333;
+        }
+
+        header {
+            background-color: #d2e8f2; /* 淺藍色 header */
+            padding: 10px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar nav button,
+        .navbar nav a {
+            text-decoration: none;
+            color: white;
+            background-color: #4682b4; /* 藍色按鈕 */
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .navbar nav button:hover,
+        .navbar nav a:hover {
+            background-color: #5a9bd6;
+        }
+    
+    /* 首頁圖片跟首頁文字的樣式 */
+    .logo-container {
+    display: flex;
+    align-items: center; /* 垂直置中 */
+    gap: 10px; /* 圖片與文字之間的間距 */
+    }
+
+    .logo-container img {
+        vertical-align: middle; /* 防止圖片偏移 */
+    }
+
+    .logo-container .logo {
+        margin: 0; /* 移除多餘的外邊距 */
+    }
+
+
+        /* 中間文字樣式 */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            margin-bottom: 30px; /* 與底部留出空間 */
+        }
+
+        .hero img {
+            width: 120px;
+            height: auto;
+            margin-right: 20px; /* 與文字區域保持距離 */
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero-text h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        /* 搜尋條件橫排樣式 */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto 20px; /* 增加頂部空白 */
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            max-width: 90%;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            gap: 15px;
+        }
+
+        .search-container label {
+            font-weight: bold;
+        }
+
+        .search-container input,
+        .search-container select,
+        .search-container button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .search-container button {
+            background-color: #4682b4; /* 藍色按鈕 */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #5a9bd6;
+        }
+
+        /* 表格樣式 */
+        .course-list {
+            display: none; /* 預設隱藏搜尋結果表格 */
+            margin-left: 5%; /* 結果表格與左側對齊 */
+        }
+
+        .course-list table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-list th,
+        .course-list td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .course-list th {
+            background-color: #d2e8f2; /* 表格標題淺藍色 */
+            font-weight: bold;
+        }
+
+        .course-list tr:nth-child(even) {
+            background-color: #f9f9f9; /* 偶數列背景色 */
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #d2e8f2;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        /* 自定義按鈕樣式，與頂部按鈕保持一致 */
+        .btn {
+            text-decoration: none;
+            color: white;
+            background-color: #4682b4; /* 按鈕藍色 */
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #5a9bd6;
+        }
+                .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px 0;
+            border-radius: 5px;
+            z-index: 1;
+            width: 160px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #d2e8f2;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-button {
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="image/home.png" alt="首頁" width="40" height="40">
+            </a>
+            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+                NCU課程評論基地
+            </a>
+        </div>
+        
+        <div class="navbar">
+            <nav>
+                <button id="loginButton" class="btn btn-primary">登入</button>
+                <script src="login.js"></script>
+                <a href="register.html">註冊</a>
+                <div class="dropdown">
+                    <button class="dropdown-button">會員中心 ▼</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="showSection('my-comments')">我的評論</a>
+                        <a href="#" onclick="showSection('favorite-courses')">收藏課程</a>
+                        <a href="#" onclick="showSection('edit-profile')">個人資料</a>
+                        <a href="index.html">登出</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 收藏課程區域 -->
+        <section id="favorite-courses">
+            <h2>收藏課程</h2>
+            <table class="favorite-courses-table">
+                <thead>
+                    <tr>
+                        <th>課程代碼</th>
+                        <th>課程名稱</th>
+                        <th>評論</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>12345</td>
+                        <td>資料科學入門</td>
+                        <td><button class="btn" onclick="">查看評論</button></td>
+                    </tr>
+                    <tr>
+                        <td>67890</td>
+                        <td>機器學習基礎</td>
+                        <td><button class="btn" onclick="">查看評論</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <script src="scriptsv2.js"></script>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
+    </footer>
+
+</body>
+</html>
