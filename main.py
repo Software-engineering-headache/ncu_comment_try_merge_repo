@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from controller.login import router as login_router
 from controller.favorite_course import router as favorite_router
 from controller.admin_list import router as admin_list_router
+from controller.member_list import router as member_list_router
 from database.main import router as database_router
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -26,6 +27,7 @@ app.include_router(login_router, tags=["Login"])
 app.include_router(favorite_router, tags=["Favorite Course"]) 
 app.include_router(database_router, tags=["Database"])
 app.include_router(admin_list_router, tags=["Admin List"])
+app.include_router(member_list_router, tags=["Member List"])
 
 
 if __name__ == "__main__":

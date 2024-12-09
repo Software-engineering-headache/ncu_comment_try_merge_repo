@@ -61,7 +61,7 @@ async function fetchData() {
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.course_name}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.course_info}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">
-                    <button class="btn" style="margin-right: 5px;" onclick="viewComment('${item.course_id}')">查看評論</button>
+                    <button class="btn" style="margin-left: 10px; margin-right: 10px;" onclick="viewComment('${item.course_id}')">查看評論</button>
                     <button class="btn" style="background-color: #ff6666;" onclick="removeFromFavorites('${item.favorite_id}')">取消收藏</button>
                 </td>
             `;

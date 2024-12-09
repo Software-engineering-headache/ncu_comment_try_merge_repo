@@ -6,170 +6,45 @@
     <title>會員管理</title>
     <link rel="stylesheet" href="new_style.css">
     <link rel="stylesheet" href="new_style_button_table.css">
-    <style>
-        /* 全局樣式設置 */
-        body {
-            font-family: Arial, sans-serif; /* 設置字體 */
-            margin: 0; /* 移除頁面邊距 */
-            padding: 0; /* 移除頁面內距 */
-            background-color: #f4f4f9; /* 背景顏色 */
-        }
-        /* 頁首樣式 */
-        header {
-            background-color: #007BFF; /* 背景顏色：綠色 */
-            color: white; /* 文字顏色：白色 */
-            padding: 30px; /* 內距：20px */
-            display: flex; /* 使用Flexbox布局 */
-            justify-content: space-between; /* 左右元素間的間隔 */
-            align-items: center; /* 垂直居中 */
-        }
-
-        /* 標題樣式 */
-        header h1 {
-            margin: 0; /* 移除標題的外邊距 */
-        }
-
-        /* 按鈕容器 */
-        .header-buttons {
-            display: flex; /* 使用Flexbox布局 */
-            gap: 10px; /* 按鈕之間的間隔 */
-        }
-
-        /* 按鈕樣式 */
-        button {
-            background-color: #007BFF; /* 按鈕背景色：綠色 */
-            color: white; /* 按鈕文字色：白色 */
-            border: none; /* 無邊框 */
-            padding: 8px 16px; /* 按鈕內距 */
-            border-radius: 4px; /* 圓角邊框 */
-            cursor: pointer; /* 鼠標樣式 */
-            font-size: 1.1rem;
-        }
-
-        button:hover {
-            background-color: #007BFF; /* 按鈕懸停效果：深綠色 */
-        }
-
-        /* 表格樣式 */
-        table {
-            width: 100%; /* 表格寬度填滿 */
-            border-collapse: collapse; /* 移除邊框間隙 */
-            margin-top: 20px; /* 與頁首的距離 */
-        }
-
-        th, td {
-            border: 1px solid #ddd; /* 單元格邊框 */
-            padding: 8px; /* 單元格內距 */
-            text-align: center; /* 文字置中 */
-        }
-
-        th {
-            background-color: #f2f2f2; /* 表頭背景色 */
-            font-weight: bold; /* 字體加粗 */
-        }
-
-        /* 表格行的懸停效果 */
-        tr:hover {
-            background-color: #f1f1f1; /* 懸停時行的背景色 */
-        }
-        /* 隱藏評論區域 */
-        .comments {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-        }
-    </style>
 </head>
 <body>
     <!-- 頁首 -->
     <header>
-        <h1>會員管理系統</h1>
-
-        <!-- 頁首右側的按鈕 -->
-        <div class="header-buttons">
-            <button onclick="window.location.href='index.html';">回到首頁</button> <!-- 回到首頁按鈕 -->
-            <button onclick="window.location.href='logout.html';">登出</button> <!-- 登出按鈕 -->
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="image/home.png" alt="首頁" width="40" height="40">
+            </a>
+            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+                NCU課程評論基地：管理系統
+            </a>
+        </div>
+        
+        <div class="navbar">
+            <nav>
+                <a href="index.html">回到使用者頁面</a>
+            <div class="dropdown">
+                <button class="dropdown-button">管理員功能 ▼</button>
+                <div class="dropdown-content">
+                    <a href="member-management.html">會員管理</a>
+                    <a href="admin-management.html">管理員管理</a>
+                    <a href="system-settings.html">系統設定</a>
+                </div>
+            </div>
+                <a href="index.html">登出</a>
+            </nav>
         </div>
     </header>
 
-    <!-- 會員資訊的表格 -->
-    <table>
-        <!-- 表格表頭 -->
-        <tr>
-            <th>會員名稱</th> <!-- 列標題：會員名稱 -->
-            <th>帳號</th> <!-- 列標題：會員帳號 -->
-            <th>最近一次登入時間</th> <!-- 列標題：最近一次登入時間 -->
-            <th>查看評論</th> <!-- 列標題：查看評論 -->
-            <th>操作</th> <!-- 列標題：操作按鈕 -->
-        </tr>
+    <main>
+        <div class="section-title">會員清單：</div>
+        <div id="dataContainer">
+            <!-- 這裡將動態顯示從後端獲取的資料 -->
+        </div>
+        <script src="member_management.js"></script>
+    </main>
 
-        <!-- 表格內容：會員數據 -->
-        <tr>
-            <td>會員A</td> <!-- 會員名稱 -->
-            <td>userA</td> <!-- 會員帳號 -->
-            <td>2024-12-01 14:30:45</td> <!-- 最近一次登入時間 -->
-            <td>
-                <select onchange="showComments('commentsA')">
-                    <option value="">選擇年份</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                </select>
-                <!-- 隱藏的歷年評論區域 -->
-                <div id="commentsA" class="comments">
-                    <h4>歷年評論</h4>
-                    <p>2024: 這是2024年的評論。</p>
-                    <p>2023: 這是2023年的評論。</p>
-                    <p>2022: 這是2022年的評論。</p>
-                </div>
-            </td>
-            <td>
-                <!-- 操作按鈕 -->
-                <button>刪除</button> <!-- 刪除會員按鈕 -->
-                <button>修改權限</button> <!-- 修改會員權限按鈕 -->
-            </td>
-        </tr>
-
-        <!-- 可以在此添加更多會員數據 -->
-        <tr>
-            <td>會員B</td>
-            <td>userB</td>
-            <td>2024-11-30 10:15:22</td>
-            <td>
-                <select onchange="showComments('commentsB')">
-                    <option value="">選擇年份</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                </select>
-                <div id="commentsB" class="comments">
-                    <h4>歷年評論</h4>
-                    <p>2024: 這是2024年的評論。</p>
-                    <p>2023: 這是2023年的評論。</p>
-                    <p>2022: 這是2022年的評論。</p>
-                </div>
-            </td>
-            <td>
-                <button>刪除</button>
-                <button>修改權限</button>
-            </td>
-        </tr>
-    </table>
-    <script>
-        // JavaScript函數，用於顯示評論區域
-        function showComments(commentId) {
-            var selectedYear = document.querySelector('#' + commentId).previousElementSibling.value;
-            var commentsDiv = document.getElementById(commentId);
-
-            // 根據選擇的年份顯示或隱藏評論
-            if (selectedYear) {
-                commentsDiv.style.display = 'block';
-            } else {
-                commentsDiv.style.display = 'none';
-            }
-        }
-    </script>
+    <footer>
+        <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
+    </footer>
 </body>
 </html>
