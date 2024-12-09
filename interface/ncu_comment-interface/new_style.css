@@ -176,11 +176,11 @@ footer {
     margin-top: 20px;
 }
 
-/* 自定義按鈕樣式，與頂部按鈕保持一致 */
+/* 自定義按鈕樣式 */
 .btn {
     text-decoration: none;
     color: white;
-    background-color: #4682b4; /* 按鈕藍色 */
+    background-color: #4682b4; /* 藍色按鈕 */
     padding: 8px 15px;
     border: none;
     border-radius: 5px;
