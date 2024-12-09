@@ -6,9 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCU課程評論基地</title>
     <style>
+        #loginButton {
+            font-size: 1rem; /* 設定與下拉選單按鈕一致的字體大小 */
+            padding: 8px 15px;
+        }
+        
         /* 網站整體風格 */
         body {
-            font-family: Arial, sans-serif;
+            fon
+            t-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f8ff; /* 淺藍色背景 */
@@ -254,28 +260,27 @@
         
         <div class="navbar">
             <nav>
-                <button id="loginButton" class="btn btn-primary">登入</button>
-                <script src="login.js"></script>
-                <a href="register.html">註冊</a>
+                <button id="loginButton" class="btn">登入</button>
+                <!-- 註冊按鈕已移除 -->
                 <div class="dropdown">
                     <button class="dropdown-button">會員中心 ▼</button>
                     <div class="dropdown-content">
                         <a href="#" onclick="showSection('my-comments')">我的評論</a>
-                        <a href="favorite_course.html" >收藏課程</a>
+                        <a href="favorite_course.html">收藏課程</a>
                         <a href="#" onclick="showSection('edit-profile')">個人資料</a>
                         <a href="index.html">登出</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button>管理員功能 ▼</button>
+                    <button class="dropdown-button">管理員功能 ▼</button>
                     <div class="dropdown-content">
                         <a href="member-management.html">會員管理</a>
                         <a href="admin-management.html">管理員管理</a>
                         <a href="system-settings.html">系統設定</a>
                     </div>
                 </div>
-
             </nav>
+            
         </div>
     </header>
 
