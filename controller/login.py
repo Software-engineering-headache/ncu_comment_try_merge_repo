@@ -24,7 +24,7 @@ REDIRECT_URI = "http://localhost:8000/interface/ncu_comment-interface/callback"
 token_storage = {}
 
 class UserBase(BaseModel):
-    id: int
+    id: Optional[int] = None
     # identifier: str
     accountType: str
     chineseName: str
@@ -109,7 +109,6 @@ async def profile():
     # print(user_info)
 
     user_info = UserBase(
-    id=user_info["id"],
     accountType=user_info["accountType"],
     chineseName=user_info["chineseName"],
     englishName=user_info["englishName"],

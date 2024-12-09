@@ -6,7 +6,8 @@ class User(Base):
     __tablename__ = 'users'
 
     # 主鍵
-    id = Column(Integer, primary_key=True, index=True)  # 主鍵且為索引
+    studentId = Column(String(20),primary_key=True, index=True)  # 學號（必須唯一）
+    # id = Column(Integer, primary_key=True, index=True)  # 主鍵且為索引
 
     # 基本資料欄位
     accountType = Column(String(20), nullable=True)  # 帳戶類型，例如 'STUDENT'
@@ -15,7 +16,6 @@ class User(Base):
     gender = Column(String(10), nullable=True)  # 性別
     birthday = Column(String(10), nullable=True)  # 出生日期
     email = Column(String(100), unique=False, nullable=True)  # 電子郵件（必須唯一）
-    studentId = Column(String(20), unique=False, nullable=True)  # 學號（必須唯一）
 
     # JSON 格式的欄位（儲存學術資料）
     # academyRecords = Column(JSON, nullable=True)
@@ -52,7 +52,7 @@ class Comment(Base):
     score = Column(Integer) #
     content = Column(String(100))
     course_id = Column(String(8), ForeignKey('courses.id'))
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(String(20), ForeignKey('users.studentId'))
 
     __table_args__ = (
         CheckConstraint('score >= 1 AND score <= 5', name='check_score_range'),
@@ -63,5 +63,5 @@ class Favorite(Base):
     __tablename__ = 'favorites'
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(String(20), ForeignKey('users.studentId'))
     course_id = Column(String(8), ForeignKey('courses.id'))
