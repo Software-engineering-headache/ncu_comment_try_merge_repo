@@ -30,12 +30,13 @@ async function fetchData() {
 
         // 建立表格結構
         const table = document.createElement("table");
-        table.style.width = "100%";
+        table.style.width = "95%"; // 表格寬度設為 95%
+        table.style.margin = "20px auto"; // 表格上下留空，左右置中
         table.style.borderCollapse = "collapse";
-        table.style.marginTop = "20px";
         table.innerHTML = `
             <thead>
                 <tr style="background-color: #d2e8f2;"> <!-- 淺藍色背景 -->
+                    <th style="border: 1px solid #ddd; padding: 8px;">學號</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">姓名</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">課程代碼</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">課程名稱</th>
@@ -54,6 +55,7 @@ async function fetchData() {
             const row = document.createElement("tr");
             row.style.backgroundColor = index % 2 === 0 ? "#f9f9f9" : "#ffffff"; // 淺灰與白色交替
             row.innerHTML = `
+                <td style="border: 1px solid #ddd; padding: 8px;">${item.user_id}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.user_name}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.course_id}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.course_name}</td>
