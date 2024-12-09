@@ -8,7 +8,7 @@ const dataContainer = document.getElementById("dataContainer");
 async function fetchData() {
     try {
         // 顯示載入中提示
-        dataContainer.innerHTML = `<p style="color: blue;">Loading data, please wait...</p>`;
+        dataContainer.innerHTML = `<p style="color: blue; margin-left: 40px;">Loading data, please wait...</p>`;
 
         // 發送 API 請求
         const response = await fetch(API_URL);

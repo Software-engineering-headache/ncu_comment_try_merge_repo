@@ -8,7 +8,7 @@ const dataContainer = document.getElementById("dataContainer");
 async function fetchAdminUsers() {
     try {
         // 顯示載入中提示
-        dataContainer.innerHTML = `<p style="color: blue;">Loading data, please wait...</p>`;
+        dataContainer.innerHTML = `<p style="color: blue; margin-left: 40px;">Loading data, please wait...</p>`;
 
         // 發送 API 請求
         const response = await fetch(API_URL);
@@ -38,10 +38,8 @@ async function fetchAdminUsers() {
                 <tr style="background-color: #d2e8f2;">
                     <th style="border: 1px solid #ddd; padding: 8px;">學號</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">姓名</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">帳戶類型</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">性別</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">生日</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">電子郵件</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,10 +55,10 @@ async function fetchAdminUsers() {
             row.innerHTML = `
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.studentId}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.chineseName}</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">${user.accountType}</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">${user.gender}</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">${user.birthday}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.email}</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
+                    <button style="background-color: #ff6666; color: white; border: none; padding: 5px 10px; cursor: pointer;" onclick="deleteAdmin('${user.studentId}')">刪除權限</button>
+                </td>
             `;
             tbody.appendChild(row);
         });
@@ -70,6 +68,14 @@ async function fetchAdminUsers() {
     } catch (error) {
         console.error("Fetch Error:", error);
         dataContainer.innerHTML = `<p style="color: red;">Failed to fetch data. Please check the API and try again.</p>`;
+    }
+}
+
+// 刪除管理員函數
+function deleteAdmin(studentId) {
+    if (confirm(`確定要刪除學號為 ${studentId} 的管理員嗎？`)) {
+        console.log(`Deleting admin with studentId: ${studentId}`);
+        // 可以在這裡添加刪除請求的邏輯
     }
 }
 
