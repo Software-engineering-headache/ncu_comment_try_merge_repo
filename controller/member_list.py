@@ -37,3 +37,28 @@ async def get_all_users():
         raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
     finally:
         db.close()
+
+@router.delete("/users/{studentId}")
+async def delete_user(studentId: str):
+    """
+    根據學號刪除使用者
+    """
+    try:
+        # 查詢目標使用者
+        user = db.query(User).filter(User.studentId == studentId).first()
+
+        # 如果找不到該使用者
+        if not user:
+            raise HTTPException(status_code=404, detail="使用者未找到")
+
+        # 刪除使用者
+        db.delete(user)
+        db.commit()
+
+        return {"message": f"使用者 {studentId} 已成功刪除"}
+    except Exception as e:
+        print(f"Error occurred in delete_user: {e}")
+        raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
+    finally:
+        # 確保關閉數據庫會話
+        db.close()

@@ -137,12 +137,14 @@ def get_user(db: Session, user_id: str ):
     return db.query(models.User).filter(models.User.studentId == user_id).first()
 
 
-# 定義路由：刪除user
-@router.delete("/users/{user_id}", status_code=status.HTTP_200_OK)
-async def delet_user(user_id: int, db: db_dependency):
-    # 查找需要刪除的文章
-    db_user = db.query(models.User).filter(models.User.id == user_id).first()
-    if db_user is None: # 如果找不到文章，回應 404 錯誤
-        raise HTTPException(status_code=404, detail='post was not found')
-    db.delete(db_user) # 刪除文章
-    db.commit() # 提交更改保存到資料庫
+# 這邊跟會員管理的刪除功能有衝突到，所以這邊先註解掉，然後這邊的models.User.id好像沒更新成新的models.User.studentId
+# # 定義路由：刪除user
+# @router.delete("/users/{user_id}", status_code=status.HTTP_200_OK)
+# async def delet_user(user_id: int, db: db_dependency):
+#     # 查找需要刪除的文章
+#     db_user = db.query(models.User).filter(models.User.id == user_id).first()
+#     if db_user is None: # 如果找不到文章，回應 404 錯誤
+#         raise HTTPException(status_code=404, detail='post was not found')
+#     db.delete(db_user) # 刪除文章
+#     db.commit() # 提交更改保存到資料庫
+

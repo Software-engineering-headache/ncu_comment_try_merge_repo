@@ -96,5 +96,30 @@ function deleteUser(studentId) {
     }
 }
 
+async function deleteUser(studentId) {
+    if (confirm(`確定要刪除學號為 ${studentId} 的使用者嗎？`)) {
+        try {
+            // 發送 DELETE 請求到後端 API
+            const response = await fetch(`${API_URL}/${studentId}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error(`刪除失敗: ${response.statusText}`);
+            }
+
+            // 顯示成功提示
+            alert(`學號為 ${studentId} 的使用者已成功刪除。`);
+
+            // 重新抓取資料並更新表格
+            fetchAllUsers();
+        } catch (error) {
+            console.error("刪除錯誤:", error);
+            alert("刪除失敗，請稍後再試。");
+        }
+    }
+}
+
+
 // 當頁面載入時自動執行抓取資料函數
 window.addEventListener("load", fetchAllUsers);
