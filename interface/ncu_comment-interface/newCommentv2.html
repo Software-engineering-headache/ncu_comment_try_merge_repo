@@ -129,6 +129,13 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        /* 警告文字樣式 */
+        .warning {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -207,8 +214,8 @@
                         <option>選擇系所</option>
                         <option>資訊管理研究所</option>
                         <option>資訊工程研究所</option>
-                    </select>
-                    <pre></pre>
+                    </select><br>
+                    
                     <!-- 授課老師 -->
                     <label for="teacher">授課老師</label>
                     <input type="text" id="teacher" required><br>
@@ -225,8 +232,8 @@
                         <option>2024</option>
                         <option>2022</option>
                         <option>2020</option>
-                    </select>
-                    <pre></pre>
+                    </select><br>
+
                     <!-- 推薦指數 -->
                     <label for="rating">推薦指數</label>
                     <div id="rating">
@@ -247,6 +254,7 @@
 
                     <!-- 提交按鈕 -->
                     <button type="button" class="btn btn-submit" onclick="submitReview()">送出評論</button>
+                    <h4 class="warning">!!!謹言慎行!!!<br>如果違規將刪除評論並寄郵件通知</h4>
                 </form>
             </div>
         </div>
