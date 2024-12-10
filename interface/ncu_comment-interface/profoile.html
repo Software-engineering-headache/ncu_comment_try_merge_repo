@@ -5,260 +5,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCU課程評論基地</title>
+    <link rel="stylesheet" href="new_style.css">
+    <link rel="stylesheet" href="new_style_button_table.css">
     <style>
-        #loginButton {
-            font-size: 1rem;
-            /* 設定與下拉選單按鈕一致的字體大小 */
-            padding: 8px 15px;
+         /* 表單樣式 */
+         .form-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        /* 網站整體風格 */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f8ff;
-            /* 淺藍色背景 */
-            color: #333;
-        }
-
-        header {
-            background-color: #d2e8f2;
-            /* 淺藍色 header */
-            padding: 10px 20px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            text-decoration: none;
-        }
-
-        .navbar nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .navbar nav button,
-        .navbar nav a {
-            text-decoration: none;
-            color: white;
-            background-color: #4682b4;
-            /* 藍色按鈕 */
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .form-container h2 {
             text-align: center;
+            margin-bottom: 1.5rem;
         }
 
-        .navbar nav button:hover,
-        .navbar nav a:hover {
-            background-color: #5a9bd6;
+        .form-container table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        /* 首頁圖片跟首頁文字的樣式 */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            /* 垂直置中 */
-            gap: 10px;
-            /* 圖片與文字之間的間距 */
-        }
-
-        .logo-container img {
-            vertical-align: middle;
-            /* 防止圖片偏移 */
-        }
-
-        .logo-container .logo {
-            margin: 0;
-            /* 移除多餘的外邊距 */
-        }
-
-
-        /* 中間文字樣式 */
-        .hero {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            /* 與底部留出空間 */
-        }
-
-        .hero img {
-            width: 120px;
-            height: auto;
-            margin-right: 20px;
-            /* 與文字區域保持距離 */
-        }
-
-        .hero-text {
+        .form-container th,
+        .form-container td {
+            padding: 10px;
             text-align: left;
         }
 
-        .hero-text h1 {
-            font-size: 2rem;
-            margin: 0;
-            color: #333;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-top: 10px;
-        }
-
-        /* 搜尋條件橫排樣式 */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 30px auto 20px;
-            /* 增加頂部空白 */
-            padding: 10px 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            max-width: 90%;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            gap: 15px;
-        }
-
-        .search-container label {
+        .form-container th {
+            background-color: #d2e8f2; /* 表格標題淺藍色 */
             font-weight: bold;
         }
 
-        .search-container input,
-        .search-container select,
-        .search-container button {
-            padding: 10px;
-            border: 1px solid #ccc;
+        .form-container input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
             border-radius: 5px;
-            box-sizing: border-box;
+            margin-bottom: 1rem;
         }
 
-        .search-container button {
-            background-color: #4682b4;
-            /* 藍色按鈕 */
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .search-container button:hover {
-            background-color: #5a9bd6;
-        }
-
-        /* 表格樣式 */
-        .course-list {
-            display: none;
-            /* 預設隱藏搜尋結果表格 */
-            margin-left: 5%;
-            /* 結果表格與左側對齊 */
-        }
-
-        .course-list table {
-            width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .course-list th,
-        .course-list td {
-            border: 1px solid #ddd;
-            text-align: center;
-            padding: 10px;
-        }
-
-        .course-list th {
-            background-color: #d2e8f2;
-            /* 表格標題淺藍色 */
-            font-weight: bold;
-        }
-
-        .course-list tr:nth-child(even) {
-            background-color: #f9f9f9;
-            /* 偶數列背景色 */
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #d2e8f2;
-            color: #333;
-            margin-top: 20px;
-        }
-
-        /* 自定義按鈕樣式，與頂部按鈕保持一致 */
-        .btn {
-            text-decoration: none;
-            color: white;
-            background-color: #4682b4;
-            /* 按鈕藍色 */
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background-color: #5a9bd6;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            padding: 10px 0;
-            border-radius: 5px;
-            z-index: 1;
-            width: 160px;
-        }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 10px 15px;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-            border-radius: 5px;
-            margin: 5px 0;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #d2e8f2;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-button {
-            padding: 10px 15px;
-            font-size: 1rem;
+        .form-container input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
         }
     </style>
 </head>
@@ -284,8 +77,8 @@
                     <button class="dropdown-button">會員中心 ▼</button>
                     <div class="dropdown-content">
                         <a href="#" onclick="showSection('my-comments')">我的評論</a>
-                        <a href="#" onclick="showSection('favorite-courses')">收藏課程</a>
-                        <a href="#" onclick="showSection('edit-profile')">個人資料</a>
+                        <a href="favorite_course.html">收藏課程</a>
+                        <a href="profoile.html">個人資料</a>
                         <a href="index.html">登出</a>
                     </div>
                 </div>
@@ -304,34 +97,46 @@
     <main>
         <!-- 修改個人資訊區域 -->
         <section id="edit-profile" class="section hidden">
-            <h2>修改個人資訊</h2>
-            <form id="profile-form">
-                <!-- <label for="id">ID</label> -->
-                <!-- <input type="text" id="id" placeholder="輸入新的ID" readonly><br> -->
-
-                <label for="accountType">帳戶類型</label>
-                <input type="text" id="accountType" placeholder="輸入新的帳戶類型" readonly><br>
-
-                <label for="chineseName">中文姓名</label>
-                <input type="text" id="chineseName" placeholder="輸入新的中文姓名"><br>
-
-                <label for="englishName">英文姓名</label>
-                <input type="text" id="englishName" placeholder="輸入新的英文姓名"><br>
-
-                <label for="gender">性別</label>
-                <input type="text" id="gender" placeholder="輸入新的性別"><br>
-
-                <label for="birthday">生日</label>
-                <input type="date" id="birthday" placeholder="輸入新的生日"><br>
-
-                <label for="studentId">學號</label>
-                <input type="text" id="studentId" placeholder="輸入新的學號"><br>
-
-                <label for="email">電子郵件</label>
-                <input type="email" id="email" placeholder="輸入新的電子郵件"><br>
-
-                <button type="submit" class="btn">更新資訊</button>
-            </form>
+            <div class="form-container">
+                <h2>修改個人資訊</h2>
+                <form id="profile-form">
+                    <table>
+                        <tr>
+                            <th><label for="accountType">帳戶類型</label></th>
+                            <td><input type="text" id="accountType" placeholder="輸入新的帳戶類型" readonly></td>
+                        </tr>
+                        <tr>
+                            <th><label for="chineseName">中文姓名</label></th>
+                            <td><input type="text" id="chineseName" placeholder="輸入新的中文姓名"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="englishName">英文姓名</label></th>
+                            <td><input type="text" id="englishName" placeholder="輸入新的英文姓名"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="gender">性別</label></th>
+                            <td><input type="text" id="gender" placeholder="輸入新的性別"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="birthday">生日</label></th>
+                            <td><input type="date" id="birthday" placeholder="輸入新的生日"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="studentId">學號</label></th>
+                            <td><input type="text" id="studentId" placeholder="輸入新的學號"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="email">電子郵件</label></th>
+                            <td><input type="email" id="email" placeholder="輸入新的電子郵件"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;">
+                                <button type="submit" class="btn">更新資訊</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
             <script src="profile.js"></script>
         </section>
         <script src="scriptsv2.js"></script>
