@@ -61,11 +61,12 @@ def get_oauth_session(state: Optional[str] = None):
 
 # 路由：引導用戶授權
 @router.get("/interface/ncu_comment-interface/login")
-async def login():
+async def login(request: Request):
     oauth = get_oauth_session()
     authorization_url, state = oauth.authorization_url(AUTHORIZATION_BASE_URL)
 
     # 存儲 state 值（可以保存在 session 中），這裡為了簡單起見，直接用 state 傳回來
+    request.session["oauth_state"] = state
     response = RedirectResponse(url=authorization_url)
     return response
 
@@ -98,7 +99,7 @@ async def callback(request: Request):
 
 # 路由：使用令牌獲取用戶信息
 @router.get("/interface/ncu_comment-interface/profile")
-async def profile():
+async def profile(request: Request):
     token = token_storage.get("token")
     oauth = OAuth2Session(CLIENT_ID, token={"access_token": token, "token_type": "Bearer"})
     
@@ -106,6 +107,10 @@ async def profile():
     user_info = response.json()
     # return user_info
     # print(user_info)
+    request.session["user"] = {
+            "studentId": user_info["studentId"],
+            "accountType": user_info["accountType"]
+        }
 
     user = UserBase(
     accountType=user_info["accountType"],
@@ -124,11 +129,32 @@ async def profile():
         key="studentId",
         value=user.studentId,
         httponly=True,      # 防止 JavaScript 訪問
-        secure=False,        # 僅通過 HTTPS 傳輸
+        secure=True,        # 僅通過 HTTPS 傳輸
         max_age=3600,       # Cookie 有效期（秒）
         path="/",           # Cookie 的作用路徑
-        samesite= None      # 防止 CSRF 攻擊
+        samesite= "strict"      # 防止 CSRF 攻擊
     )
 
     return redirect_response
 
+@router.get("/interface/ncu_comment-interface/Islogin")
+async def Islogin(request: Request):
+    # 確保 session 和 user 存在
+    user = request.session.get("user")  
+    print(user)
+    if not user or "studentId" not in user:
+        return {
+        "studentId": None,
+        "accountType": None  # 默認為普通用戶
+    }
+
+    # 返回用戶資訊
+    return {
+        "studentId": user["studentId"],
+        "accountType": user["accountType"]  # 默認為普通用戶
+    }
+
+@router.get("/interface/ncu_comment-interface/logout")
+async def logout(request: Request):
+    request.session.clear()  # 清除伺服器端 Session
+    return RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")

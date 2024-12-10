@@ -1,4 +1,3 @@
-// scripts.js
 
 document.getElementById("loginButton").addEventListener("click", () => {
     // 导向到 FastAPI 的 /login 路由，开始 OAuth 认证

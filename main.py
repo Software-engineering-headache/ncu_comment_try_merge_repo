@@ -5,12 +5,26 @@ from controller.admin_list import router as admin_list_router
 from controller.member_list import router as member_list_router
 from database.main import router as database_router
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
+
 
 from database import models
 from database.database import engine
 
+
+
+
 app = FastAPI()
-    
+
+# 添加伺服器端的 SessionMiddleware
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="your_secret_key",  # 替換成你的隨機密鑰
+    session_cookie="session",     # 存儲 Session 的 Cookie 名稱
+    max_age=3600,                 # Session 有效期（秒）
+)
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:5500","http://localhost:5500","http://localhost:5500/interface/ncu_comment-interface/profoile.html"],  # 替換成你的前端來源

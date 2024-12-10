@@ -13,7 +13,8 @@ body {
 /* 確保下拉選單在頁面最上層 */
 .user-menu {
     position: relative;
-    z-index: 1000; /* 設定高 z-index 值，確保不被其他元素遮住 */
+    z-index: 1000;
+    /* 設定高 z-index 值，確保不被其他元素遮住 */
 }
 
 .dropdown-content {
@@ -24,7 +25,8 @@ body {
     right: 0;
     min-width: 200px;
     border-radius: 5px;
-    z-index: 1001; /* 更高的 z-index 確保內容顯示在最前 */
+    z-index: 1001;
+    /* 更高的 z-index 確保內容顯示在最前 */
 }
 
 /* 導覽列 */
@@ -56,7 +58,15 @@ body {
 }
 
 
-.dropdown-button {
+.dropdown-button-member {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.dropdown-button-admin {
     background: none;
     border: none;
     color: #fff;

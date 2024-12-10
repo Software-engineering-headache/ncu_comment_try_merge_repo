@@ -3,7 +3,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px auto 20px; /* 增加頂部空白 */
+    margin: 30px auto 20px;
+    /* 增加頂部空白 */
     padding: 10px 20px;
     background-color: #ffffff;
     border-radius: 10px;
@@ -26,7 +27,8 @@
 }
 
 .search-container button {
-    background-color: #4682b4; /* 藍色按鈕 */
+    background-color: #4682b4;
+    /* 藍色按鈕 */
     color: white;
     border: none;
     cursor: pointer;
@@ -38,8 +40,10 @@
 
 /* 表格樣式 */
 .course-list {
-    display: none; /* 預設隱藏搜尋結果表格 */
-    margin-left: 5%; /* 結果表格與左側對齊 */
+    display: none;
+    /* 預設隱藏搜尋結果表格 */
+    margin-left: 5%;
+    /* 結果表格與左側對齊 */
 }
 
 .course-list table {
@@ -60,19 +64,22 @@
 }
 
 .course-list th {
-    background-color: #d2e8f2; /* 表格標題淺藍色 */
+    background-color: #d2e8f2;
+    /* 表格標題淺藍色 */
     font-weight: bold;
 }
 
 .course-list tr:nth-child(even) {
-    background-color: #f9f9f9; /* 偶數列背景色 */
+    background-color: #f9f9f9;
+    /* 偶數列背景色 */
 }
 
 /* 自定義按鈕樣式 */
 .btn {
     text-decoration: none;
     color: white;
-    background-color: #4682b4; /* 藍色按鈕 */
+    background-color: #4682b4;
+    /* 藍色按鈕 */
     padding: 8px 15px;
     border: none;
     border-radius: 5px;
@@ -120,8 +127,34 @@
     display: block;
 }
 
-.dropdown-button {
+/* 會員中心按鈕 */
+.dropdown-button-member {
     padding: 10px 15px;
     font-size: 1rem;
+    background-color: #4682b4;
+    /* 按鈕背景顏色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
+.dropdown-button-member:hover {
+    background-color: #5a9bd6;
+}
+
+/* 管理員功能按鈕 */
+.dropdown-button-admin {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #4682b4;
+    /* 按鈕背景顏色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dropdown-button-admin:hover {
+    background-color: #5a9bd6;
+}
