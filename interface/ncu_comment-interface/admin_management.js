@@ -79,5 +79,73 @@ function deleteAdmin(studentId) {
     }
 }
 
+
+// 新增管理員按鈕
+document.querySelector(".add-admin button").addEventListener("click", async () => {
+    const studentIdInput = document.getElementById("student-id");
+    const studentId = studentIdInput.value.trim();
+
+    if (!studentId) {
+        alert("請輸入學號！");
+        return;
+    }
+
+    try {
+        // 發送 API 請求檢查學號
+        const response = await fetch(`http://127.0.0.1:8000/users/check/${studentId}`, {
+            method: "GET",
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.message === "NOT_FOUND") {
+            alert("該學號的使用者不存在！");
+        } else if (data.message === "ALREADY_ADMIN") {
+            alert("該使用者已經是管理員！");
+        } else if (data.message === "UPDATED") {
+            alert(`已成功新增使用者學號 ${studentId} 為管理員！`);
+            // 重新抓取管理員列表
+            fetchAdminUsers();
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("新增管理員失敗，請稍後再試！");
+    }
+});
+
+// 刪除管理員函數
+async function deleteAdmin(studentId) {
+    if (confirm(`確定要刪除學號為 ${studentId} 的管理員嗎？`)) {
+        try {
+            // 發送 API 請求將該使用者權限改為 STUDENT
+            const response = await fetch(`http://127.0.0.1:8000/users/remove-admin/${studentId}`, {
+                method: "PATCH", // 使用 PATCH 方法表示更新部分數據
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.message === "NOT_FOUND") {
+                alert("該學號的使用者不存在！");
+            } else if (data.message === "REMOVED") {
+                alert(`已刪除學號 ${studentId} 的管理員權限！`);
+                // 重新抓取管理員列表
+                fetchAdminUsers();
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("刪除管理員失敗，請稍後再試！");
+        }
+    }
+}
+
+
 // 當頁面載入時自動執行抓取資料函數
 window.addEventListener("load", fetchAdminUsers);

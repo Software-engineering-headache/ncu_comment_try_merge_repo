@@ -7,6 +7,24 @@
         <!-- 引入外部 CSS -->
         <link rel="stylesheet" href="new_style.css">
         <link rel="stylesheet" href="new_style_button_table.css">
+        <style>
+                .add-admin {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 1rem;
+                }
+
+                .add-admin label {
+                    margin-right: 1rem;
+                    font-weight: bold;
+                }
+
+                .add-admin-container {
+                    display: flex;
+                    justify-content: flex-start;
+                    margin-left: 2rem; /* 與表格標題的左側邊距一致 */
+                }
+        </style>
 </head>
 <body>
     <!-- 頁首 -->
@@ -37,6 +55,17 @@
         </header>
 
         <main>
+            <div class="section-title">新增管理員：</div>
+            <div class="add-admin-container">
+                <div class="add-admin">
+                    <label for="student-id">使用者學號：</label>
+                    <input type="text" id="student-id" placeholder="輸入學號">
+                    <button class="btn" style="margin-left: 10px;">新增</button>
+                </div>
+            </div>
+            
+            
+
             <div class="section-title">管理員清單：</div>
             <div id="dataContainer">
                 <!-- 這裡將動態顯示從後端獲取的資料 -->

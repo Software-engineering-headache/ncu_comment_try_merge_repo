@@ -37,3 +37,53 @@ async def get_admin_users():
         raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
     finally:
         db.close()
+
+
+@router.get("/users/check/{student_id}")
+async def check_and_add_admin(student_id: str):
+    """
+    檢查學生學號，並根據情況更新 accountType 為 ADMIN
+    """
+    try:
+        # 查詢該學號的使用者
+        user = db.query(User).filter(User.studentId == student_id).first()
+
+        if not user:
+            return {"message": "NOT_FOUND"}
+
+        if user.accountType == "ADMIN":
+            return {"message": "ALREADY_ADMIN"}
+
+        # 更新該使用者為管理員
+        user.accountType = "ADMIN"
+        db.commit()
+
+        return {"message": "UPDATED"}
+    except Exception as e:
+        print(f"Error occurred in check_and_add_admin: {e}")
+        raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
+    finally:
+        db.close()
+
+@router.patch("/users/remove-admin/{student_id}")
+async def remove_admin_privileges(student_id: str):
+    """
+    將指定學號的使用者權限改為 STUDENT
+    """
+    try:
+        # 查詢該學號的使用者
+        user = db.query(User).filter(User.studentId == student_id).first()
+
+        if not user:
+            return {"message": "NOT_FOUND"}
+
+        # 更新該使用者為 STUDENT
+        user.accountType = "STUDENT"
+        db.commit()
+
+        return {"message": "REMOVED"}
+    except Exception as e:
+        print(f"Error occurred in remove_admin_privileges: {e}")
+        raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
+    finally:
+        db.close()
