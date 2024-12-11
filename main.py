@@ -3,6 +3,8 @@ from controller.login import router as login_router
 from controller.favorite_course import router as favorite_router
 from controller.admin_list import router as admin_list_router
 from controller.member_list import router as member_list_router
+from controller.course_result import router as course_result_router
+from controller.comment import router as comment_router
 from database.main import router as database_router
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -42,6 +44,8 @@ app.include_router(favorite_router, tags=["Favorite Course"])
 app.include_router(database_router, tags=["Database"])
 app.include_router(admin_list_router, tags=["Admin List"])
 app.include_router(member_list_router, tags=["Member List"])
+app.include_router(course_result_router, tags=["Course Result"])
+app.include_router(comment_router, tags=["Comment"])
 
 
 if __name__ == "__main__":
