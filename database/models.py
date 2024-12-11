@@ -1,5 +1,5 @@
-from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, CheckConstraint
-#用於定義資料庫的列型別（Column、Integer、String）和其他屬性（例如主鍵 primary_key 和索引 index）
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, CheckConstraint, DateTime
+from sqlalchemy.sql import func  # 用於自動設置時間戳
 from database.database import Base #它是 SQLAlchemy 中用於創建模型的基礎類
 
 class User(Base):
@@ -7,7 +7,6 @@ class User(Base):
 
     # 主鍵
     studentId = Column(String(20),primary_key=True, index=True)  # 學號（必須唯一）
-    # id = Column(Integer, primary_key=True, index=True)  # 主鍵且為索引
 
     # 基本資料欄位
     accountType = Column(String(20), nullable=True)  # 帳戶類型，例如 'STUDENT'
@@ -40,10 +39,16 @@ class Course(Base):
 
     id = Column(String(8), primary_key=True, index=True) # 課程編號，比如IM4043-*
     name = Column(String(50), unique=True)  # 唯一課程名稱
-    course_info = Column(String(100))  # 課程資訊
+    course_info = Column(String(100), nullable=True)  # 課程資訊
     course_year = Column(Integer)  # 開課年份
-    professor_id = Column(Integer, ForeignKey('professors.id'))  # 教授外鍵
     department_id = Column(Integer, ForeignKey('colleges.department_id'))  # 學院外鍵
+
+class CourseProfessor(Base):
+    __tablename__ = 'course_professors'
+
+    id = Column(Integer, primary_key=True, index=True)  # 主键
+    course_id = Column(String(8), ForeignKey('courses.id'))  # 课程外键
+    professor_id = Column(Integer, ForeignKey('professors.id'))  # 教授外键
 
 class Comment(Base):
     __tablename__ = 'comments'
@@ -53,7 +58,7 @@ class Comment(Base):
     content = Column(String(100))
     course_id = Column(String(8), ForeignKey('courses.id'))
     user_id = Column(String(20), ForeignKey('users.studentId'))
-    time = Column(String(50))  # 時間
+    time = Column(DateTime(timezone=True), server_default=func.now())  # 創建時間
 
     __table_args__ = (
         CheckConstraint('score >= 1 AND score <= 5', name='check_score_range'),
@@ -66,3 +71,12 @@ class Favorite(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(String(20), ForeignKey('users.studentId'))
     course_id = Column(String(8), ForeignKey('courses.id'))
+
+class Log(Base):
+    __tablename__ = 'logs'
+
+    id = Column(Integer, primary_key=True, index=True)  # 主鍵
+    char_count = Column(Integer)  # 字數限制（評論字數）
+    action = Column(String(50))  # 操作類型（如增刪等動作）
+    timestamp = Column(DateTime(timezone=True), server_default=func.now())  # 時間戳
+    admin_id = Column(String(20), ForeignKey('users.studentId'))  # 管理員 ID，聯結 users 的 studentId
