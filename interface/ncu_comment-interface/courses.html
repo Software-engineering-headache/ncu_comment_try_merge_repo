@@ -20,23 +20,22 @@
     </header>
     <main>
         <section class="search-container">
-            <form id="search-form">
-                <label for="department">系所：</label>
-                <select id="department">
-                    <option>選擇系所</option>
-                    <option>資訊管理研究所</option>
-                    <option>資訊工程研究所</option>
-                </select>
-                <label for="instructor">授課老師：</label>
-                <input type="text" id="instructor" placeholder="輸入老師名稱">
-                <label for="keyword">課程關鍵字：</label>
-                <input type="text" id="keyword" placeholder="輸入課程名稱或代碼">
-                <button type="submit" class="btn" id="searchButton">搜尋</button>
-            </form>
+        <!-- form 我刪除這個區塊 -->
+            <label for="department">系所：</label>
+            <select id="department">
+                <option>選擇系所</option>
+                <option>資訊管理研究所</option>
+                <option>資訊工程研究所</option>
+            </select>
+            <label for="instructor">授課老師：</label>
+            <input type="text" id="instructor" placeholder="輸入老師名稱">
+            <label for="keyword">課程關鍵字：</label>
+            <input type="text" id="keyword" placeholder="輸入課程名稱或代碼">
+            <button type="submit" class="btn" id="searchButton"  onclick="searchCourses()">搜尋</button>
         </section>
         <section class="course-list" id="courseList">
             <h2 style="text-align: left;">搜尋結果：</h2>
-            <table>
+            <table  id="noneresult2">
                 <thead>
                     <tr>
                         <th>開課系所</th>
@@ -49,10 +48,11 @@
                 </thead>
                 <tbody id="courseListBody">
                     <!-- 動態插入資料 -->
+                    <h2 id="noneresult" style="display: none;">查無此任何相關課程</h2>
                 </tbody>
             </table>
         </section>
-        <script>
+        <!-- script>
             document.getElementById('search-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const department = document.getElementById('department').value;
@@ -101,7 +101,8 @@
                 });
                 document.getElementById('courseList').style.display = 'block';
             });
-        </script>
+        <!-- /script -->
+        <script src="courses.js"></script><!-- 尚未引入 -->
     </main>
 </body>
 </html>
