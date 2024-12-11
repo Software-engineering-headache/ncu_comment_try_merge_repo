@@ -127,7 +127,8 @@ async def read_profile(request: Request, db: Session = Depends(get_db)):
 def get_studentId(request: Request):
     # 嘗試從 cookies 中獲取 studentId
     print("Request Cookies:", request.cookies)
-    student_id = request.session['user'].get("studentId")
+    student_id = request.session.get("user")
+    student_id = student_id["studentId"]
     print(type(student_id))
     if not student_id:
         raise HTTPException(status_code=401, detail="Student ID not found in cookies")

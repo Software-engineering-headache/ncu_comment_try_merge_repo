@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,15 @@
     <link rel="stylesheet" href="new_style.css">
     <link rel="stylesheet" href="new_style_button_table.css">
 </head>
+
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
                 <img src="image/home.png" alt="首頁" width="40" height="40">
             </a>
-            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+            <a href="index.html" class="logo"
+                style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
                 NCU課程評論基地
             </a>
         </div>
@@ -25,7 +28,7 @@
     </header>
     <main>
         <section class="search-container">
-        <!-- form 我刪除這個區塊 -->
+            <!-- form 我刪除這個區塊 -->
             <label for="department">系所：</label>
             <select id="department">
                 <option>選擇系所</option>
@@ -36,11 +39,11 @@
             <input type="text" id="instructor" placeholder="輸入老師名稱">
             <label for="keyword">課程關鍵字：</label>
             <input type="text" id="keyword" placeholder="輸入課程名稱或代碼">
-            <button type="submit" class="btn" id="searchButton"  onclick="searchCourses()">搜尋</button>
+            <button type="submit" class="btn" id="searchButton" onclick="searchCourses()">搜尋</button>
         </section>
         <section class="course-list" id="courseList">
             <h2 style="text-align: left;">搜尋結果：</h2>
-            <table  id="noneresult2">
+            <table id="noneresult2">
                 <thead>
                     <tr>
                         <th>開課系所</th>
@@ -106,8 +109,10 @@
                 });
                 document.getElementById('courseList').style.display = 'block';
             });
-        <!-- /script -->
+        <-- /script -->
+
         <script src="courses.js"></script><!-- 尚未引入 -->
     </main>
 </body>
+
 </html>

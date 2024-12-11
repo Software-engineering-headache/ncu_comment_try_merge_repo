@@ -140,7 +140,7 @@ async def profile(request: Request):
 @router.get("/interface/ncu_comment-interface/Islogin")
 async def Islogin(request: Request):
     # 確保 session 和 user 存在
-    user = request.session.get("user")  
+    user = request.session.get("user")
     print(user)
     if not user or "studentId" not in user:
         return {

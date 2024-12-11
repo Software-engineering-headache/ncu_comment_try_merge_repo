@@ -137,6 +137,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: none;
 }
 
 .dropdown-button-member:hover {
@@ -153,6 +154,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: none;
 }
 
 .dropdown-button-admin:hover {

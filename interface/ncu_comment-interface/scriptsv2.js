@@ -1,47 +1,3 @@
-// 切換下拉選單顯示
-// function toggleDropdown() {
-//     const dropdown = document.getElementById("dropdown-content");
-//     dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-// }
-
-// 顯示選擇的區域
-async function checkLoginStatus() {
-    try {
-        const response = await fetch('http://localhost:8000/interface/ncu_comment-interface/Islogin', {
-            credentials: 'include', // 確保 Cookie 被自動帶上
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log('用戶已登入：', data);
-
-            // 檢查是否有學號（studentId）
-            if (data.studentId) {
-                // 顯示會員功能按鈕
-                document.querySelector('.dropdown-button-member').style.display = 'inline-block';
-
-                // 顯示管理員功能按鈕（如果需要進一步判斷可以打開下面註解）
-                if (data.accountType === 'ADMIN') {
-                    document.querySelector('.dropdown-button-admin').style.display = 'inline-block';
-                }
-            } else {
-                console.log('未抓到學號，按鈕保持隱藏');
-                document.querySelector('.dropdown-button-admin').style.display = 'none';
-                document.querySelector('.dropdown-button-member').style.display = 'none';
-            }
-        } else {
-            console.log('未登入，按鈕保持隱藏');
-        }
-
-    } catch (error) {
-        console.error('檢查登入狀態失敗：', error);
-    }
-}
-
-// 頁面加載時檢查登入狀態
-document.addEventListener('DOMContentLoaded', () => {
-    checkLoginStatus();
-});
 
 function showSection(sectionId) {
     const sections = document.querySelectorAll('main section');
@@ -121,6 +77,9 @@ function initializeSearchButton() {
 
 // 確保 DOM 加載後執行
 document.addEventListener('DOMContentLoaded', initializeSearchButton);
+// window.onload = function () {
+//     initializeSearchButton();
+// };
 
 // 將首頁搜尋跳轉到course.html頁面，並保留剛剛所選的搜尋條件
 function searchCourses() {
