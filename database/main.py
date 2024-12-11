@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException, Depends, status, APIRouter, Request
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing_extensions import Annotated
-from database import models, crud
+from database import models
 from database.database import engine, SessionLocal
 from sqlalchemy.orm import Session
 # from database.crud import get_studentId
