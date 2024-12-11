@@ -9,6 +9,7 @@ class User(Base):
     studentId = Column(String(20),primary_key=True, index=True)  # 學號（必須唯一）
 
     # 基本資料欄位
+    nickname = Column(String(50), nullable=True)  # 暱稱
     accountType = Column(String(20), nullable=True)  # 帳戶類型，例如 'STUDENT'
     chineseName = Column(String(50), nullable=True)  # 中文姓名
     englishName = Column(String(50), nullable=True)  # 英文姓名
