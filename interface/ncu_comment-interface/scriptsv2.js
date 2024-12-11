@@ -73,7 +73,7 @@ function handleSearchButtonClick() {
 
     if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
         alert('輸入資料不完整');
-        return;
+        return window.location.href = 'index.html'; //如果輸入不完整跳回首頁重新輸入
     }
 
     // 隱藏 Hero 文字
