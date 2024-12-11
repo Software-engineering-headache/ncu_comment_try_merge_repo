@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 from requests_oauthlib import OAuth2Session
 from pydantic import BaseModel
 from typing import Optional
-from database.main import create_user
+from database.crud import create_user
 import requests
 from database.database import SessionLocal
 

@@ -106,36 +106,7 @@ async def create_user(user: UserBase, db: db_dependency):
 
     return db_user
 
-#從資料庫抓資料出來
-@router.get("/api/profile")
-async def read_profile(request: Request, db: Session = Depends(get_db)):
-        student_id = get_studentId(request)
-        user = get_user(db, student_id)
-        if user:
-            return {
-        "accountType": user.accountType,
-        "chineseName": user.chineseName,
-        "englishName": user.englishName,
-        "gender": user.gender,
-        "birthday": user.birthday,
-        "email": user.email,
-        "studentId": user.studentId
-        }
-        else:
-            return {"error": "User not found"}
-        
-def get_studentId(request: Request):
-    # 嘗試從 cookies 中獲取 studentId
-    print("Request Cookies:", request.cookies)
-    student_id = request.session.get("user")
-    student_id = student_id["studentId"]
-    print(type(student_id))
-    if not student_id:
-        raise HTTPException(status_code=401, detail="Student ID not found in cookies")
-    return student_id
 
-def get_user(db: Session, user_id: str ):
-    return db.query(models.User).filter(models.User.studentId == user_id).first()
 
 
 # 這邊跟會員管理的刪除功能有衝突到，所以這邊先註解掉，然後這邊的models.User.id好像沒更新成新的models.User.studentId

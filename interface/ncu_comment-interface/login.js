@@ -17,8 +17,14 @@ window.addEventListener("load", async () => {
                 throw new Error("Failed to fetch user data");
             }
             const userData = await response.json();
-            document.getElementById("userInfo").classList.remove("d-none");
-            document.getElementById("userData").textContent = JSON.stringify(userData, null, 2);
+            // 檢查是否是第一次登入
+            if (userData.isFirstLogin) {
+                // 跳轉到 register.html 填寫表單
+                window.location.href = "register.html";
+            } else {
+                document.getElementById("userInfo").classList.remove("d-none");
+                document.getElementById("userData").textContent = JSON.stringify(userData, null, 2);
+            }
         } catch (error) {
             console.error("Error fetching user data:", error);
         }
