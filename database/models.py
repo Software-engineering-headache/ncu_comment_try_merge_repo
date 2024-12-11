@@ -53,6 +53,7 @@ class Comment(Base):
     content = Column(String(100))
     course_id = Column(String(8), ForeignKey('courses.id'))
     user_id = Column(String(20), ForeignKey('users.studentId'))
+    time = Column(String(50))  # 時間
 
     __table_args__ = (
         CheckConstraint('score >= 1 AND score <= 5', name='check_score_range'),
