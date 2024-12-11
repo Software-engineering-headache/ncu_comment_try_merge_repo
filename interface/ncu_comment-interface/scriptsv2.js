@@ -122,3 +122,12 @@ function initializeSearchButton() {
 // 確保 DOM 加載後執行
 document.addEventListener('DOMContentLoaded', initializeSearchButton);
 
+// 將首頁搜尋跳轉到course.html頁面，並保留剛剛所選的搜尋條件
+function searchCourses() {
+    const department = document.getElementById('department').value;
+    const instructor = document.getElementById('instructor').value;
+    const keyword = document.getElementById('keyword').value;
+
+    const params = new URLSearchParams({ department, instructor, keyword });
+    window.location.href = `courses.html?${params.toString()}`;
+}
