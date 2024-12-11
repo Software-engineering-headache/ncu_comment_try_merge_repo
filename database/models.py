@@ -38,7 +38,7 @@ class Course(Base):
     __tablename__ = 'courses'
 
     id = Column(String(8), primary_key=True, index=True) # 課程編號，比如IM4043-*
-    name = Column(String(50), unique=True)  # 唯一課程名稱
+    name = Column(String(50))  # 課程名稱
     course_info = Column(String(100), nullable=True)  # 課程資訊
     course_year = Column(Integer)  # 開課年份
     department_id = Column(Integer, ForeignKey('colleges.department_id'))  # 學院外鍵
