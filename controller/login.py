@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Depends, APIRouter, HTTPException
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 from requests_oauthlib import OAuth2Session
 from pydantic import BaseModel
 from typing import Optional
@@ -144,17 +144,26 @@ async def Islogin(request: Request):
     print(user)
     if not user or "studentId" not in user:
         return {
-        "studentId": None,
-        "accountType": None  # 默認為普通用戶
-    }
+            "studentId": None,
+            "accountType": None  # 默認為普通用戶
+        }
 
     # 返回用戶資訊
     return {
         "studentId": user["studentId"],
-        "accountType": user["accountType"]  # 默認為普通用戶
+        "accountType": user["accountType"]  # 正確返回 accountType
     }
+
+# @router.get("/interface/ncu_comment-interface/logout")
+# async def logout(request: Request):
+#     request.session.clear()  # 清除伺服器端 Session
+#     response = RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+#     response.delete_cookie("studentId")
+#     return response
 
 @router.get("/interface/ncu_comment-interface/logout")
 async def logout(request: Request):
     request.session.clear()  # 清除伺服器端 Session
-    return RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+    response = JSONResponse({"message": "Logout successful"})
+    response.delete_cookie("studentId")
+    return response

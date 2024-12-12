@@ -64,8 +64,8 @@ async def read_profile(request: Request, db: Session = Depends(get_db)):
         student_id = get_studentId(request)
         user = get_user(db, student_id)
         if user:
-            return {
-        "accountType": user.accountType,
+            profile = {
+        "accountType": user.accountType,  # Keep as is if already uppercase
         "chineseName": user.chineseName,
         "englishName": user.englishName,
         "gender": user.gender,
@@ -73,18 +73,17 @@ async def read_profile(request: Request, db: Session = Depends(get_db)):
         "email": user.email,
         "studentId": user.studentId
         }
+            print("User accountType:", profile["accountType"])  # Log the accountType
+            return profile
         else:
             return {"error": "User not found"}
         
 def get_studentId(request: Request):
-    # 嘗試從 cookies 中獲取 studentId
-    print("Request Cookies:", request.cookies)
-    student_id = request.session.get("user")
-    student_id = student_id["studentId"]
-    print(type(student_id))
-    if not student_id:
-        raise HTTPException(status_code=401, detail="Student ID not found in cookies")
-    return student_id
+    # 嘗試從 session 中獲取 studentId
+    student_data = request.session.get("user")
+    if not student_data or "studentId" not in student_data:
+        raise HTTPException(status_code=401, detail="Student ID not found in session")
+    return student_data["studentId"]
 
 def get_user(db: Session, user_id: str ):
     return db.query(models.User).filter(models.User.studentId == user_id).first()

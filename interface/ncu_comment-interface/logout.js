@@ -1,15 +1,29 @@
-async function logout() {
-    try {
-        const response = await fetch('http://localhost:8000/interface/ncu_comment-interface/logout', {
-            credentials: 'include', // 確保 Cookie 被自動帶上
+
+document.addEventListener("DOMContentLoaded", function () {
+    const logoutLink = document.getElementById("logoutLink");
+    if (logoutLink) {
+        logoutLink.addEventListener("click", function (event) {
+            event.preventDefault(); // 防止默認導航行為
+
+            fetch("http://localhost:8000/interface/ncu_comment-interface/logout", { // 確保使用完整的URL
+                method: "GET",
+                credentials: "include" // 確保攜帶 Cookie
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // 登出成功，重定向到首頁
+                        window.location.href = "index.html";
+                    } else {
+                        console.error("Logout failed");
+                        alert("登出失敗，請稍後再試。");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during logout:", error);
+                    alert("登出過程中出錯，請檢查網絡或稍後再試。");
+                });
         });
-        if (response.ok) {
-            console.log('登出成功');
-            window.location.href = 'http://localhost:8000/interface/ncu_comment-interface/login'; // 登出後跳轉到登入頁面
-        } else {
-            console.error('登出失敗');
-        }
-    } catch (error) {
-        console.error('登出請求失敗：', error);
+    } else {
+        console.error("Logout link not found");
     }
-}
+});

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,18 +31,21 @@
 
         .course-detail th,
         .course-list th {
-            background-color: #d2e8f2; /* 表格標題淺藍色 */
+            background-color: #d2e8f2;
+            /* 表格標題淺藍色 */
             font-weight: bold;
         }
 
         .course-detail tr:nth-child(even),
         .course-list tr:nth-child(even) {
-            background-color: #f9f9f9; /* 偶數列背景色 */
+            background-color: #f9f9f9;
+            /* 偶數列背景色 */
         }
 
         .course-detail button,
         .course-list button {
-            background-color: #4682b4; /* 藍色按鈕 */
+            background-color: #4682b4;
+            /* 藍色按鈕 */
             color: white;
             border: none;
             padding: 10px 20px;
@@ -58,6 +62,7 @@
         .comments {
             margin-top: 2rem;
         }
+
         /* 單條評論樣式 */
         .comment-item {
             background: #f8f9fa;
@@ -68,16 +73,18 @@
         }
 
         .comment-item .rating {
-            color: #f5b301; /* 星星顏色 */
+            color: #f5b301;
+            /* 星星顏色 */
         }
 
         .meta {
             color: #6c757d;
             font-size: 0.9rem;
         }
-        
+
         /* 彈跳視窗 */
-        .modal, .alert-modal {
+        .modal,
+        .alert-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -89,8 +96,10 @@
             align-items: center;
         }
 
-        .modal-content, .alert-content {
-            position: relative; /* 確保內部的按鈕可以相對於彈跳視窗內容定位 */
+        .modal-content,
+        .alert-content {
+            position: relative;
+            /* 確保內部的按鈕可以相對於彈跳視窗內容定位 */
             background: #fff;
             padding: 2rem;
             border-radius: 8px;
@@ -104,9 +113,12 @@
             right: 10px;
             font-size: 1.5rem;
             cursor: pointer;
-            background: none; /* 移除背景 */
-            border: none; /* 移除邊框 */
-            color: #333; /* 叉叉的顏色 */
+            background: none;
+            /* 移除背景 */
+            border: none;
+            /* 移除邊框 */
+            color: #333;
+            /* 叉叉的顏色 */
         }
 
         /* 評分星級樣式 */
@@ -138,13 +150,15 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
                 <img src="image/home.png" alt="首頁" width="40" height="40">
             </a>
-            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+            <a href="index.html" class="logo"
+                style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
                 NCU課程評論基地
             </a>
         </div>
@@ -219,7 +233,7 @@
                         <option>資訊管理研究所</option>
                         <option>資訊工程研究所</option>
                     </select><br>
-                    
+
                     <!-- 授課老師 -->
                     <label for="teacher">授課老師</label>
                     <input type="text" id="teacher" required><br>
@@ -227,7 +241,7 @@
                     <!-- 課程關鍵字 -->
                     <label for="keywords">課程關鍵字</label>
                     <input type="text" id="keywords" required><br>
-                    
+
                     <!-- 年份 -->
                     <label for="year">年份</label>
                     <!--<input type="number" id="year" required min="2000" max="2100"><br>-->
@@ -273,4 +287,5 @@
     </main>
     <script src="scripts.js"></script>
 </body>
+
 </html>

@@ -16,8 +16,6 @@ from database import models
 from database.database import engine
 
 
-
-
 app = FastAPI()
 
 # 添加伺服器端的 SessionMiddleware

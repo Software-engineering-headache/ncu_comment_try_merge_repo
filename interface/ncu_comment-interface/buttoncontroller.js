@@ -7,6 +7,9 @@ async function checkLoginStatus() {
     const adminButton = document.querySelector('.dropdown-button-admin');
     const logoutLink = document.getElementById('logoutLink');
 
+    // 清除本地快取以避免使用過期的資料
+    localStorage.removeItem('loginStatusCache');
+
     // 檢查本地快取
     const cachedData = getCachedLoginStatus();
 
@@ -27,17 +30,25 @@ async function checkLoginStatus() {
         const profileResponse = await fetch('http://localhost:8000/api/profile', {
             credentials: "include",
         });
+        const Islogin = await fetch('http://localhost:8000/interface/ncu_comment-interface/Islogin', {
+            credentials: "include",
+        });
 
         if (!profileResponse.ok) {
-            throw new Error(`HTTP error! Status: ${profileResponse.status}`);
+            // 伺服器未正確返回，設定為未登入狀態
+            setButtonVisibility({ login: true, member: false, admin: false, logout: false });
+            return;
         }
 
         const profileData = await profileResponse.json();
+        const IsloginData = await Islogin.json();
+
         console.log("伺服器返回的登入狀態資料:", profileData);
+        console.log("Received accountType:", profileData.accountType); // Log the accountType
 
         // 處理登入狀態
-        const loggedIn = !!profileData.studentId;
-        const isAdmin = profileData.accountType === 'ADMIN';
+        const loggedIn = !!IsloginData.studentId;
+        const isAdmin = profileData.accountType === 'ADMIN';  // No need to convert case if already uppercase
 
         // 更新按鈕顯示狀態
         setButtonVisibility({
@@ -93,4 +104,5 @@ function cacheLoginStatus({ loggedIn, isAdmin }) {
 }
 
 // 在 DOM 加載完成後調用函式
+
 window.addEventListener('DOMContentLoaded', checkLoginStatus);
