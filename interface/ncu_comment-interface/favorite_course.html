@@ -21,7 +21,7 @@
                 NCU課程評論基地
             </a>
         </div>
-    
+
         <div class="navbar">
             <nav>
                 <button id="loginButton" class="btn">登入</button>
@@ -54,7 +54,7 @@
             <!-- 這裡將動態顯示符合當前登入使用者的收藏課程 -->
         </div>
 
-        <!-- 將原先分開的JS集中於此，確保順序 -->
+        <!-- 先載入 buttoncontroller.js 再載入 favorite_course.js，以確保 buttoncontroller.js 優先執行 -->
         <script src="buttoncontroller.js"></script>
         <script src="favorite_course.js"></script>
     </main>

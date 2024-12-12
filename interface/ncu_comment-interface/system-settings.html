@@ -58,36 +58,34 @@
             </a>
             <a href="index.html" class="logo"
                 style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
-                NCU課程評論基地：管理系統
+                NCU課程評論基地
             </a>
         </div>
-
+    
         <div class="navbar">
             <nav>
-                <!-- 把登入按鈕註解掉 -->
-                <!-- <button id="loginButton" class="btn">登入</button>
-                                <script src="login.js"></script> -->
-                <!-- 註冊按鈕已移除 -->
+                <button id="loginButton" class="btn">登入</button>
+                <script src="login.js"></script>
                 <div class="dropdown">
                     <button class="dropdown-button-member">會員中心 ▼</button>
                     <div class="dropdown-content">
                         <a href="#" onclick="showSection('my-comments')">我的評論</a>
                         <a href="favorite_course.html">收藏課程</a>
                         <a href="profoile.html">個人資料</a>
-                        <!-- <a href="#" onclick="showSection('edit-profile')">個人資料</a>-->
-                        <!-- 登出按鈕已移除 -->
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button-admin" style="display: inline;">管理員功能 ▼</button>
+                    <button class="dropdown-button-admin">管理員功能 ▼</button>
                     <div class="dropdown-content">
                         <a href="member-management.html">會員管理</a>
                         <a href="admin-management.html">管理員管理</a>
                         <a href="system-settings.html">系統設定</a>
                     </div>
                 </div>
-                <a href="index.html">登出</a>
+                <a href="index.html" id="logoutLink" onclick="logout()">登出</a>
+                <script src="logout.js"></script>
             </nav>
+        </div>
     </header>
 
     <main>

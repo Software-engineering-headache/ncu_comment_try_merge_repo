@@ -35,6 +35,8 @@
     
         <div class="navbar">
             <nav>
+                <button id="loginButton" class="btn">登入</button>
+                <script src="login.js"></script>
                 <div class="dropdown">
                     <button class="dropdown-button-member">會員中心 ▼</button>
                     <div class="dropdown-content">
@@ -44,14 +46,15 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button-admin" style="display:none;">管理員功能 ▼</button>
+                    <button class="dropdown-button-admin">管理員功能 ▼</button>
                     <div class="dropdown-content">
                         <a href="member-management.html">會員管理</a>
                         <a href="admin-management.html">管理員管理</a>
                         <a href="system-settings.html">系統設定</a>
                     </div>
                 </div>
-                <a href="index.html">登出</a>
+                <a href="index.html" id="logoutLink" onclick="logout()">登出</a>
+                <script src="logout.js"></script>
             </nav>
         </div>
     </header>
