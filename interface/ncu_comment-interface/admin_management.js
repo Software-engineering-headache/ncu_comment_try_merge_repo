@@ -37,6 +37,7 @@ async function fetchAdminUsers() {
             <thead>
                 <tr style="background-color: #d2e8f2;">
                     <th style="border: 1px solid #ddd; padding: 8px;">學號</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">暱稱</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">姓名</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">電子郵件</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">操作</th>
@@ -54,6 +55,7 @@ async function fetchAdminUsers() {
             row.style.backgroundColor = index % 2 === 0 ? "#f9f9f9" : "#ffffff";
             row.innerHTML = `
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.studentId}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${user.nickname}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.chineseName}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.email}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">

@@ -29,6 +29,7 @@ async def get_admin_users():
                 "gender": user.gender,
                 "birthday": user.birthday,
                 "email": user.email,
+                "nickname": user.nickname,
             })
 
         return admin_users_details
