@@ -1,4 +1,11 @@
-/* 搜尋條件橫排樣式 */
+/* 搜尋條件橫排樣式 *//* 預設將登入按鈕、會員功能、管理員功能、登出按鈕隱藏 */
+#loginButton,
+.dropdown-button-member,
+.dropdown-button-admin,
+#logoutLink {
+    display: none;
+}
+
 .search-container {
     display: flex;
     justify-content: center;
