@@ -24,22 +24,16 @@
 
         <div class="navbar">
             <nav>
-                <!-- 把登入按鈕註解掉 -->
-                <!-- <button id="loginButton" class="btn">登入</button>
-                <script src="login.js"></script> -->
-                <!-- 註冊按鈕已移除 -->
                 <div class="dropdown">
                     <button class="dropdown-button-member">會員中心 ▼</button>
                     <div class="dropdown-content">
                         <a href="#" onclick="showSection('my-comments')">我的評論</a>
                         <a href="favorite_course.html">收藏課程</a>
                         <a href="profoile.html">個人資料</a>
-                        <!-- <a href="#" onclick="showSection('edit-profile')">個人資料</a>-->
-                        <!-- 登出按鈕已移除 -->
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button-admin" style="display: inline;">管理員功能 ▼</button>
+                    <button class="dropdown-button-admin" style="display:none;">管理員功能 ▼</button>
                     <div class="dropdown-content">
                         <a href="member-management.html">會員管理</a>
                         <a href="admin-management.html">管理員管理</a>
@@ -48,17 +42,17 @@
                 </div>
                 <a href="index.html">登出</a>
             </nav>
-
         </div>
     </header>
 
     <main>
         <div class="section-title">收藏課程：</div>
         <div id="dataContainer">
-            <!-- 這裡將動態顯示從後端獲取的資料 -->
+            <!-- 這裡將動態顯示符合當前登入使用者的收藏課程 -->
         </div>
+
+        <!-- 將原先分開的JS集中於此，確保順序 -->
         <script src="favorite_course.js"></script>
-        <script src="buttoncontroller.js"></script>
     </main>
 
     <footer>
