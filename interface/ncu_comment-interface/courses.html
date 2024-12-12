@@ -29,8 +29,9 @@
             <label for="department">系所：</label>
             <select id="department">
                 <option>選擇系所</option>
-                <option>資訊管理研究所</option>
-                <option>資訊工程研究所</option>
+                <option>資訊管理學系</option>
+                <option>企業管理學系</option>
+                <option>財務金融學系</option>
             </select>
             <label for="instructor">授課老師：</label>
             <input type="text" id="instructor" placeholder="輸入老師名稱">
@@ -40,6 +41,7 @@
         </section>
         <section class="course-list" id="courseList">
             <h2 style="text-align: left;">搜尋結果：</h2>
+            <h2 id="noneresult" style="display: none;">查無此任何相關課程</h2>
             <table  id="noneresult2">
                 <thead>
                     <tr>
@@ -52,13 +54,12 @@
                     </tr>
                 </thead>
                 <tbody id="courseListBody">
-                    <!-- 動態插入資料 -->
-                    <h2 id="noneresult" style="display: none;">查無此任何相關課程</h2>
+                    <!-- 動態插入資料 -->           
                 </tbody>
             </table>
         </section>
-        <!-- script>
-            document.getElementById('search-form').addEventListener('submit', function(event) {
+        <!--script>
+            document.getElementById('searchButton').addEventListener('click', function(event) {
             event.preventDefault();
             const department = document.getElementById('department').value;
             const instructor = document.getElementById('instructor').value;
@@ -106,8 +107,8 @@
                 });
                 document.getElementById('courseList').style.display = 'block';
             });
-        <!-- /script -->
-        <script src="courses.js"></script><!-- 尚未引入 -->
+        </script-->
+        <script src="courses.js"></script>
     </main>
 </body>
 </html>
