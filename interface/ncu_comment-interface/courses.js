@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', initializeSearchButton);
 function initializeSearchButton() {
     const searchButton = document.getElementById('searchButton');
     if (searchButton) {
-        searchButton.addEventListener('click');
+        searchButton.addEventListener('click',searchCourses);
     }
 }
 
@@ -55,59 +55,70 @@ function fillForm(params) {
 
 // 調用 API 獲取搜尋結果
 function fetchSearchResults(params) {
-    // 使用假資料顯示結果
+    //使用假資料顯示結果
     // const fakeData = [
-    //    { department: '資訊管理研究所', courseCode: '43030', courseName: '軟體工程 I', instructor: '張三', reviewCount: 2 },
-    //    { department: '資訊工程研究所', courseCode: '43039', courseName: '企業電腦網路', instructor: '李四', reviewCount: 1 }
+    //    { department: '資訊管理學系', courseCode: '43030', courseName: '軟體工程 I', instructor: '張三', reviewCount: 2 },
+    //    { department: '資訊工程學系', courseCode: '43039', courseName: '企業電腦網路', instructor: '李四', reviewCount: 1 }
     //];
     //showSearchResults(fakeData);
 
     fetch(`${API_URL}?department=${params.department}&instructor=${params.instructor}&keyword=${params.keyword}`)
-        .then(response => response.json())  // 確保將響應轉換為 JSON
-        .then(data => {
-            // 檢查資料是否為空陣列或包含 null 的值
-            if (!data || data.length === 0 || data.every(item => Object.values(item).every(value => value === null))) {
-                // 如果沒有結果，顯示 "無結果" 提示
-                const courseListBody = document.getElementById('courseListBody');
-                courseListBody.innerHTML = ''; // 清空搜尋結果
-            }
-            else {
-                showSearchResults(data);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching search results:', error);
+    .then(response => {
+        return response.json(); // 確保將回應轉為 JSON
+    })
+    .then(data => {
+        const courseListBody = document.getElementById('courseListBody');
+        console.log('Received Data:', data); 
+        
+        // 檢查資料是否為空或所有值均為 null
+        if (!data || data.length === 0 || data.every(item => Object.values(item).every(value => value === null))) {
+        // 清空搜尋結果並顯示 "無結果" 提示
+            courseListBody.innerHTML = '';
             document.getElementById('noneresult').style.display = 'inline';
-        });
+            return;
+        }
+
+        // 有結果時，隱藏 "無結果" 提示，顯示結果
+        document.getElementById('noneresult').style.display = 'none';
+        showSearchResults(data);
+    })
+    .catch(error => {
+        console.error('Error fetching search results:', error);
+        // 如果發生錯誤，顯示 "無結果" 提示
+        document.getElementById('noneresult').style.display = 'inline';
+    });
+
 }
 
 // 顯示搜尋結果
 function showSearchResults(results) {
     const courseListBody = document.getElementById('courseListBody');
     courseListBody.innerHTML = '';
-        results.forEach(result => {
-            const row = document.createElement('tr');
-            if (result.department_name === null ) { 
-                document.getElementById('noneresult').style.display = 'inline';
-                document.getElementById('noneresult2').style.display = 'none';
-            }
-            else {
-                row.innerHTML = `
-                    <td>${result.department_name}</td>
-                    <td>${result.course_id}</td>
-                    <td>${result.course_name}</td>
-                    <td>${result.professor_name}</td>
-                    <td>${result.comment_count}</td>
-                    <td>
-                        <button class="btn" onclick="window.location.href='newCommentv2.html'">查看評論</button>
-                        <button class="btn">加入收藏</button>
-                    </td>
-                `;
-                courseListBody.appendChild(row);
-                document.getElementById('courseList').style.display = 'block';
-            }
-
-        });
+    results.forEach(result => {
+        const row = document.createElement('tr');
+        if (result.department_name === null ) { 
+            document.getElementById('noneresult').style.display = 'inline';
+            document.getElementById('noneresult2').style.display = 'none';
+        } else {
+            // 處理教授列表（將陣列轉為以逗號分隔的字串）
+            const professors = result.professors.join(', ');
+            
+            // 動態填充資料
+            row.innerHTML = `
+                <td>${result.department_name}</td>
+                <td>${result.course_id}</td>
+                <td>${result.course_name}</td>
+                <td>${professors}</td>
+                <td>${result.count}</td>
+                <td>
+                    <button class="btn" onclick="window.location.href='newCommentv2.html'">查看評論</button>
+                    <button class="btn">加入收藏</button>
+                </td>
+            `;
+            courseListBody.appendChild(row);
+            document.getElementById('courseList').style.display = 'block';
+        }
+    });
 }
         
 function viewComments(courseName) {
