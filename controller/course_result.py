@@ -67,33 +67,6 @@ async def get_courses_with_professors(department: str, instructor: str, keyword:
         courses_list = list(courses_details.values())
         return courses_list
 
-        # 整理結果：按課程分組，合併教授名稱
-        #courses_details = {}
-        #for result in results:
-            #course_id = result.course_id
-            #if course_id not in courses_details:
-                #courses_details[course_id] = {
-                    #"course_id": course_id,
-                    #"course_name": result.course_name,
-                    #"department_name": result.department_name,
-                    #"professors": []
-                #}
-            #if result.professor_name:
-                #courses_details[course_id]["professors"].append(result.professor_name)
-
-        # 將結果轉換為列表
-        #courses_list = [
-            #{
-                #"course_id": details["course_id"],
-                #"course_name": details["course_name"],
-                #"department_name": details["department_name"],
-                #"professors": details["professors"]
-            #}
-            #for details in courses_details.values()
-        #]
-
-        #return courses_list
-
     except Exception as e:
         print(f"Error occurred in get_courses_with_professors: {e}")
         raise HTTPException(status_code=500, detail=f"Error occurred: {e}")

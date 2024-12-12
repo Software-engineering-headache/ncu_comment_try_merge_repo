@@ -29,6 +29,7 @@ async def get_all_users():
                 "gender": user.gender,
                 "birthday": user.birthday,
                 "email": user.email,
+                "nickname": user.nickname,
             })
 
         return all_users_details

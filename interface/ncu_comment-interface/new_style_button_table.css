@@ -40,7 +40,7 @@
 
 /* 表格樣式 */
 .course-list {
-    display: none;
+    display: block;
     /* 預設隱藏搜尋結果表格 */
     margin-left: 5%;
     /* 結果表格與左側對齊 */
@@ -137,6 +137,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: none;
 }
 
 .dropdown-button-member:hover {
@@ -153,6 +154,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: none;
 }
 
 .dropdown-button-admin:hover {

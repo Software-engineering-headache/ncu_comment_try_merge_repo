@@ -16,15 +16,17 @@
             <a href="index.html">
                 <img src="image/home.png" alt="首頁" width="40" height="40">
             </a>
-            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+            <a href="index.html" class="logo"
+                style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
                 NCU課程評論基地
             </a>
         </div>
-        
+
         <div class="navbar">
             <nav>
-                <button id="loginButton" class="btn">登入</button>
-                <script src="login.js"></script>
+                <!-- 把登入按鈕註解掉 -->
+                <!-- <button id="loginButton" class="btn">登入</button>
+                <script src="login.js"></script> -->
                 <!-- 註冊按鈕已移除 -->
                 <div class="dropdown">
                     <button class="dropdown-button-member">會員中心 ▼</button>
@@ -32,20 +34,21 @@
                         <a href="#" onclick="showSection('my-comments')">我的評論</a>
                         <a href="favorite_course.html">收藏課程</a>
                         <a href="profoile.html">個人資料</a>
-                         <!-- <a href="#" onclick="showSection('edit-profile')">個人資料</a>-->
-                        <a href="index.html">登出</a>
+                        <!-- <a href="#" onclick="showSection('edit-profile')">個人資料</a>-->
+                        <!-- 登出按鈕已移除 -->
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button-member">管理員功能 ▼</button>
+                    <button class="dropdown-button-admin" style="display: inline;">管理員功能 ▼</button>
                     <div class="dropdown-content">
                         <a href="member-management.html">會員管理</a>
                         <a href="admin-management.html">管理員管理</a>
                         <a href="system-settings.html">系統設定</a>
                     </div>
                 </div>
+                <a href="index.html">登出</a>
             </nav>
-            
+
         </div>
     </header>
 
@@ -55,10 +58,12 @@
             <!-- 這裡將動態顯示從後端獲取的資料 -->
         </div>
         <script src="favorite_course.js"></script>
+        <script src="buttoncontroller.js"></script>
     </main>
 
     <footer>
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
 </body>
+
 </html>

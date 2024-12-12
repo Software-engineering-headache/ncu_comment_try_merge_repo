@@ -38,6 +38,7 @@ async function fetchAllUsers() {
                 <tr style="background-color: #d2e8f2;">
                     <th style="border: 1px solid #ddd; padding: 8px;">學號</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">帳戶類型</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">暱稱</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">中文姓名</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">英文姓名</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">性別</th>
@@ -59,6 +60,7 @@ async function fetchAllUsers() {
             row.innerHTML = `
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.studentId}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.accountType || "N/A"}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${user.nickname || "N/A"}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.chineseName || "N/A"}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.englishName || "N/A"}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.gender || "N/A"}</td>

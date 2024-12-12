@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 from requests_oauthlib import OAuth2Session
 from pydantic import BaseModel
 from typing import Optional
-from database.main import create_user
+from database.crud import create_user
 import requests
 from database.database import SessionLocal
 
@@ -140,7 +140,7 @@ async def profile(request: Request):
 @router.get("/interface/ncu_comment-interface/Islogin")
 async def Islogin(request: Request):
     # 確保 session 和 user 存在
-    user = request.session.get("user")  
+    user = request.session.get("user")
     print(user)
     if not user or "studentId" not in user:
         return {

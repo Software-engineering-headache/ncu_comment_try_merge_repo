@@ -9,6 +9,7 @@ class User(Base):
     studentId = Column(String(20),primary_key=True, index=True)  # 學號（必須唯一）
 
     # 基本資料欄位
+    nickname = Column(String(50), nullable=True)  # 暱稱
     accountType = Column(String(20), nullable=True)  # 帳戶類型，例如 'STUDENT'
     chineseName = Column(String(50), nullable=True)  # 中文姓名
     englishName = Column(String(50), nullable=True)  # 英文姓名
@@ -38,7 +39,7 @@ class Course(Base):
     __tablename__ = 'courses'
 
     id = Column(String(8), primary_key=True, index=True) # 課程編號，比如IM4043-*
-    name = Column(String(50), unique=True)  # 唯一課程名稱
+    name = Column(String(50))  # 課程名稱
     course_info = Column(String(100), nullable=True)  # 課程資訊
     course_year = Column(Integer)  # 開課年份
     department_id = Column(Integer, ForeignKey('colleges.department_id'))  # 學院外鍵

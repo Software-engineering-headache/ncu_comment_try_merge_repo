@@ -61,7 +61,7 @@
                 <script src="login.js"></script>
                 <!-- 註冊按鈕已移除 -->
                 <div class="dropdown">
-                    <button class="dropdown-button-member" style="display:none;">會員中心 ▼</button>
+                    <button class="dropdown-button-member">會員中心 ▼</button>
                     <div class="dropdown-content">
                         <a href="#" onclick="showSection('my-comments')">我的評論</a>
                         <a href="favorite_course.html">收藏課程</a>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button-admin" style="display:none;">管理員功能 ▼</button>
+                    <button class="dropdown-button-admin">管理員功能 ▼</button>
                     <div class="dropdown-content">
                         <a href="member-management.html">會員管理</a>
                         <a href="admin-management.html">管理員管理</a>
@@ -90,8 +90,9 @@
             <label for="department">系所：</label>
             <select id="department">
                 <option>選擇系所</option>
-                <option>資訊管理研究所</option>
-                <option>資訊工程研究所</option>
+                <option>資訊管理學系</option>
+                <option>企業管理學系</option>
+                <option>財務金融學系</option>
             </select>
             <label for="instructor">授課老師：</label>
             <input type="text" id="instructor" placeholder="輸入老師名稱">
@@ -150,12 +151,14 @@
         </section>
 
         <script src="scriptsv2.js"></script>
+        <script src="buttoncontroller.js"></script>
     </main>
 
     <footer>
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
     <script src="search.js"></script>
+    <!-- <script src="buttoncontroller.js"></script> -->
 </body>
 
 </html>
