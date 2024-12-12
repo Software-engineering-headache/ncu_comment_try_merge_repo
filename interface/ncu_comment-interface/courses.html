@@ -7,6 +7,18 @@
     <title>搜尋課程 - 課程評論系統</title>
     <link rel="stylesheet" href="new_style.css">
     <link rel="stylesheet" href="new_style_button_table.css">
+    <style>
+        /* 只在有結果時顯示表格 */
+        #courseList {
+            display: none;
+        }
+
+        #noneresult {
+            display: none;
+            color: gray;
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,15 +32,31 @@
                 NCU課程評論基地
             </a>
         </div>
+    
         <div class="navbar">
             <nav>
+                <div class="dropdown">
+                    <button class="dropdown-button-member">會員中心 ▼</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="showSection('my-comments')">我的評論</a>
+                        <a href="favorite_course.html">收藏課程</a>
+                        <a href="profoile.html">個人資料</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-button-admin" style="display:none;">管理員功能 ▼</button>
+                    <div class="dropdown-content">
+                        <a href="member-management.html">會員管理</a>
+                        <a href="admin-management.html">管理員管理</a>
+                        <a href="system-settings.html">系統設定</a>
+                    </div>
+                </div>
                 <a href="index.html">登出</a>
             </nav>
         </div>
     </header>
     <main>
         <section class="search-container">
-            <!-- form 我刪除這個區塊 -->
             <label for="department">系所：</label>
             <select id="department">
                 <option>選擇系所</option>
@@ -42,10 +70,12 @@
             <input type="text" id="keyword" placeholder="輸入課程名稱或代碼">
             <button type="submit" class="btn" id="searchButton" onclick="searchCourses()">搜尋</button>
         </section>
+
+        <h2 id="noneresult">查無此任何相關課程</h2>
+
         <section class="course-list" id="courseList">
             <h2 style="text-align: left;">搜尋結果：</h2>
-            <h2 id="noneresult" style="display: none;">查無此任何相關課程</h2>
-            <table  id="noneresult2">
+            <table>
                 <thead>
                     <tr>
                         <th>開課系所</th>
@@ -57,60 +87,12 @@
                     </tr>
                 </thead>
                 <tbody id="courseListBody">
-                    <!-- 動態插入資料 -->           
+                    <!-- 動態插入資料 -->
                 </tbody>
             </table>
         </section>
-        <!--script>
-            document.getElementById('searchButton').addEventListener('click', function(event) {
-            event.preventDefault();
-            const department = document.getElementById('department').value;
-            const instructor = document.getElementById('instructor').value;
-            const keyword = document.getElementById('keyword').value;
-            if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
-                alert('輸入資料不完整');
-                return;
-            }
-            
-            // 模擬搜尋結果
-            const searchResults = [
-                    {
-                        department: department,
-                        courseCode: '43030',
-                        courseName: '軟體工程 I',
-                        instructor: instructor,
-                        reviewCount: 2
-                    },
-                    {
-                        department: department,
-                        courseCode: '43039',
-                        courseName: '企業電腦網路',
-                        instructor: instructor,
-                        reviewCount: 1
-                    }
-                ];
 
-                const courseListBody = document.getElementById('courseListBody');
-                courseListBody.innerHTML = ''; // 清空之前的搜尋結果
-
-                searchResults.forEach(result => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${result.department}</td>
-                        <td>${result.courseCode}</td>
-                        <td>${result.courseName}</td>
-                        <td>${result.instructor}</td>
-                        <td>${result.reviewCount}</td>
-                        <td>
-                            <button class="btn" onclick="window.location.href='newCommentv2.html'">查看評論</button>
-                            <button class="btn">加入收藏</button>
-                        </td>
-                    `;
-                    courseListBody.appendChild(row);
-                });
-                document.getElementById('courseList').style.display = 'block';
-            });
-        </script-->
+        <script src="buttoncontroller.js"></script>
         <script src="courses.js"></script>
     </main>
 </body>

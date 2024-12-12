@@ -1,35 +1,41 @@
 const API_URL = "http://127.0.0.1:8000/courses/results";
+const ADD_FAVORITE_URL = "http://127.0.0.1:8000/favorites/add";
 
-document.addEventListener('DOMContentLoaded', initializeSearchButton);
+// 全域變數(需確保 checkLoginStatus 已在 buttoncontroller.js 中執行並設定 currentStudentId)
+let currentStudentId = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // 先檢查登入狀態，確保 currentStudentId 已取得
+    // 因為 checkLoginStatus 在 buttoncontroller.js 中的 DOMContentLoaded 執行
+    // 此處可多加一個 setTimeout 或直接相信已經執行完畢。
+    // 若不放心，可將本區塊的邏輯放在 checkLoginStatus() 完成後再呼叫。
+    // 建議方式：在此直接嘗試使用 currentStudentId。
+    // 若要保證順序，可移除這行 await checkLoginStatus(); 因為已在 buttoncontroller.js 執行過。
+    console.log("Logged in user studentId:", currentStudentId);
+
+    initializeSearchButton();
+    const params = getQueryParams();
+    if (params.department || params.instructor || params.keyword) {
+        fillForm(params);
+        fetchSearchResults(params);
+    }
+});
 
 function initializeSearchButton() {
     const searchButton = document.getElementById('searchButton');
     if (searchButton) {
-        searchButton.addEventListener('click',searchCourses);
+        searchButton.addEventListener('click', searchCourses);
     }
 }
 
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-    const params = getQueryParams();
-    if (!params.department && !params.instructor && !params.keyword) {
-        return 0;
-    }
-    else {
-        fillForm(params);   
-        fetchSearchResults(params);
-    }
-});   
-
-// 解析 URL 參數
 function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);  //URLSearchParams是一個內建的物件，用來處理URL查詢字串，例如：?name=abc&age=20
+    const params = new URLSearchParams(window.location.search);
     return {
         department: params.get('department'),
         instructor: params.get('instructor'),
         keyword: params.get('keyword')
-    };// 會回傳一個物件，裡面有三個屬性，分別是department、instructor、keyword
-} //這個 getQueryParams 的結果會丟回去最底下初始化           
+    };
+}
 
 function searchCourses() {
     const department = document.getElementById('department').value;
@@ -39,91 +45,108 @@ function searchCourses() {
     if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
         alert('輸入資料不完整');
         return window.location.href = 'courses.html';
-    }
-    else{
+    } else {
         const params = { department: department, instructor: instructor, keyword: keyword };
         fetchSearchResults(params);
     }
 }
 
-// 填充表單
 function fillForm(params) {
     document.getElementById('department').value = params.department || '選擇系所';
     document.getElementById('instructor').value = params.instructor || '';
     document.getElementById('keyword').value = params.keyword || '';
-}            
-
-// 調用 API 獲取搜尋結果
-function fetchSearchResults(params) {
-    //使用假資料顯示結果
-    // const fakeData = [
-    //    { department: '資訊管理學系', courseCode: '43030', courseName: '軟體工程 I', instructor: '張三', reviewCount: 2 },
-    //    { department: '資訊工程學系', courseCode: '43039', courseName: '企業電腦網路', instructor: '李四', reviewCount: 1 }
-    //];
-    //showSearchResults(fakeData);
-
-    fetch(`${API_URL}?department=${params.department}&instructor=${params.instructor}&keyword=${params.keyword}`)
-    .then(response => {
-        return response.json(); // 確保將回應轉為 JSON
-    })
-    .then(data => {
-        const courseListBody = document.getElementById('courseListBody');
-        console.log('Received Data:', data); 
-        
-        // 檢查資料是否為空或所有值均為 null
-        if (!data || data.length === 0 || data.every(item => Object.values(item).every(value => value === null))) {
-        // 清空搜尋結果並顯示 "無結果" 提示
-            courseListBody.innerHTML = '';
-            document.getElementById('noneresult').style.display = 'inline';
-            return;
-        }
-
-        // 有結果時，隱藏 "無結果" 提示，顯示結果
-        document.getElementById('noneresult').style.display = 'none';
-        showSearchResults(data);
-    })
-    .catch(error => {
-        console.error('Error fetching search results:', error);
-        // 如果發生錯誤，顯示 "無結果" 提示
-        document.getElementById('noneresult').style.display = 'inline';
-    });
-
 }
 
-// 顯示搜尋結果
+function fetchSearchResults(params) {
+    fetch(`${API_URL}?department=${params.department}&instructor=${params.instructor}&keyword=${params.keyword}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Received Data:', data); 
+            const courseListBody = document.getElementById('courseListBody');
+            const noResultElem = document.getElementById('noneresult');
+            const courseListSection = document.getElementById('courseList');
+
+            if (!data || data.length === 0 || data.every(item => Object.values(item).every(value => value === null))) {
+                // 無結果時顯示訊息並隱藏表格
+                courseListBody.innerHTML = '';
+                noResultElem.style.display = 'block';
+                courseListSection.style.display = 'none';
+                return;
+            }
+
+            // 有結果時，隱藏無結果訊息，顯示表格
+            noResultElem.style.display = 'none';
+            courseListSection.style.display = 'block';
+            showSearchResults(data);
+        })
+        .catch(error => {
+            console.error('Error fetching search results:', error);
+            // 失敗時同樣顯示無結果訊息
+            document.getElementById('noneresult').style.display = 'block';
+            document.getElementById('courseList').style.display = 'none';
+        });
+}
+
 function showSearchResults(results) {
     const courseListBody = document.getElementById('courseListBody');
     courseListBody.innerHTML = '';
     results.forEach(result => {
         const row = document.createElement('tr');
-        if (result.department_name === null ) { 
-            document.getElementById('noneresult').style.display = 'inline';
-            document.getElementById('noneresult2').style.display = 'none';
-        } else {
-            // 處理教授列表（將陣列轉為以逗號分隔的字串）
-            const professors = result.professors.join(', ');
-            
-            // 動態填充資料
-            row.innerHTML = `
-                <td>${result.department_name}</td>
-                <td>${result.course_id}</td>
-                <td>${result.course_name}</td>
-                <td>${professors}</td>
-                <td>${result.count}</td>
-                <td>
-                    <button class="btn" onclick="window.location.href='newCommentv2.html'">查看評論</button>
-                    <button class="btn">加入收藏</button>
-                </td>
-            `;
-            courseListBody.appendChild(row);
-            document.getElementById('courseList').style.display = 'block';
-        }
+        const professors = result.professors.join(', ');
+
+        row.innerHTML = `
+            <td>${result.department_name}</td>
+            <td>${result.course_id}</td>
+            <td>${result.course_name}</td>
+            <td>${professors}</td>
+            <td>${result.count}</td>
+            <td>
+                <button class="btn" onclick="viewComments('${result.course_name}')">查看評論</button>
+                <button class="btn add-favorite-btn" 
+                        data-course-id="${result.course_id}" 
+                        data-course-name="${result.course_name}">
+                    加入收藏
+                </button>
+            </td>
+        `;
+        courseListBody.appendChild(row);
+    });
+
+    // 綁定「加入收藏」按鈕事件
+    const favoriteButtons = document.querySelectorAll('.add-favorite-btn');
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            // 點擊時再次確認 currentStudentId 是否已取到
+            console.log("Add favorite clicked, currentStudentId:", currentStudentId);
+            if (!currentStudentId) {
+                alert("您尚未登入，請先登入！");
+                return;
+            }
+
+            const courseId = e.target.getAttribute('data-course-id');
+            const courseName = e.target.getAttribute('data-course-name');
+
+            try {
+                const response = await fetch(ADD_FAVORITE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: currentStudentId, course_id: courseId })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to add favorite: ${response.statusText}`);
+                }
+                
+                await response.json();
+                alert(`成功將「${courseName}」加入收藏！`);
+            } catch (error) {
+                console.error('Error adding to favorites:', error);
+                alert('加入收藏時發生錯誤，請稍後再試。');
+            }
+        });
     });
 }
-        
+
 function viewComments(courseName) {
     window.location.href = `newCommentv2.html?course_name=${encodeURIComponent(courseName)}`;
 }
-            
-
-         
