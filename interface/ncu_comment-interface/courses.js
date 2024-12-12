@@ -1,16 +1,11 @@
 const API_URL = "http://127.0.0.1:8000/courses/results";
 const ADD_FAVORITE_URL = "http://127.0.0.1:8000/favorites/add";
+const FAVORITES_DETAILS_URL = "http://127.0.0.1:8000/favorites/details"; // 新增此常數，用於檢查已收藏的資料
 
 // 全域變數(需確保 checkLoginStatus 已在 buttoncontroller.js 中執行並設定 currentStudentId)
 let currentStudentId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 先檢查登入狀態，確保 currentStudentId 已取得
-    // 因為 checkLoginStatus 在 buttoncontroller.js 中的 DOMContentLoaded 執行
-    // 此處可多加一個 setTimeout 或直接相信已經執行完畢。
-    // 若不放心，可將本區塊的邏輯放在 checkLoginStatus() 完成後再呼叫。
-    // 建議方式：在此直接嘗試使用 currentStudentId。
-    // 若要保證順序，可移除這行 await checkLoginStatus(); 因為已在 buttoncontroller.js 執行過。
     console.log("Logged in user studentId:", currentStudentId);
 
     initializeSearchButton();
@@ -116,7 +111,6 @@ function showSearchResults(results) {
     const favoriteButtons = document.querySelectorAll('.add-favorite-btn');
     favoriteButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
-            // 點擊時再次確認 currentStudentId 是否已取到
             console.log("Add favorite clicked, currentStudentId:", currentStudentId);
             if (!currentStudentId) {
                 alert("您尚未登入，請先登入！");
@@ -126,7 +120,22 @@ function showSearchResults(results) {
             const courseId = e.target.getAttribute('data-course-id');
             const courseName = e.target.getAttribute('data-course-name');
 
+            // 先透過 /favorites/details 獲得已收藏課程列表，以檢查是否已存在該課程
             try {
+                const favoritesResp = await fetch(FAVORITES_DETAILS_URL, { credentials: "include" });
+                if (!favoritesResp.ok) {
+                    throw new Error(`Failed to fetch favorites: ${favoritesResp.statusText}`);
+                }
+                const favoritesData = await favoritesResp.json();
+
+                // 檢查該 user_id 與 course_id 是否已存在
+                const exists = favoritesData.some(fav => fav.user_id === currentStudentId && fav.course_id === courseId);
+                if (exists) {
+                    alert(`「${courseName}」已存在收藏清單中！`);
+                    return; // 不執行新增
+                }
+
+                // 若不存在，呼叫 /favorites/add 新增收藏
                 const response = await fetch(ADD_FAVORITE_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -139,6 +148,7 @@ function showSearchResults(results) {
                 
                 await response.json();
                 alert(`成功將「${courseName}」加入收藏！`);
+
             } catch (error) {
                 console.error('Error adding to favorites:', error);
                 alert('加入收藏時發生錯誤，請稍後再試。');
