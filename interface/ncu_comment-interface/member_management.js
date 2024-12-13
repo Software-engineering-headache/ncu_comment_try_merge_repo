@@ -67,9 +67,9 @@ async function fetchAllUsers() {
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.birthday || "N/A"}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.email || "N/A"}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
-                    <button class="btn" padding: 5px 10px; cursor: pointer; margin-right: 10px;" 
+                    <button class="btn" style="padding: 5px 10px; cursor: pointer; margin-right: 10px;" 
                         onclick="viewComments('${user.studentId}')">查看所有評論</button>
-                    <button class="btn" style="background-color: #ff6666;" padding: 5px 10px; cursor: pointer;" 
+                    <button class="btn" style="background-color: #ff6666; padding: 5px 10px; cursor: pointer;" 
                         onclick="deleteUser('${user.studentId}')">刪除使用者</button>
                 </td>
             `;
@@ -86,22 +86,13 @@ async function fetchAllUsers() {
 
 // 查看所有評論函數
 function viewComments(studentId) {
-    alert(`查看學號為 ${studentId} 的所有評論功能尚未實現`);
-    // 你可以在這裡實現跳轉到評論頁面或顯示評論資料的邏輯
+    window.location.href = `all_user_comments.html?studentId=${studentId}`;
 }
 
 // 刪除使用者函數
-function deleteUser(studentId) {
-    if (confirm(`確定要刪除學號為 ${studentId} 的使用者嗎？`)) {
-        console.log(`Deleting user with studentId: ${studentId}`);
-        // 在這裡添加刪除請求的邏輯，例如發送DELETE請求到後端API
-    }
-}
-
 async function deleteUser(studentId) {
     if (confirm(`確定要刪除學號為 ${studentId} 的使用者嗎？`)) {
         try {
-            // 發送 DELETE 請求到後端 API
             const response = await fetch(`${API_URL}/${studentId}`, {
                 method: 'DELETE',
             });
@@ -110,10 +101,7 @@ async function deleteUser(studentId) {
                 throw new Error(`刪除失敗: ${response.statusText}`);
             }
 
-            // 顯示成功提示
             alert(`學號為 ${studentId} 的使用者已成功刪除。`);
-
-            // 重新抓取資料並更新表格
             fetchAllUsers();
         } catch (error) {
             console.error("刪除錯誤:", error);
@@ -121,7 +109,6 @@ async function deleteUser(studentId) {
         }
     }
 }
-
 
 // 當頁面載入時自動執行抓取資料函數
 window.addEventListener("load", fetchAllUsers);
