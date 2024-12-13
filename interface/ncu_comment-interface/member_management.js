@@ -68,7 +68,7 @@ async function fetchAllUsers() {
                 <td style="border: 1px solid #ddd; padding: 8px;">${user.email || "N/A"}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
                     <button class="btn" style="padding: 5px 10px; cursor: pointer; margin-right: 10px;" 
-                        onclick="viewComments('${encodeURIComponent(user.studentId)}', '${encodeURIComponent(user.chineseName)}')">查看所有評論</button>
+                        onclick="viewComments('${user.studentId}', '${user.chineseName}')">查看所有評論</button>
                     <button class="btn" style="background-color: #ff6666; padding: 5px 10px; cursor: pointer;" 
                         onclick="deleteUser('${encodeURIComponent(user.studentId)}')">刪除使用者</button>
                 </td>
@@ -89,7 +89,6 @@ function viewComments(studentId, chineseName) {
     // 使用 URL 查詢參數傳遞 studentId 和 chineseName
     window.location.href = `all_user_comments.html?studentId=${encodeURIComponent(studentId)}&chineseName=${encodeURIComponent(chineseName)}`;
 }
-
 
 // 刪除使用者函數
 async function deleteUser(studentId) {

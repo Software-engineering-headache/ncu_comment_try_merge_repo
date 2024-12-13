@@ -1,30 +1,37 @@
+// all_user_comments.js
+
 // 定義新的 API URL
 const USER_COMMENTS_API_URL_BASE = "http://127.0.0.1:8000/admin_comments/user/"; // 基礎 API 路由
 const DELETE_API_URL = "http://127.0.0.1:8000/admin_comments/"; // 基礎刪除 API URL
 
 // DOM 元素
 const tableBody = document.querySelector("#comment-summary-table tbody");
-const sectionTitle = document.getElementById("section-title"); // 新增：選取標題元素
+const sectionTitle = document.getElementById("section-title"); // 選取標題元素
 
-// 解析 URL 查詢參數以取得 studentId
-function getStudentIdFromURL() {
+// 解析 URL 查詢參數以取得 studentId 和 chineseName
+function getStudentInfoFromURL() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('studentId');
+    const studentId = params.get('studentId');
+    const chineseNameEncoded = params.get('chineseName');
+    // 明確解碼 chineseName
+    const chineseName = chineseNameEncoded ? decodeURIComponent(chineseNameEncoded) : null;
+    return { studentId, chineseName };
 }
 
 // 抓取並顯示所有評論的函數
 async function fetchUserComments() {
-    const studentId = getStudentIdFromURL();
-    if (!studentId) {
-        console.error("未取得 studentId，無法抓取評論資料。");
-        tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">未取得 studentId，無法顯示評論。</td></tr>`;
+    const { studentId, chineseName } = getStudentInfoFromURL();
+    console.log("Parsed studentId:", studentId, "Parsed chineseName:", chineseName); // 調試信息
+    if (!studentId || !chineseName) {
+        console.error("未取得 studentId 或 chineseName，無法抓取評論資料。");
+        tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">未取得 studentId 或 chineseName，無法顯示評論。</td></tr>`;
         sectionTitle.textContent = "管理評論："; // 保持原本的標題
         return;
     }
 
     try {
         // 更新標題內容
-        sectionTitle.textContent = `管理 ${studentId} 評論：`;
+        sectionTitle.textContent = `管理 ${studentId} ${chineseName} 的評論：`;
 
         // 顯示載入中提示
         tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">載入中，請稍候...</td></tr>`;
