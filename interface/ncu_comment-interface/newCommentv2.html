@@ -60,15 +60,27 @@
 
         /* 新增：評論列表區塊樣式 */
         .comments {
-            margin-top: 2rem;
+            width: 80%; /* 與表格保持一致的寬度 */
+            margin: 20px auto; /* 與表格保持垂直間距，並水平置中 */
+            padding: 5px; /* 內邊距 */
+            background-color: #fff; /* 白色背景 */
+            border-radius: 10px; /* 圓角效果 */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+        }
+
+        .comment-title {
+            text-align: center; /* 文字水平置中 */
+            font-size: 25px; /* 字體大小 */
+            font-weight: bold; /* 字體加粗 */
+            margin-bottom: 30px; /* 與評論內容的間距 */
         }
 
         /* 單條評論樣式 */
         .comment-item {
-            background: #f8f9fa;
-            padding: 1rem;
+            margin-bottom: 15px; /* 每條評論之間的間距 */
+            padding: 10px;
+            background-color: #f8f9fa; /* 淺灰背景 */
             border-radius: 8px;
-            margin-bottom: 1rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
@@ -175,26 +187,30 @@
             <table>
                 <tr>
                     <th>課程名稱</th>
-                    <td>軟體工程 I</td>
+                    <td id="course-name" colspan="5">載入中...</td>
                 </tr>
                 <tr>
                     <th>授課老師</th>
-                    <td>許智誠</td>
+                    <td id="professor-name" colspan="5">載入中...</td>
                 </tr>
                 <tr>
-                    <th>課程簡介</th>
-                    <td>課程代碼：43030 | 學分數：3 學分 | 開課學期：113 上</td>
+                    <th>開課系所</th>
+                    <td id="department-name">載入中...</td>
+                    <th>學分數</th>
+                    <td id="course-info">載入中...</td>
+                    <th>學期</th>
+                    <td id="course-year">載入中...</td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="text-align: center;">
+                    <td colspan="6" style="text-align: center;">
                         <button class="btn btn-primary" id="review-button">我要評論</button>
                     </td>
                 </tr>
             </table>
         </section>
         <!-- 新增：評論清單區塊 -->
-        <div class="comments">
-            <h3>評論</h3>
+        <section class="comments">
+            <h3 class="comment-title">課程評論</h3>
             <!-- 單條評論範例 -->
             <!--div class="comment-item">
                 <p><strong>資訊系網紅</strong> <span class="rating">★★★★★</span></p>
@@ -206,7 +222,7 @@
                 <p>一學期有幾次 Case 討論作業，還有期末考，需要花時間認真學。</p>
                 <p class="meta">受評教授：許智誠 | 日期：2024-11-01 10:24</p>
             </div -->
-            <div id="comment-list" --><!-- 這是我改原本的架構，但是目前無法正常顯示，因此保留原本的架構，scripts.js 是以這個為參考去寫的>
+            <div id="comment-list">
                 <!-- 多條評論範例 -->
             </div>
         </div>
