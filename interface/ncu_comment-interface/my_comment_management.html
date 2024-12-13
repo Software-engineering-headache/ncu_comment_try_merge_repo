@@ -5,9 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCU課程評論基地</title>
-    <!-- 引入外部 CSS -->
+    引入外部 CSS
     <link rel="stylesheet" href="new_style.css">
     <link rel="stylesheet" href="new_style_button_table.css">
+    
+    <style>
+       
+        #my-comments {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#my-comments h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.comments-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.comments-table th,
+.comments-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.comments-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.comments-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.comments-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+    </style>
 </head>
 
 <body>
@@ -50,7 +92,8 @@
     </header>
 
     <main>
-        <section id="my-comments" style="display: none;">
+        <div class="section-title">我的評論：</div>
+        <section id="my-comments">
             <h2>我的評論</h2>
             <table class="comments-table">
                 <thead>
@@ -74,11 +117,13 @@
                 </tbody>
             </table>
         </section>
+        <script src="scriptsv2.js"></script>
+        <script src="buttoncontroller.js"></script>
     </main>
 
     <footer>
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
 </body>
-
+ 
 </html>
