@@ -1,6 +1,6 @@
 // 目前還在測試中，因為資料到介面就不見了，但是API是有丟資料的
-API_URL1 = "http://127.0.0.1:8000/courses/comments";
-API_URL2 = "http://127.0.0.1:8000/courses/info";
+API_URL1 = "http://127.0.0.1:8000/courses/info";
+API_URL2 = "http://127.0.0.1:8000/courses/comments";
 
 // 當頁面載入完成後，從 URL 取得課程名稱，並呼叫 fetchComments 函式
 document.addEventListener("DOMContentLoaded", async () => {
