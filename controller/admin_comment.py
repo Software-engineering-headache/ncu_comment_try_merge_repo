@@ -53,3 +53,25 @@ async def get_all_comments(db: Session = Depends(get_db)):
     except Exception as e:
         print(f"Error occurred in get_all_comments: {e}")
         raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
+
+# 新增的刪除評論路由
+@router.delete("/admin_comments/{comment_id}")
+async def delete_comment(comment_id: int, db: Session = Depends(get_db)):
+    """
+    刪除指定ID的評論
+    """
+    try:
+        # 查找評論
+        comment = db.query(Comment).filter(Comment.id == comment_id).first()
+        if not comment:
+            raise HTTPException(status_code=404, detail=f"Comment with id {comment_id} not found.")
+
+        # 刪除評論
+        db.delete(comment)
+        db.commit()
+        return {"message": f"Comment with id {comment_id} has been deleted successfully."}
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"Error occurred in delete_comment: {e}")
+        raise HTTPException(status_code=500, detail=f"Error occurred: {e}")

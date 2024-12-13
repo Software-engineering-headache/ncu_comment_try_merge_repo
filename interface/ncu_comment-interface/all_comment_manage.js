@@ -1,5 +1,6 @@
 // 定義 API URL
 const API_URL = "http://127.0.0.1:8000/admin_comments/all";
+const DELETE_API_URL = "http://127.0.0.1:8000/admin_comments/"; // 基礎刪除 API URL
 
 // DOM 元素
 const tableBody = document.querySelector("#comment-table tbody");
@@ -100,17 +101,48 @@ async function fetchAllComments() {
 
         // 為每個刪除按鈕新增點擊事件
         document.querySelectorAll(".btn-delete").forEach(btn => {
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click", async () => {
                 const commentId = btn.getAttribute("data-id");
-                // 實作刪除功能
-                console.log(`刪除評論 ID: ${commentId}`);
-                // 您可以在這裡添加刪除評論的功能，例如發送 DELETE 請求到後端
+                // 顯示確認對話框
+                const confirmDelete = confirm(`您確定要刪除評論 ID ${commentId} 的評論嗎？`);
+                if (confirmDelete) {
+                    try {
+                        // 發送 DELETE 請求
+                        const deleteResponse = await fetch(`${DELETE_API_URL}${commentId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        if (!deleteResponse.ok) {
+                            const errorData = await deleteResponse.json();
+                            throw new Error(errorData.detail || '刪除失敗');
+                        }
+
+                        // const result = await deleteResponse.json(); // 不需要後端回傳的訊息
+                        // 顯示刪除完成的提示
+                        alert(`評論 ID ${commentId}已成功被刪除！`);
+
+                        // 移除該評論的表格列
+                        btn.closest('tr').remove();
+
+                        // 如果刪除後表格沒有資料，顯示無評論訊息
+                        if (tableBody.children.length === 0) {
+                            tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">目前沒有評論！</td></tr>`;
+                        }
+
+                    } catch (error) {
+                        console.error("Delete Error:", error);
+                        alert(`刪除失敗: ${error.message}`);
+                    }
+                }
             });
         });
 
     } catch (error) {
         console.error("Fetch Error:", error);
-        tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Failed to fetch comments. Please try again later.</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">抓取評論失敗，請稍後再試</td></tr>`;
     }
 }
 
