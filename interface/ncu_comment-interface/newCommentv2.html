@@ -176,9 +176,8 @@
         </div>
         <div class="navbar">
             <nav>
-                <a>加入收藏</a><!-- 沒有可連結的地方！！！ -->
-                <a href="courses.html">搜尋課程</a>
-                <a href="index.html">登出</a>
+                <a href="index.html" id="logoutLink" onclick="logout()">登出</a>
+                <script src="logout.js"></script>
             </nav>
         </div>
     </header>
@@ -204,6 +203,7 @@
                 <tr>
                     <td colspan="6" style="text-align: center;">
                         <button class="btn btn-primary" id="review-button">我要評論</button>
+                        <button class="btn btn-primary">加入收藏</button>
                     </td>
                 </tr>
             </table>
