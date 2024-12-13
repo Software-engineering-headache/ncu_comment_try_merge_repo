@@ -7,6 +7,7 @@ from controller.course_result import router as course_result_router
 from controller.get_user_info import router as get_user_info_router
 from controller.comment import router as comment_router
 from database.crud import router as database_router
+from controller.system_settings import router as system_setting_router
 from controller.write_back_comment import router as write_back_comment_router
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -48,6 +49,7 @@ app.include_router(course_result_router, tags=["Course Result"])
 app.include_router(comment_router, tags=["Comment"])
 app.include_router(get_user_info_router, tags=["get_user_info"])
 app.include_router(write_back_comment_router, tags=["write_back_comment"])
+app.include_router(system_setting_router, tags=["System Setting"])
 
 
 if __name__ == "__main__":

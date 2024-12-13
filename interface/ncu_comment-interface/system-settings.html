@@ -61,7 +61,7 @@
                 NCU課程評論基地
             </a>
         </div>
-    
+
         <div class="navbar">
             <nav>
                 <button id="loginButton" class="btn">登入</button>
@@ -91,31 +91,38 @@
     <main>
         <div class="section-title">變更系統設定：</div>
         <!-- 系統設定表單 -->
-        <form>
+        <form id="system-settings-form">
             <table>
                 <tr>
                     <td><label for="comment-limit">評論字數上限：</label></td>
-                    <td><input id="comment-limit" type="text" value="1000" required style="width: 80px;"><label> 字</td>
+                    <td>
+                        <input id="comment-limit" type="text" value="1000" required style="width: 80px;">
+                        <label> 字</label>
+                    </td>
                 </tr>
                 <tr>
                     <td><label for="system-log" style="vertical-align: top;">設定更新備註：</label></td>
-                    <td><textarea id="system-log" rows="10" cols="50" style="resize: none; width: 100%;"
-                            placeholder="填入日誌紀錄..."></textarea></td>
+                    <td>
+                        <textarea id="system-log" rows="10" cols="50" style="resize: none; width: 100%;"
+                            placeholder="填入日誌紀錄..."></textarea>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td class="button-container">
-                        <button type="submit" class="save-button">儲存設定</button>
+                        <!-- 將 type 改為 button，避免表單自動提交 -->
+                        <button type="button" class="save-button" id="save-settings-btn">儲存設定</button>
                     </td>
                 </tr>
             </table>
         </form>
-        <script src="buttoncontroller.js"></script>
     </main>
 
     <footer>
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
+
+    <script src="system_settings.js"></script>
 </body>
 
 </html>
