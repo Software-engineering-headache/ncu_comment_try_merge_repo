@@ -78,6 +78,6 @@ class Log(Base):
 
     id = Column(Integer, primary_key=True, index=True)  # 主鍵
     char_count = Column(Integer)  # 字數限制（評論字數）
-    action = Column(String(50))  # 操作類型（如增刪等動作）
+    action = Column(String(200))  # 操作類型（如增刪等動作）
     timestamp = Column(DateTime(timezone=True), server_default=func.now())  # 時間戳
     admin_id = Column(String(20), ForeignKey('users.studentId'))  # 管理員 ID，聯結 users 的 studentId
