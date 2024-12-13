@@ -4,6 +4,7 @@ const DELETE_API_URL = "http://127.0.0.1:8000/admin_comments/"; // 基礎刪除 
 
 // DOM 元素
 const tableBody = document.querySelector("#comment-summary-table tbody");
+const sectionTitle = document.getElementById("section-title"); // 新增：選取標題元素
 
 // 解析 URL 查詢參數以取得 studentId
 function getStudentIdFromURL() {
@@ -17,15 +18,19 @@ async function fetchUserComments() {
     if (!studentId) {
         console.error("未取得 studentId，無法抓取評論資料。");
         tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">未取得 studentId，無法顯示評論。</td></tr>`;
+        sectionTitle.textContent = "管理評論："; // 保持原本的標題
         return;
     }
 
     try {
+        // 更新標題內容
+        sectionTitle.textContent = `管理 ${studentId} 評論：`;
+
         // 顯示載入中提示
         tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">載入中，請稍候...</td></tr>`;
 
         // 發送 GET 請求到 user-specific API
-        const response = await fetch(`${USER_COMMENTS_API_URL_BASE}${studentId}`);
+        const response = await fetch(`${USER_COMMENTS_API_URL_BASE}${encodeURIComponent(studentId)}`);
         if (!response.ok) {
             throw new Error(`API 錯誤: ${response.statusText}`);
         }
