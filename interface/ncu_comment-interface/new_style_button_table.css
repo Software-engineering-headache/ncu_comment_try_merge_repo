@@ -3,7 +3,7 @@
 .dropdown-button-member,
 .dropdown-button-admin,
 #logoutLink {
-    display: none;
+    display: inline-block;
 }
 
 .search-container {
