@@ -23,17 +23,23 @@
 
         .comments-table th,
         .comments-table td {
-            padding: 10px; /* 增加內距 */
-            border: 1px solid #ccc; /* 單元格邊框 */
-            text-align: center; /* 文字置中 */
+            padding: 10px;
+            /* 增加內距 */
+            border: 1px solid #ccc;
+            /* 單元格邊框 */
+            text-align: center;
+            /* 文字置中 */
         }
 
         .comments-table th {
-            background-color: #d9eefb; /* 淡藍色背景 */
+            background-color: #d9eefb;
+            /* 淡藍色背景 */
             font-weight: bold;
             text-align: center;
-            padding: 12px; /* 增加內距 */
-            border: 1px solid #ccc; /* 添加邊框顏色 */
+            padding: 12px;
+            /* 增加內距 */
+            border: 1px solid #ccc;
+            /* 添加邊框顏色 */
         }
 
         .comments-table tr:nth-child(even) {
@@ -43,9 +49,11 @@
         .comments-table tr:hover {
             background-color: #f1f1f1;
         }
+
         /* 操作按鈕樣式 */
         .comments-table .btn {
-            background-color: #428bca; /* 藍色背景 */
+            background-color: #428bca;
+            /* 藍色背景 */
             color: #fff;
             padding: 6px 12px;
             border: none;
@@ -54,9 +62,9 @@
         }
 
         .comments-table .btn:hover {
-            background-color: #3071a9; /* 深藍色懸停效果 */
+            background-color: #3071a9;
+            /* 深藍色懸停效果 */
         }
-
     </style>
 </head>
 
@@ -111,29 +119,19 @@
                         <th>刪除</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>43030</td>
-                        <td>軟體工程I</td>
-                        <td>超級讚</td>
-                        <td><button class="btn" onclick="deleteComment(this)">刪除</button></td>
-                    </tr>
-                    <tr>
-                        <td>43039</td>
-                        <td>企業電腦網路</td>
-                        <td>收穫很多</td>
-                        <td><button class="btn" onclick="deleteComment(this)">刪除</button></td>
-                    </tr>
+                <tbody id="comments-body">
+                    <!-- JavaScript 會在此處插入表格資料 -->
                 </tbody>
             </table>
         </section>
         <script src="scriptsv2.js"></script>
         <script src="buttoncontroller.js"></script>
+        <script src="my_comments.js"></script>
     </main>
 
     <footer>
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
 </body>
- 
+
 </html>
