@@ -10,13 +10,12 @@ from controller.comment import router as comment_router
 from database.crud import router as database_router
 from controller.system_settings import router as system_setting_router
 from controller.write_back_comment import router as write_back_comment_router
+from controller.admin_comment import router as admin_comment_router
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
-
 from database import models
 from database.database import engine
-
 
 app = FastAPI()
 
@@ -27,7 +26,6 @@ app.add_middleware(
     session_cookie="session",     # 存儲 Session 的 Cookie 名稱
     max_age=3600,                 # Session 有效期（秒）
 )
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -52,6 +50,7 @@ app.include_router(get_user_info_router, tags=["get_user_info"])
 app.include_router(get_my_comment_router, tags=["get_my_comment_info"])
 app.include_router(write_back_comment_router, tags=["write_back_comment"])
 app.include_router(system_setting_router, tags=["System Setting"])
+app.include_router(admin_comment_router, tags=["Admin Comment"])
 
 
 if __name__ == "__main__":
