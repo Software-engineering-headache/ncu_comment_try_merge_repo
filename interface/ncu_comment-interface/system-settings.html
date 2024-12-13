@@ -46,6 +46,40 @@
             text-align: center;
             display: inline-block;
         }
+
+        /* 專屬於系統設定變更紀錄表格的樣式 */
+        .log-table {
+            width: 95%; /* 表格總寬度 */
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        .log-table th, .log-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .log-table th:nth-child(1), .log-table td:nth-child(1) {
+            width: 10%; /* 更新id欄寬度 */
+        }
+
+        .log-table th:nth-child(2), .log-table td:nth-child(2) {
+            width: 15%; /* 字數限制欄寬度 */
+        }
+
+        .log-table th:nth-child(3), .log-table td:nth-child(3) {
+            width: 40%; /* 更新備註欄寬度 */
+        }
+
+        .log-table th:nth-child(4), .log-table td:nth-child(4) {
+            width: 20%; /* 更新時間欄寬度 */
+        }
+
+        .log-table th:nth-child(5), .log-table td:nth-child(5) {
+            width: 15%; /* 管理員帳號欄寬度 */
+        }
+
     </style>
 </head>
 
@@ -117,6 +151,11 @@
                 </tr>
             </table>
         </form>
+
+
+        <div class="section-title">系統設定變更紀錄：</div>
+        <!-- 在此處新增容器來顯示 logs 表格 -->
+        <div id="logsContainer"></div>
     </main>
 
     <footer>

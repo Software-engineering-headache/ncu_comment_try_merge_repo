@@ -44,3 +44,24 @@ async def save_system_settings(setting: SettingInput):
         raise HTTPException(status_code=500, detail=f"無法儲存設定：{e}")
     finally:
         db.close()
+
+@router.get("/settings/logs")
+async def get_all_logs():
+    db = SessionLocal()
+    try:
+        logs = db.query(Log).order_by(Log.id.desc()).all()
+        result = []
+        for log in logs:
+            result.append({
+                "id": log.id,
+                "char_count": log.char_count,
+                "action": log.action,
+                "timestamp": log.timestamp.isoformat() if log.timestamp else None,
+                "admin_id": log.admin_id
+            })
+        return result
+    except Exception as e:
+        print("Error in get_all_logs:", e)
+        raise HTTPException(status_code=500, detail=f"無法取得設定紀錄：{e}")
+    finally:
+        db.close()
