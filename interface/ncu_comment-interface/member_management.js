@@ -110,5 +110,12 @@ async function deleteUser(studentId) {
     }
 }
 
+
+// 查看所有評論函數
+function viewComments(studentId) {
+    window.location.href = `all_user_comments.html?studentId=${encodeURIComponent(studentId)}`;
+}
+
+
 // 當頁面載入時自動執行抓取資料函數
 window.addEventListener("load", fetchAllUsers);

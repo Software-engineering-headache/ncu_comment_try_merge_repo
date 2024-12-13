@@ -54,7 +54,42 @@ async def get_all_comments(db: Session = Depends(get_db)):
         print(f"Error occurred in get_all_comments: {e}")
         raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
 
-# 新增的刪除評論路由
+# 新增的 API 路由：獲取特定使用者的評論資料
+@router.get("/admin_comments/user/{student_id}")
+async def get_user_comments(student_id: str, db: Session = Depends(get_db)):
+    """
+    獲取特定使用者的所有評論
+    """
+    try:
+        comments = db.query(
+            Comment.id.label("comment_id"),
+            Comment.score,
+            Comment.content.label("comment_content"),
+            Comment.course_id,
+            Course.name.label("course_name"),
+            Comment.time
+        ).join(
+            Course, Comment.course_id == Course.id, isouter=True
+        ).filter(Comment.user_id == student_id).order_by(Comment.id.desc()).all()
+
+        # 將查詢結果整理為輸出格式
+        result = []
+        for comment in comments:
+            result.append({
+                "comment_id": comment.comment_id,
+                "score": comment.score,
+                "comment_content": comment.comment_content,
+                "course_id": comment.course_id,
+                "course_name": comment.course_name,
+                "time": comment.time.isoformat() if comment.time else None
+            })
+        return result
+
+    except Exception as e:
+        print(f"Error occurred in get_user_comments: {e}")
+        raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
+
+# 新增的刪除評論路由（保持不變）
 @router.delete("/admin_comments/{comment_id}")
 async def delete_comment(comment_id: int, db: Session = Depends(get_db)):
     """

@@ -1,15 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理員管理</title>
+    <title>管理員評論管理</title>
     <!-- 引入外部 CSS -->
     <link rel="stylesheet" href="new_style.css">
     <link rel="stylesheet" href="new_style_button_table.css">
     <style>
+        /* 調整表格欄位寬度 */
+        #comment-summary-table th, #comment-summary-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            word-wrap: break-word;
+            vertical-align: top;
+        }
 
+        #comment-summary-table th {
+            background-color: #d2e8f2;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 交替行背景色 */
+        #comment-summary-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        #comment-summary-table tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        /* 刪除按鈕樣式 */
+        .btn-delete {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: #ff4d4d;
+        }
     </style>
 </head>
 
@@ -33,9 +69,9 @@
                 <div class="dropdown">
                     <button class="dropdown-button-member">會員中心 ▼</button>
                     <div class="dropdown-content">
-                        <a href="#" onclick="showSection('my-comments')">我的評論</a>
+                        <a href="my_comment_management.html">我的評論</a>
                         <a href="favorite_course.html">收藏課程</a>
-                        <a href="profoile.html">個人資料</a>
+                        <a href="profile.html">個人資料</a>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -54,14 +90,34 @@
     </header>
 
     <main>
+        <div class="section-title">管理評論：</div>
 
-    <script src="buttoncontroller.js"></script>
+        <!-- 評論表格 -->
+        <table id="comment-summary-table" style="width: 95%; margin: 0 auto; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>評論 ID</th>
+                    <th>評分</th>
+                    <th>評論內容</th>
+                    <th>課程代碼</th>
+                    <th>課程名稱</th>
+                    <th>留言時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 動態填充評論資料 -->
+            </tbody>
+        </table>
+
+        <!-- 引入新的 JavaScript 檔案 -->
+        <script src="buttoncontroller.js"></script>
+        <script src="all_user_comments.js"></script>
     </main>
 
     <footer>
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
-    
 </body>
 
 </html>
