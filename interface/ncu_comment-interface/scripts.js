@@ -3,43 +3,84 @@ API_URL1 = "http://127.0.0.1:8000/courses/comments";
 API_URL2 = "http://127.0.0.1:8000/courses/info";
 
 // 當頁面載入完成後，從 URL 取得課程名稱，並呼叫 fetchComments 函式
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
-    const courseName = params.get('course_name');
+    const courseName = params.get("course_name");
+
     if (courseName) {
-        fetchComments(courseName);
+        try {
+            await fetchCourseInfo(courseName);
+            await fetchComments(courseName);
+        } catch (error) {
+            console.error("Error fetching course data:", error);
+        }
     }
 });
 
-function fetchComments(courseName) {
-    //fetch(`${API_URL1}?course_name${courseName}`)
-        //.then(response => response.json())
-        //.then(data => {showSearchResults(data);})
-        //.catch(error => {
-            //console.error('Error fetching comments:', error);
-        //});
-    const fakeData = [
-        { chinesename: '張三', course_score: 5, course_content: '這是一個很棒的課程！', professor_name: '李四', time: '2023-10-01T12:00:00Z' },
-        { chinesename: '王五', course_score: 4, course_content: '課程內容豐富，老師講解清晰。', professor_name: '李四', time: '2023-10-02T12:00:00Z' }
-    ];
-    showSearchResults(fakeData);
+async function fetchCourseInfo(courseName) {
+    try {
+        const response = await fetch(`${API_URL1}?course_name=${encodeURIComponent(courseName)}`);
+        if (!response.ok) throw new Error(`Failed to fetch course info: ${response.statusText}`);
+        
+        const data = await response.json();
+        renderCourseInfo(courseName, data[0]); // 假設 API 返回的是列表，取第一個結果
+        //console.log(data[0]);
+    } catch (error) {
+        console.error("Error fetching course info:", error);
+    }
 }
 
-function showSearchResults(results) {
-    const commentItem = document.getElementById('comment-list');
-    commentItem.innerHTML = '';
-        results.forEach(result => {
-            const commentItem = document.createElement('div');
-            commentItem.innerHTML = `
-                <div class="comment-item">
-                    <p><strong>${result.chinesename}</strong> <span class="rating">${'★'.repeat(result.course_score)}</span></p>
-                    <p>${result.course_content}</p>
-                    <p class="meta">受評教授：${result.professor_name} | 日期：${new Date(result.time).toLocaleString()}</p>
-                </div>
-            `;
-        commentItem.appendChild(commentItem);
-    });
+function renderCourseInfo(course_name, courseInfo) {
+    const courseDetailTable = document.querySelector(".course-detail table");
+    console.log(courseInfo);
 
+    if (courseInfo) {
+        document.querySelector("#course-name").textContent = course_name || "未提供";
+        document.querySelector("#professor-name").textContent = courseInfo.professor_name.join(", ") || "未提供";
+        document.querySelector("#department-name").textContent = courseInfo.department_name || "未提供";
+        document.querySelector("#course-info").textContent = courseInfo.course_info ? String(courseInfo.course_info): "未提供" ;
+        document.querySelector("#course-year").textContent = courseInfo.course_year ? String(courseInfo.course_year): "未提供" ; // 假設固定值，可替換為動態數據
+    } else {
+        // 如果沒有資料，設置為默認提示
+        document.querySelector("#course-name").textContent = "無相關課程資訊";
+        document.querySelector("#professor-name").textContent = "無相關資訊";
+        document.querySelector("#department-name").textContent = "無相關資訊";
+        document.querySelector("#course-info").textContent = "無相關資訊";
+        document.querySelector("#course-year").textContent = "無相關資訊";
+    }
+}
+
+async function fetchComments(courseName) {
+    try {
+        const response = await fetch(`${API_URL2}?course_name=${encodeURIComponent(courseName)}`);
+        if (!response.ok) throw new Error(`Failed to fetch comments: ${response.statusText}`);
+        
+        const data = await response.json();
+        renderComments(data);
+    } catch (error) {
+        console.error("Error fetching comments:", error);
+    }
+}
+
+function renderComments(comments) {
+    const commentList = document.getElementById("comment-list");
+    commentList.innerHTML = ""; // 清空評論列表
+
+    if (comments.length === 0) {
+        commentList.innerHTML = "<p>目前無評論。</p>";
+        return;
+    }
+
+    comments.forEach((comment) => {
+        const commentItem = document.createElement("div");
+        commentItem.className = "comment-item";
+        commentItem.innerHTML = `
+            <p><strong>${comment.chinesename}</strong> <span class="rating">${"★".repeat(comment.course_score)}</span></p>
+            <p>${comment.course_content}</p>
+            <p class="meta">受評教授：${comment.professor_name.join(", ")} | 日期：${comment.time}</p>
+        `;
+        commentList.appendChild(commentItem);
+    });
 }
 
 // 判斷登入狀態（模擬）
