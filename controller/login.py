@@ -4,6 +4,7 @@ from requests_oauthlib import OAuth2Session
 from pydantic import BaseModel
 from typing import Optional
 from database.crud import create_user
+from database import models
 import requests
 from database.database import SessionLocal
 
@@ -122,20 +123,25 @@ async def profile(request: Request):
     email=user_info["email"],
     )
 
-    await create_user(user, db)
-    
-    redirect_response = RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
-    redirect_response.set_cookie(
-        key="studentId",
-        value=user.studentId,
-        httponly=True,      # 防止 JavaScript 訪問
-        secure=True,        # 僅通過 HTTPS 傳輸
-        max_age=3600,       # Cookie 有效期（秒）
-        path="/",           # Cookie 的作用路徑
-        samesite= "strict"      # 防止 CSRF 攻擊
-    )
-
-    return redirect_response
+    # Check if the user exists in the database
+    existing_user = await get_studentId(db, user.studentId)
+    if not existing_user:
+        # First login, redirect to register.html
+        await create_user(user, db)
+        redirect_response = RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/register.html")
+        return redirect_response
+    else:
+        # User exists, proceed as usual
+        redirect_response = RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
+        redirect_response.set_cookie(
+            key="studentId",
+            value=user.studentId,
+            httponly=True,
+            max_age=3600,
+            path="/",
+            samesite="strict"
+        )
+        return redirect_response
 
 @router.get("/interface/ncu_comment-interface/Islogin")
 async def Islogin(request: Request):
@@ -167,3 +173,8 @@ async def logout(request: Request):
     response = JSONResponse({"message": "Logout successful"})
     response.delete_cookie("studentId")
     return response
+
+# 在当前文件中定义 get_studentId 函数
+async def get_studentId(db, student_id):
+    # 在数据库中查找具有指定 student_id 的用户
+    return db.query(models.User).filter(models.User.studentId == student_id).first()

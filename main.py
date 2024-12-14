@@ -11,6 +11,7 @@ from database.crud import router as database_router
 from controller.system_settings import router as system_setting_router
 from controller.write_back_comment import router as write_back_comment_router
 from controller.admin_comment import router as admin_comment_router
+from controller.register import router as register_router
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -29,7 +30,7 @@ app.add_middleware(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500","http://localhost:5500","http://localhost:5500/interface/ncu_comment-interface/profoile.html"],  # 替換成你的前端來源
+    allow_origins=["http://127.0.0.1:5500","http://localhost:5500","http://localhost:5500/interface/ncu_comment-interface/profoile.html","http://localhost:5500/interface/ncu_comment-interface/register.html"],  # 替換成你的前端來源
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["Authorization", "Content-Type"],
@@ -51,6 +52,7 @@ app.include_router(get_my_comment_router, tags=["get_my_comment_info"])
 app.include_router(write_back_comment_router, tags=["write_back_comment"])
 app.include_router(system_setting_router, tags=["System Setting"])
 app.include_router(admin_comment_router, tags=["Admin Comment"])
+app.include_router(register_router, tags=["register"])
 
 
 if __name__ == "__main__":
