@@ -9,8 +9,15 @@
     <link rel="stylesheet" href="new_style.css">
     <link rel="stylesheet" href="new_style_button_table.css">
     <style>
-        /* 調整表格欄位寬度 */
-        #comment-summary-table th, #comment-summary-table td {
+        /* 基本表格樣式 */
+        #comment-summary-table {
+            width: 95%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        #comment-summary-table th,
+        #comment-summary-table td {
             border: 1px solid #ddd;
             padding: 12px 15px;
             word-wrap: break-word;
@@ -21,6 +28,7 @@
             background-color: #d2e8f2;
             font-weight: bold;
             text-align: center;
+            white-space: nowrap; /* 標題不換行 */
         }
 
         /* 交替行背景色 */
@@ -41,10 +49,58 @@
             cursor: pointer;
             border-radius: 4px;
             transition: background-color 0.3s ease;
+            white-space: nowrap; /* 按鈕文字不換行 */
         }
 
         .btn-delete:hover {
             background-color: #ff4d4d;
+        }
+
+        /* 1. 將「評論ID」、「評分」欄位加寬 */
+        /* 假設評論ID在第1欄、評分在第2欄 */
+        #comment-summary-table th:nth-child(1),
+        #comment-summary-table td:nth-child(1) {
+            min-width: 80px; /* 您可自行調整數值 */
+            white-space: nowrap;
+        }
+
+        #comment-summary-table th:nth-child(2),
+        #comment-summary-table td:nth-child(2) {
+            min-width: 50px; /* 您可自行調整數值 */
+            white-space: nowrap;
+        }
+
+        /* 2. 「評論內容」欄位寬度調為目前約三分之二，根據需求自行調整 */
+        /* 假設評論內容在第3欄，可嘗試給定一個固定寬度或相對寬度 */
+        #comment-summary-table th:nth-child(3),
+        #comment-summary-table td:nth-child(3) {
+            width: 40%; /* 根據需求自行調整，約縮小至原三分之二 */
+        }
+
+        /* 3. 將課程代碼、課程名稱、留言時間、操作欄位加寬 */
+        /* 假設課程代碼在第4欄、課程名稱第5欄、留言時間第6欄、操作第7欄 */
+        #comment-summary-table th:nth-child(4),
+        #comment-summary-table td:nth-child(4) {
+            min-width: 100px;
+            white-space: nowrap;
+        }
+
+        #comment-summary-table th:nth-child(5),
+        #comment-summary-table td:nth-child(5) {
+            min-width: 100px;
+            white-space: nowrap;
+        }
+
+        #comment-summary-table th:nth-child(6),
+        #comment-summary-table td:nth-child(6) {
+            min-width: 120px;
+            white-space: nowrap;
+        }
+
+        #comment-summary-table th:nth-child(7),
+        #comment-summary-table td:nth-child(7) {
+            min-width: 80px;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -93,10 +149,10 @@
         <div class="section-title" id="section-title">管理評論：</div>
 
         <!-- 評論表格 -->
-        <table id="comment-summary-table" style="width: 95%; margin: 0 auto; border-collapse: collapse;">
+        <table id="comment-summary-table">
             <thead>
                 <tr>
-                    <th>評論 ID</th>
+                    <th>評論ID</th>
                     <th>評分</th>
                     <th>評論內容</th>
                     <th>課程代碼</th>
