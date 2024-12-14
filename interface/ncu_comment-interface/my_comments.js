@@ -27,8 +27,15 @@ window.addEventListener('DOMContentLoaded', () => {
                 row.appendChild(courseNameCell);
 
                 // 評論內容
+                // 評論內容
                 const contentCell = document.createElement('td');
-                contentCell.textContent = comment.content;
+                const maxLength = 100; // 要顯示的最大字數
+                const displayContent = comment.content
+                    ? (comment.content.length > maxLength
+                        ? comment.content.substring(0, maxLength) + '...' // 截斷內容加上 "..."
+                        : comment.content)
+                    : '無內容'; // 如果 content 是空值，顯示 "無內容"
+                contentCell.textContent = displayContent;
                 row.appendChild(contentCell);
 
                 // 刪除按鈕
