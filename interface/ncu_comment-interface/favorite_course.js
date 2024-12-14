@@ -112,7 +112,7 @@ async function fetchData() {
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.course_name}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.course_info}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">
-                    <button class="btn" style="margin-left: 10px; margin-right: 10px;" onclick="viewComment('${item.course_id}')">查看評論</button>
+                    <button class="btn" style="margin-left: 10px; margin-right: 10px;" onclick="viewComments('${item.course_name}')">查看評論</button>
                     <button class="btn remove-favorite-btn" style="background-color: #ff6666;"
                         data-favorite-id="${item.favorite_id}"
                         data-course-id="${item.course_id}"
@@ -150,9 +150,11 @@ async function fetchData() {
     }
 }
 
-function viewComment(courseId) {
-    alert(`查看課程 ${courseId} 的評論`);
+function viewComments(courseName) {
+    window.location.href = `newCommentv2.html?course_name=${encodeURIComponent(courseName)}`;
 }
+
+
 
 async function removeFromFavorites(favoriteId, courseId, courseName) {
     if (!currentStudentId) {
