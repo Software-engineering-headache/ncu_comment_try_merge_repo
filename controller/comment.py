@@ -16,6 +16,7 @@ async def get_info_in_course(course_name: str):
         # 執行查詢：關聯 Course 和 Professor
         results = (
             db.query(
+                Course.id.label("course_id"),
                 Course.name.label("course_name"),
                 Course.course_info.label('course_info'),
                 Course.course_year.label('course_year'),
@@ -36,6 +37,7 @@ async def get_info_in_course(course_name: str):
         # 整理查詢結果為結構化的列表
         courses_details = {}
         for result in results:
+            course_id = result.course_id
             course_name = result.course_name
             department_name = result.department_name
             course_info = result.course_info
@@ -44,6 +46,7 @@ async def get_info_in_course(course_name: str):
 
             if course_name not in courses_details:
                 courses_details[course_name] = {
+                    "course_id" : course_id,
                     "professor_name": [],
                     "department_name": department_name,
                     "course_info": course_info,
@@ -76,6 +79,7 @@ async def get_comment_in_course(course_name: str):
                 Comment.content.label("course_content"),
                 Comment.time.label('time'),
                 User.chineseName.label("chinesename"),
+                User.nickname.label("nickname"),
                 Professor.name.label("professor_name")
             )
             .select_from(Course)  # 選擇 Course 表
@@ -93,6 +97,7 @@ async def get_comment_in_course(course_name: str):
         comment_details = {}
         for result in results:
             chinesename = result.chinesename
+            nickname = result.nickname
             course_score = result.course_score or 0  # 如果沒有評論，默認為 0
             course_content = result.course_content
             time = result.time
@@ -102,6 +107,7 @@ async def get_comment_in_course(course_name: str):
                 formatted_time = result.time.strftime("%Y-%m-%d %H:%M:%S") if result.time else None
                 comment_details[chinesename] = {
                     "chinesename": chinesename,
+                    "nickname": nickname,
                     "professor_name": [],
                     "course_score": course_score,
                     "course_content": course_content,
