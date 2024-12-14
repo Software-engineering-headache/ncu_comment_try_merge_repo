@@ -43,7 +43,7 @@ async function fetchAllComments() {
             // 課程資訊
             const tdCourse = document.createElement("td");
             tdCourse.innerHTML = `
-                <div><strong>課程ID:</strong> ${comment.course_id}</div>
+                <div><strong>課程代碼:</strong> ${comment.course_id}</div>
                 <div><strong>課程名稱:</strong> ${comment.course_name || ''}</div>
             `;
             tdCourse.style.border = "1px solid #ddd";
