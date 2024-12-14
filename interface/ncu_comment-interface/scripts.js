@@ -2,15 +2,44 @@
 API_URL1 = "http://127.0.0.1:8000/courses/info";
 API_URL2 = "http://127.0.0.1:8000/courses/comments";
 API_URL3 = "http://localhost:8000/api/profile";
+const ADD_FAVORITE_URL = "http://127.0.0.1:8000/favorites/add";
+const FAVORITES_DETAILS_URL = "http://127.0.0.1:8000/favorites/details";
+const LOGS_API_URL = "http://127.0.0.1:8000/settings/logs";
 
 let currentStudentId = null;
 let course_id = null
+let charCountLimit = 1500; // 預設評論字數限制
+
+// Fetch the latest char_count from system settings logs
+async function fetchCharCountLimit() {
+    try {
+        const response = await fetch(LOGS_API_URL);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch system settings logs: ${response.statusText}`);
+        }
+        const logs = await response.json();
+
+        if (logs.length > 0) {
+            charCountLimit = logs[0].char_count; // Use the latest char_count value
+            console.log(`Character count limit fetched: ${charCountLimit}`);
+        }
+    } catch (error) {
+        console.error("Error fetching char_count limit:", error);
+    }
+}
 
 // 當頁面載入完成後，從 URL 取得課程名稱，並呼叫 fetchComments 函式
 window.addEventListener("DOMContentLoaded", async () => {
     console.log("DOMContentLoaded...");
+    await fetchCharCountLimit(); // 取得評論字數限制
+
     const isLoggedIn = await checkLoginStatus();
     console.log("使用者已登入:", isLoggedIn, " currentStudentId:", currentStudentId);
+
+    // 動態更新 HTML 顯示的字數限制
+    document.getElementById("char-limit-label").textContent = charCountLimit;
+    document.getElementById("char-limit-warning").textContent = charCountLimit;
+
     const params = new URLSearchParams(window.location.search);
     const courseName = params.get("course_name");
     console.log("Course_name get!");
@@ -19,6 +48,8 @@ window.addEventListener("DOMContentLoaded", async () => {
         try {
             await fetchCourseInfo(courseName);
             await fetchComments(courseName);
+            // 初始化收藏按鈕
+            initializeFavoriteButton(course_id, courseName);
         } catch (error) {
             console.error("Error fetching course data:", error);
         }
@@ -70,6 +101,56 @@ async function checkLoginStatus() {
         return false;
     }
 }
+
+// 初始化收藏按鈕
+function initializeFavoriteButton(courseId, courseName) {
+    const favoriteButton = document.querySelector('.add-favorite-btn');
+    if (!favoriteButton) return;
+
+    favoriteButton.setAttribute('data-course-id', courseId);
+    favoriteButton.setAttribute('data-course-name', courseName);
+
+    favoriteButton.addEventListener('click', async (e) => {
+        if (!window.currentStudentId) {
+            alert("您尚未登入，請先登入後才可收藏按鈕！");
+            return;
+        }
+
+        const courseId = e.target.getAttribute('data-course-id');
+        const courseName = e.target.getAttribute('data-course-name');
+
+        try {
+            const favoritesResp = await fetch(FAVORITES_DETAILS_URL, { credentials: "include" });
+            if (!favoritesResp.ok) {
+                throw new Error(`Failed to fetch favorites: ${favoritesResp.statusText}`);
+            }
+            const favoritesData = await favoritesResp.json();
+
+            const exists = favoritesData.some(fav => fav.user_id === window.currentStudentId && fav.course_id === courseId);
+            if (exists) {
+                alert(`「${courseName}」已存在收藏清單中！`);
+                return;
+            }
+
+            const response = await fetch(ADD_FAVORITE_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: window.currentStudentId, course_id: courseId })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to add favorite: ${response.statusText}`);
+            }
+
+            await response.json();
+            alert(`成功將「${courseName}」加入收藏！`);
+        } catch (error) {
+            console.error('Error adding to favorites:', error);
+            alert('加入收藏時發生錯誤，請稍後再試。');
+        }
+    });
+}
+
 
 async function fetchCourseInfo(courseName) {
     try {
@@ -156,6 +237,7 @@ document.getElementById("sort-options").addEventListener("change", function (eve
     renderComments(originalComments, sortOrder); // 按選擇的排序方式重新渲染評論
 });
 
+
 //------------------------------------------------------這裡是新增評論的部分--------------------------------------------------------------------
 
 // 判斷登入狀態（模擬）
@@ -179,6 +261,14 @@ function openModal() {
     document.getElementById("modal-course-info").textContent = document.getElementById("course-info").textContent;
     document.getElementById("modal-course-year").textContent = document.getElementById("course-year").textContent;
     
+
+    const textarea = document.getElementById("comment-text");
+    const charLimitLabel = document.querySelector("label[for='comment-text']");
+
+    // Update maxLength and label dynamically
+    textarea.setAttribute("maxlength", charCountLimit);
+    charLimitLabel.textContent = `請輸入評論（上限${charCountLimit}字）`;
+
     // 顯示彈出視窗
     document.getElementById("review-modal").style.display = "flex";
 }
@@ -189,7 +279,7 @@ function closeModal() {
 
 //當輸入超過1500字時
 document.getElementById("comment-text").addEventListener("input", function () {
-    if (this.value.length > 1500) {
+    if (this.value.length > charCountLimit) {
         document.getElementById("alert-modal").style.display = "flex";
     }
 });
