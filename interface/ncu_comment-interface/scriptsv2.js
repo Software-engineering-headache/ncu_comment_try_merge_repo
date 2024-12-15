@@ -27,8 +27,8 @@ function handleSearchButtonClick() {
     const instructor = document.getElementById('instructor').value;
     const keyword = document.getElementById('keyword').value;
 
-    if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
-        alert('輸入資料不完整');
+    if (department === '選擇系所') {
+        alert('請選擇系所');
         return window.location.href = 'index.html'; //如果輸入不完整跳回首頁重新輸入
     }
 
