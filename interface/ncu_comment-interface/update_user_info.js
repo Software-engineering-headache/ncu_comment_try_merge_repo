@@ -2,14 +2,13 @@ document.getElementById('profile-form').addEventListener('submit', function (eve
     event.preventDefault();
     const nickname = document.getElementById('nickname').value;
     const email = document.getElementById('email').value;
-    const studentId = document.getElementById('studentId').value;
+    const studentId = document.getElementById('studentId').innerText;
 
-    fetch('http://127.0.0.1:8000/api/write_back_user_info', {
+    fetch('http://localhost:8000/api/write_back_user_info', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-
         body: JSON.stringify({
             nickname: nickname,
             email: email,
