@@ -54,6 +54,13 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
         }
+
+        input[readonly] {
+            background-color: #e0e0e0;
+            /* 灰色背景 */
+            color: #000;
+            /* 黑色文字 */
+        }
     </style>
 </head>
 
@@ -125,7 +132,7 @@
                         </tr>
                         <tr>
                             <th><label for="birthday">生日</label></th>
-                            <td><input type="test" id="birthday" placeholder="輸入新的生日" readonly></td>
+                            <td><input type="text" id="birthday" placeholder="輸入新的生日" readonly></td>
                         </tr>
                         <tr>
                             <th><label for="studentId">學號</label></th>

@@ -35,8 +35,8 @@ function searchCourses() {
     const instructor = document.getElementById('instructor').value;
     const keyword = document.getElementById('keyword').value;
 
-    if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
-        alert('輸入資料不完整');
+    if (department === '選擇系所') {
+        alert('請選擇系所');
         return window.location.href = 'courses.html';
     } else {
         const params = { department: department, instructor: instructor, keyword: keyword };
