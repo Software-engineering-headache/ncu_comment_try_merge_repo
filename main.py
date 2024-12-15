@@ -10,6 +10,7 @@ from controller.comment import router as comment_router
 from database.crud import router as database_router
 from controller.system_settings import router as system_setting_router
 from controller.write_back_comment import router as write_back_comment_router
+from controller.write_back_user_info import router as write_back_user_info_router
 from controller.admin_comment import router as admin_comment_router
 from controller.register import router as register_router
 from fastapi.middleware.cors import CORSMiddleware
@@ -50,6 +51,7 @@ app.include_router(comment_router, tags=["Comment"])
 app.include_router(get_user_info_router, tags=["get_user_info"])
 app.include_router(get_my_comment_router, tags=["get_my_comment_info"])
 app.include_router(write_back_comment_router, tags=["write_back_comment"])
+app.include_router(write_back_user_info_router, tags=["write_back_user_info"])
 app.include_router(system_setting_router, tags=["System Setting"])
 app.include_router(admin_comment_router, tags=["Admin Comment"])
 app.include_router(register_router, tags=["register"])

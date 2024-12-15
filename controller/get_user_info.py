@@ -66,6 +66,7 @@ async def read_profile(request: Request, db: Session = Depends(get_db)):
         if user:
             profile = {
         "accountType": user.accountType,  # Keep as is if already uppercase
+        "nickname":user.nickname,
         "chineseName": user.chineseName,
         "englishName": user.englishName,
         "gender": user.gender,

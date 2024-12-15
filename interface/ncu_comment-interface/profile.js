@@ -5,6 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             document.getElementById('accountType').value = data.accountType;
+            document.getElementById('nickname').value = data.nickname;
             document.getElementById('chineseName').value = data.chineseName;
             document.getElementById('englishName').value = data.englishName;
             document.getElementById('gender').value = data.gender;
