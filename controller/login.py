@@ -160,13 +160,6 @@ async def Islogin(request: Request):
         "accountType": user["accountType"]  # 正確返回 accountType
     }
 
-# @router.get("/interface/ncu_comment-interface/logout")
-# async def logout(request: Request):
-#     request.session.clear()  # 清除伺服器端 Session
-#     response = RedirectResponse(url="http://localhost:5500/interface/ncu_comment-interface/index.html")
-#     response.delete_cookie("studentId")
-#     return response
-
 @router.get("/interface/ncu_comment-interface/logout")
 async def logout(request: Request):
     request.session.clear()  # 清除伺服器端 Session
