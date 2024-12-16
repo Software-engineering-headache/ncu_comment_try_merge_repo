@@ -27,8 +27,6 @@ class UserBase(BaseModel):
     email: str
 
 
-
-
 # 這是用於獲取資料庫連接的依賴函數
 def get_db():
     db = SessionLocal()  # 建立一個資料庫連接
