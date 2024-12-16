@@ -22,10 +22,17 @@ async function checkLoginStatus() {
             admin: cachedData.isAdmin,
             logout: cachedData.loggedIn,
         });
+
+        // 由於快取中僅有 loggedIn/isAdmin，沒有 studentId，若需要 studentId 仍須從後端抓取。
+        // 假設系統需要 studentId，則應在沒有快取 studentId 時再次請求後端。
+        // 以下為可選擇性的補充實作（視需要）：
+        if (cachedData.loggedIn && typeof window.currentStudentId === 'undefined') {
+            await fetchStudentId();
+        }
         return;
     }
 
-    // 若無快取或快取無效，請求伺服器
+    // 無快取或快取無效，請求伺服器
     try {
         const profileResponse = await fetch('http://localhost:8000/api/profile', {
             credentials: "include",
@@ -37,6 +44,7 @@ async function checkLoginStatus() {
         if (!profileResponse.ok) {
             // 伺服器未正確返回，設定為未登入狀態
             setButtonVisibility({ login: true, member: false, admin: false, logout: false });
+            window.currentStudentId = null;
             return;
         }
 
@@ -44,11 +52,13 @@ async function checkLoginStatus() {
         const IsloginData = await Islogin.json();
 
         console.log("伺服器返回的登入狀態資料:", profileData);
-        console.log("Received accountType:", profileData.accountType); // Log the accountType
+        console.log("Received accountType:", profileData.accountType);
 
-        // 處理登入狀態
         const loggedIn = !!IsloginData.studentId;
-        const isAdmin = profileData.accountType === 'ADMIN';  // No need to convert case if already uppercase
+        const isAdmin = profileData.accountType === 'ADMIN';
+
+        // 設定全域變數 studentId
+        window.currentStudentId = loggedIn ? IsloginData.studentId : null;
 
         // 更新按鈕顯示狀態
         setButtonVisibility({
@@ -62,9 +72,27 @@ async function checkLoginStatus() {
         cacheLoginStatus({ loggedIn, isAdmin });
     } catch (error) {
         console.error('檢查登入狀態失敗:', error);
-
         // 發生錯誤時，設置未登入狀態
         setButtonVisibility({ login: true, member: false, admin: false, logout: false });
+        window.currentStudentId = null;
+    }
+}
+
+// 若需要獨立抓取 studentId（備用函式，可視需要新增）
+async function fetchStudentId() {
+    try {
+        const Islogin = await fetch('http://localhost:8000/interface/ncu_comment-interface/Islogin', {
+            credentials: "include",
+        });
+        if (Islogin.ok) {
+            const IsloginData = await Islogin.json();
+            window.currentStudentId = IsloginData.studentId || null;
+        } else {
+            window.currentStudentId = null;
+        }
+    } catch (error) {
+        console.error("無法取得 studentId:", error);
+        window.currentStudentId = null;
     }
 }
 
@@ -102,7 +130,5 @@ function cacheLoginStatus({ loggedIn, isAdmin }) {
 
     localStorage.setItem('loginStatusCache', JSON.stringify(cacheData));
 }
-
-// 在 DOM 加載完成後調用函式
 
 window.addEventListener('DOMContentLoaded', checkLoginStatus);

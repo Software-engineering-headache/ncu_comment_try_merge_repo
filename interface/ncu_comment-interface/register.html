@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,10 +27,11 @@
             font-weight: bold;
             margin-top: 1rem;
             display: block;
-            
+
         }
 
-        .form-container input, .form-container select {
+        .form-container input,
+        .form-container select {
             width: 100%;
             padding: 0.75rem;
             margin-top: 0.5rem;
@@ -64,15 +66,20 @@
         .btn {
             display: inline-block;
             text-align: center;
-            padding: 10px 20px; /* 調整按鈕的內邊距 */
-            text-decoration: none; /* 去掉超鏈接的下劃線 */
-            font-size: 0.75rem; /* 設置字體大小為 0.75rem（較小） */
+            padding: 10px 20px;
+            /* 調整按鈕的內邊距 */
+            text-decoration: none;
+            /* 去掉超鏈接的下劃線 */
+            font-size: 0.75rem;
+            /* 設置字體大小為 0.75rem（較小） */
         }
+
         /* 自定義按鈕樣式，與頂部按鈕保持一致 */
         .btn {
             text-decoration: none;
             color: white;
-            background-color: #4682b4; /* 按鈕藍色 */
+            background-color: #4682b4;
+            /* 按鈕藍色 */
             padding: 8px 15px;
             border: none;
             border-radius: 5px;
@@ -82,13 +89,15 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo-container">
             <a href="index.html">
                 <img src="image/home.png" alt="首頁" width="40" height="40">
             </a>
-            <a href="index.html" class="logo" style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
+            <a href="index.html" class="logo"
+                style="text-decoration: none; font-size: 1.5rem; font-weight: bold; color: #333;">
                 NCU課程評論基地
             </a>
         </div>
@@ -96,13 +105,15 @@
     <main>
         <div class="form-container">
             <h2>第一次登入請填寫</h2>
-            <form action="/register" method="post">
+            <form id="register-form">
                 <label for="username">使用者暱稱：</label>
                 <input type="text" id="username" name="username" required>
-                
+
                 <button type="submit" class="btn">確認</button>
             </form>
         </div>
     </main>
+    <script src="register.js"></script>
 </body>
+
 </html>

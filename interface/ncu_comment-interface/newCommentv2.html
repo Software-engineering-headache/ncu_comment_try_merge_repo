@@ -75,9 +75,22 @@
             margin-bottom: 30px; /* 與評論內容的間距 */
         }
 
+        .sort-select {
+            float: right;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 30px;
+            /*margin-top: 0px;*/
+            width: 13%;
+            height: 40px;
+        }
+
         /* 單條評論樣式 */
         .comment-item {
-            margin-bottom: 15px; /* 每條評論之間的間距 */
+            margin: 0px 15px 20px 15px; /* 每條評論之間的間距 */
             padding: 10px;
             background-color: #f8f9fa; /* 淺灰背景 */
             border-radius: 8px;
@@ -96,6 +109,84 @@
 
         /* 彈跳視窗 */
         .modal,
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(240, 248, 255, 0.9); /* 背景半透明 */
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8); /* 調深背景色 */
+            backdrop-filter: blur(5px); /* 背景模糊效果 */
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-decoration: dotted underline;
+        }
+
+               /* 彈跳視窗內部樣式 */
+        .modal-content {
+            background: #06304b; /* 使用頁面主背景色 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            text-align: left;
+        }        
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+            display: block;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+            width: 95%;
+        }
+        rating
+        #rating .star {
+            font-size: 20px;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        #rating .star.selected {
+            color: #f5b301;
+        }
+
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+
         .alert-modal {
             display: none;
             position: fixed;
@@ -108,7 +199,17 @@
             align-items: center;
         }
 
-        .modal-content,
+        .modal-content{
+            position: relative;
+            /* 確保內部的按鈕可以相對於彈跳視窗內容定位 */
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            text-align: center;
+            font-weight: bold;
+            height: 77%;
+        }
         .alert-content {
             position: relative;
             /* 確保內部的按鈕可以相對於彈跳視窗內容定位 */
@@ -117,6 +218,18 @@
             border-radius: 8px;
             max-width: 500px;
             text-align: center;
+            font-weight: bold;
+        }
+
+        .modal-content p, .modal-content label {
+            line-height: 1.6;
+            font-size: 15px; /* 增加字體大小 */
+            text-align: left;
+        }
+
+        textarea {
+            font-size: 16px;
+            line-height: 1.5;
         }
 
         .close-button {
@@ -133,9 +246,14 @@
             /* 叉叉的顏色 */
         }
 
+        #rating {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
         /* 評分星級樣式 */
         #rating .star {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #ddd;
             cursor: pointer;
         }
@@ -176,6 +294,24 @@
         </div>
         <div class="navbar">
             <nav>
+                <button id="loginButton" class="btn">登入</button>
+                <script src="login.js"></script>
+                <div class="dropdown">
+                    <button class="dropdown-button-member">會員中心 ▼</button>
+                    <div class="dropdown-content">
+                        <a href="my_comment_management.html">我的評論</a>
+                        <a href="favorite_course.html">收藏課程</a>
+                        <a href="profoile.html">個人資料</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-button-admin">管理員功能 ▼</button>
+                    <div class="dropdown-content">
+                        <a href="member-management.html">會員管理</a>
+                        <a href="admin-management.html">管理員管理</a>
+                        <a href="system-settings.html">系統設定</a>
+                    </div>
+                </div>
                 <a href="index.html" id="logoutLink" onclick="logout()">登出</a>
                 <script src="logout.js"></script>
             </nav>
@@ -202,15 +338,23 @@
                 </tr>
                 <tr>
                     <td colspan="6" style="text-align: center;">
-                        <button class="btn btn-primary" id="review-button">我要評論</button>
-                        <button class="btn btn-primary">加入收藏</button>
+                        <button class="btn btn-primary" id="review-button" onclick=checkLoginStatus()>我要評論</button>
+                        <button class="btn add-favorite-btn" 
+                            data-course-id="" 
+                            data-course-name="">加入收藏</button>
                     </td>
                 </tr>
             </table>
         </section>
         <!-- 新增：評論清單區塊 -->
         <section class="comments">
-            <h3 class="comment-title">課程評論</h3>
+            <h3 class="comment-title">課程評論
+                <select id="sort-options" class="sort-select">
+                    <option value="default">排序方式</option>
+                    <option value="asc">評分：由小到大</option>
+                    <option value="desc">評分：由大到小</option>
+                </select>
+            </h3>
             <!-- 單條評論範例 -->
             <!--div class="comment-item">
                 <p><strong>資訊系網紅</strong> <span class="rating">★★★★★</span></p>
@@ -225,83 +369,47 @@
             <div id="comment-list">
                 <!-- 多條評論範例 -->
             </div>
-        </div>
+        </section>
 
         <!-- 評論彈跳視窗 -->
         <div class="modal" id="review-modal">
             <div class="modal-content">
                 <span class="close-button" onclick="closeModal()">&times;</span>
-                <h3>發表評論</h3>
-                <form id="review-form">
-                    <!-- 課程代碼 -->
-                    <label for="course-code">課程代碼</label>
-                    <input type="text" id="course-code" required><br>
-
-                    <!-- 使用者名稱 -->
-                    <label for="username">使用者名稱</label>
-                    <input type="text" id="username" required><br>
-
-                    <!-- 系所 -->
-                    <label for="department">系所</label>
-                    <!--<input type="text" id="department" required><br>-->
-                    <select id="department">
-                        <option>選擇系所</option>
-                        <option>資訊管理學系</option>
-                        <option>企業管理學系</option>
-                        <option>財務金融學系</option>
-                    </select><br>
-
-                    <!-- 授課老師 -->
-                    <label for="teacher">授課老師</label>
-                    <input type="text" id="teacher" required><br>
-
-                    <!-- 課程關鍵字 -->
-                    <label for="keywords">課程關鍵字</label>
-                    <input type="text" id="keywords" required><br>
-
-                    <!-- 年份 -->
-                    <label for="year">年份</label>
-                    <!--<input type="number" id="year" required min="2000" max="2100"><br>-->
-                    <select id="department">
-                        <option>選擇年份</option>
-                        <option>2024</option>
-                        <option>2022</option>
-                        <option>2020</option>
-                    </select><br>
-
-                    <!-- 推薦指數 -->
-                    <label for="rating">推薦指數</label>
-                    <div id="rating">
-                        <span class="star" onclick="setRating(1)">★</span>
-                        <span class="star" onclick="setRating(2)">★</span>
-                        <span class="star" onclick="setRating(3)">★</span>
-                        <span class="star" onclick="setRating(4)">★</span>
-                        <span class="star" onclick="setRating(5)">★</span>
-                    </div>
-
-                    <!-- 評論內容 -->
-                    <label for="comment-text">評論內容 (字數限制：1500)</label>
-                    <textarea id="comment-text" maxlength="1500" placeholder="撰寫您的評論..." required></textarea><br>
-
-                    <!-- 提交日期 -->
-                    <label for="submit-date">提交日期</label>
-                    <input type="date" id="submit-date" required>
-
-                    <!-- 提交按鈕 -->
-                    <button type="button" class="btn btn-submit" onclick="submitReview()">送出評論</button>
-                    <h4 class="warning">!!!謹言慎行!!!<br>如果違規將刪除評論並寄郵件通知</h4>
-                </form>
+                <h3 class="modal-title">發表評論</h3>
+                <p><strong>課程名稱：</strong><span id="modal-course-name"></span></p>
+                <p><strong>授課老師：</strong><span id="modal-professor-name"></span></p>
+                <p><strong>開課系所：</strong><span id="modal-department-name"></span></p>
+                <p><strong>學分數：</strong><span id="modal-course-info"></span></p>
+                <p><strong>學期：</strong><span id="modal-course-year"></span></p>
+        
+                <!-- 評分 -->
+                <label for="rating">評分</label>
+                <div id="rating">
+                    <span class="star" onclick="setRating(1)">★</span>
+                    <span class="star" onclick="setRating(2)">★</span>
+                    <span class="star" onclick="setRating(3)">★</span>
+                    <span class="star" onclick="setRating(4)">★</span>
+                    <span class="star" onclick="setRating(5)">★</span>
+                </div>
+        
+                <!-- 評論內容輸入 -->
+                <label for="comment-text">請輸入評論（上限<span id="char-limit-label">1500</span>字）</label>
+                <textarea id="comment-text" maxlength="1500" placeholder="撰寫您的評論..." required></textarea><br>
+        
+                <!-- 提交按鈕 -->
+                <button type="button" class="btn btn-submit" onclick="submitReview()">發布</button>
             </div>
         </div>
 
         <!-- 超過字數警告視窗 -->
         <div class="alert-modal" id="alert-modal">
             <div class="alert-content">
-                <p>字數不可超過 1500 字！</p>
+                <p>字數不可超過 <span id="char-limit-warning">1500</span> 字！</p>
                 <button class="btn btn-alert" onclick="closeAlert()">確定</button>
             </div>
         </div>
     </main>
+    <script src="buttoncontroller.js"></script>
     <script src="scripts.js"></script>
 </body>
 

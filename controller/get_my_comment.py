@@ -6,20 +6,17 @@ from database import models
 from database.database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from controller.get_user_info import get_studentId
-from fastapi.middleware.cors import CORSMiddleware
+from database.models import Comment
 
 router = APIRouter()
-# router.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  # 根據需要設置允許的來源
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+
 # 創建所有與資料庫模型對應的表格
 # models.Base.metadata.create_all(bind=engine) 會檢查定義的 SQLAlchemy 模型
 # 如果表格不存在，會在資料庫中創建這些表
 models.Base.metadata.create_all(bind=engine)
+
+class CommentBase(BaseModel):
+    id: int
 
 # 這是用於獲取資料庫連接的依賴函數
 def get_db():
@@ -33,7 +30,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 @router.get("/my_comments")
-def get_comments(request: Request, db: Session = Depends(get_db)):
+async def get_comments(request: Request, db: Session = Depends(get_db)):
     student_id = get_studentId(request)
     print(f"Retrieved student_id: {student_id}")  # 添加日志
 
@@ -49,7 +46,30 @@ def get_comments(request: Request, db: Session = Depends(get_db)):
         result.append({
             "content": comment.content,
             "course_id": comment.course_id,
-            "course_name": course.name if course else None
+            "course_name": course.name if course else None,
+            "comment_id": comment.id
         })
-    
+
     return result
+
+@router.post("/comments/remove")
+async def remove_comment(comment: CommentBase, request: Request, db: Session = Depends(get_db)):
+    student_id = get_studentId(request)
+    if not student_id:
+        return {"error": "User not authenticated"}
+
+    # Get the comment record by comment id
+    comment_record = db.query(Comment).filter(Comment.id == comment.id).first()
+    if not comment_record:
+        raise HTTPException(status_code=404, detail="Comment record not found")
+
+    # Check if the comment belongs to the student
+    if comment_record.user_id != student_id:
+        raise HTTPException(status_code=403, detail="You are not authorized to delete this comment")
+
+    # Delete the entire row
+    db.delete(comment_record)
+    db.commit()
+
+    return {"message": "Comment removed successfully"}
+

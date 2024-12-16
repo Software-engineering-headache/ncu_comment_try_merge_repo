@@ -71,7 +71,7 @@
             <label for="instructor">授課老師：</label>
             <input type="text" id="instructor" placeholder="輸入老師名稱">
             <label for="keyword">課程關鍵字：</label>
-            <input type="text" id="keyword" placeholder="輸入課程名稱或代碼">
+            <input type="text" id="keyword" placeholder="輸入課程名稱">
             <button type="submit" class="btn" id="searchButton" onclick="searchCourses()">搜尋</button>
         </section>
 
@@ -96,6 +96,7 @@
             </table>
         </section>
 
+        <!-- 請確保引用順序：buttoncontroller.js 在 courses.js 之前 -->
         <script src="buttoncontroller.js"></script>
         <script src="courses.js"></script>
     </main>

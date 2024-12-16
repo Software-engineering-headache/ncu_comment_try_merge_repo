@@ -1,10 +1,10 @@
 window.addEventListener('DOMContentLoaded', () => {
     fetch('http://localhost:8000/my_comments', {
-        credentials: 'include'  // 确保请求包含凭据（如 Cookie）
+        credentials: 'include'  // 確保請求包含憑據（如 Cookie）
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Received data:', data);  // 输出接收到的数据
+            console.log('Received data:', data);  // 輸出接收到的數據
 
             const tbody = document.getElementById('comments-body');
 
@@ -27,8 +27,15 @@ window.addEventListener('DOMContentLoaded', () => {
                 row.appendChild(courseNameCell);
 
                 // 評論內容
+                // 評論內容
                 const contentCell = document.createElement('td');
-                contentCell.textContent = comment.content;
+                const maxLength = 100; // 要顯示的最大字數
+                const displayContent = comment.content
+                    ? (comment.content.length > maxLength
+                        ? comment.content.substring(0, maxLength) + '...' // 截斷內容加上 "..."
+                        : comment.content)
+                    : '無內容'; // 如果 content 是空值，顯示 "無內容"
+                contentCell.textContent = displayContent;
                 row.appendChild(contentCell);
 
                 // 刪除按鈕
@@ -37,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 deleteButton.className = 'btn';
                 deleteButton.textContent = '刪除';
                 deleteButton.onclick = function () {
-                    deleteComment(this, comment.course_id);
+                    deleteComment(this, comment.comment_id);
                 };
                 deleteCell.appendChild(deleteButton);
                 row.appendChild(deleteCell);
@@ -48,6 +55,24 @@ window.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error fetching comments:', error));
 });
 
-function deleteComment(button, courseId) {
-    // 實現刪除邏輯，例如發送 DELETE 請求到後端
+function deleteComment(button, commentId) {
+    fetch('http://localhost:8000/comments/remove', {
+        method: 'POST',
+        credentials: 'include',  // Include cookies for authentication
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: commentId })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Comment removed successfully') {
+                // Remove the row from the table
+                const row = button.parentElement.parentElement;
+                row.parentElement.removeChild(row);
+            } else {
+                console.error('Error deleting comment:', data);
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }

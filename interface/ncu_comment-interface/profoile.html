@@ -68,7 +68,7 @@
                 NCU課程評論基地
             </a>
         </div>
-    
+
         <div class="navbar">
             <nav>
                 <button id="loginButton" class="btn">登入</button>
@@ -105,27 +105,31 @@
                     <table>
                         <tr>
                             <th><label for="accountType">帳戶類型</label></th>
-                            <td><input type="text" id="accountType" placeholder="輸入新的帳戶類型" readonly></td>
+                            <td id="accountType"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="nickname">暱稱</label></th>
+                            <td><input type="text" id="nickname" placeholder="輸入新的暱稱"></td>
                         </tr>
                         <tr>
                             <th><label for="chineseName">中文姓名</label></th>
-                            <td><input type="text" id="chineseName" placeholder="輸入新的中文姓名"></td>
+                            <td id="chineseName"></td>
                         </tr>
                         <tr>
                             <th><label for="englishName">英文姓名</label></th>
-                            <td><input type="text" id="englishName" placeholder="輸入新的英文姓名"></td>
+                            <td id="englishName"></td>
                         </tr>
                         <tr>
                             <th><label for="gender">性別</label></th>
-                            <td><input type="text" id="gender" placeholder="輸入新的性別"></td>
+                            <td id="gender"></td>
                         </tr>
                         <tr>
                             <th><label for="birthday">生日</label></th>
-                            <td><input type="date" id="birthday" placeholder="輸入新的生日"></td>
+                            <td id="birthday"></td>
                         </tr>
                         <tr>
                             <th><label for="studentId">學號</label></th>
-                            <td><input type="text" id="studentId" placeholder="輸入新的學號"></td>
+                            <td id="studentId"></td>
                         </tr>
                         <tr>
                             <th><label for="email">電子郵件</label></th>
@@ -143,8 +147,7 @@
         </section>
         <script src="buttoncontroller.js"></script>
         <script src="scriptsv2.js"></script>
-        
-
+        <script src="update_user_info.js"></script>
     </main>
 
     <footer>

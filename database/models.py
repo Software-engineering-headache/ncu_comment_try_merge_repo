@@ -55,8 +55,8 @@ class Comment(Base):
     __tablename__ = 'comments'
 
     id = Column(Integer, primary_key=True, index=True) #id是主鍵，index就是代表他可以成為索引
-    score = Column(Integer) #
-    content = Column(String(100))
+    score = Column(Integer) 
+    content = Column(String(3000))
     course_id = Column(String(8), ForeignKey('courses.id'))
     user_id = Column(String(20), ForeignKey('users.studentId'))
     time = Column(DateTime(timezone=True), server_default=func.now())  # 創建時間

@@ -1,12 +1,10 @@
 const API_URL = "http://127.0.0.1:8000/courses/results";
 const ADD_FAVORITE_URL = "http://127.0.0.1:8000/favorites/add";
-const FAVORITES_DETAILS_URL = "http://127.0.0.1:8000/favorites/details"; // 新增此常數，用於檢查已收藏的資料
-
-// 全域變數(需確保 checkLoginStatus 已在 buttoncontroller.js 中執行並設定 currentStudentId)
-let currentStudentId = null;
+const FAVORITES_DETAILS_URL = "http://127.0.0.1:8000/favorites/details"; // 檢查已收藏的資料
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log("Logged in user studentId:", currentStudentId);
+    // 使用全域變數 window.currentStudentId （由 buttoncontroller.js 設定）
+    console.log("Logged in user studentId:", window.currentStudentId);
 
     initializeSearchButton();
     const params = getQueryParams();
@@ -37,8 +35,8 @@ function searchCourses() {
     const instructor = document.getElementById('instructor').value;
     const keyword = document.getElementById('keyword').value;
 
-    if (department === '選擇系所' || instructor.trim() === '' || keyword.trim() === '') {
-        alert('輸入資料不完整');
+    if (department === '選擇系所') {
+        alert('請選擇系所');
         return window.location.href = 'courses.html';
     } else {
         const params = { department: department, instructor: instructor, keyword: keyword };
@@ -111,8 +109,8 @@ function showSearchResults(results) {
     const favoriteButtons = document.querySelectorAll('.add-favorite-btn');
     favoriteButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
-            console.log("Add favorite clicked, currentStudentId:", currentStudentId);
-            if (!currentStudentId) {
+            console.log("Add favorite clicked, currentStudentId:", window.currentStudentId);
+            if (!window.currentStudentId) {
                 alert("您尚未登入，請先登入！");
                 return;
             }
@@ -120,7 +118,7 @@ function showSearchResults(results) {
             const courseId = e.target.getAttribute('data-course-id');
             const courseName = e.target.getAttribute('data-course-name');
 
-            // 先透過 /favorites/details 獲得已收藏課程列表，以檢查是否已存在該課程
+            // 檢查收藏是否已存在
             try {
                 const favoritesResp = await fetch(FAVORITES_DETAILS_URL, { credentials: "include" });
                 if (!favoritesResp.ok) {
@@ -129,7 +127,7 @@ function showSearchResults(results) {
                 const favoritesData = await favoritesResp.json();
 
                 // 檢查該 user_id 與 course_id 是否已存在
-                const exists = favoritesData.some(fav => fav.user_id === currentStudentId && fav.course_id === courseId);
+                const exists = favoritesData.some(fav => fav.user_id === window.currentStudentId && fav.course_id === courseId);
                 if (exists) {
                     alert(`「${courseName}」已存在收藏清單中！`);
                     return; // 不執行新增
@@ -139,7 +137,7 @@ function showSearchResults(results) {
                 const response = await fetch(ADD_FAVORITE_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: currentStudentId, course_id: courseId })
+                    body: JSON.stringify({ user_id: window.currentStudentId, course_id: courseId })
                 });
 
                 if (!response.ok) {

@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理員管理</title>
-    <!-- 引入外部 CSS -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <title>管理所有評論</title>
     <link rel="stylesheet" href="new_style.css">
     <link rel="stylesheet" href="new_style_button_table.css">
     <style>
+        /* 調整評論 ID 欄位寬度 */
+        #comment-table th:first-child, #comment-table td:first-child {
+            width: 120px; /* 調整欄位寬度，避免壓縮 */
+        }
 
+        /* 調整評論資訊欄位寬度 */
+        #comment-table th:nth-child(3), #comment-table td:nth-child(3) {
+            width: 40%; /* 確保欄位不被壓縮 */
+        }
+
+        /* 調整使用者資訊的 Email 不換行 */
+        #comment-table td:nth-child(4) div:last-child {
+            white-space: nowrap; /* 防止換行 */
+        }
+
+        /* 表格樣式調整 */
+        #comment-table {
+            border-collapse: collapse;
+            width: 95%;
+            margin: 20px auto;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        #comment-table th, #comment-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            word-wrap: break-word;
+            vertical-align: top;
+        }
+
+        #comment-table th {
+            background-color: #d2e8f2;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 交替行背景色 */
+        #comment-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        #comment-table tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        /* 刪除按鈕樣式 */
+        .btn-delete {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: #ff4d4d;
+        }
     </style>
 </head>
-
 <body>
-    <!-- 頁首 -->
     <header>
         <div class="logo-container">
             <a href="index.html">
@@ -54,14 +108,29 @@
     </header>
 
     <main>
+        <div class="section-title">管理所有評論：</div>
+
+        <!-- 評論表格 -->
+        <table id="comment-table">
+            <thead>
+                <tr>
+                    <th>評論編號</th>
+                    <th>課程資訊</th>
+                    <th>評論資訊</th>
+                    <th>使用者資訊</th>
+                    <th>留言時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
         <script src="buttoncontroller.js"></script>
+        <script src="all_comment_manage.js"></script>
     </main>
 
     <footer>
         <p>&copy; 2024 NCU課程評論基地. 版權所有。</p>
     </footer>
-
 </body>
-
 </html>
